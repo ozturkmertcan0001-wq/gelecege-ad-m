@@ -3,7 +3,10 @@ name: Gelecege Adim 7/24 Saatlik Tarama Botu
 on:
   schedule:
     - cron: '0 * * * *' # Her saat başı otomatik çalışır
-  workflow_dispatch: # İstediğin an manuel tetikleyebilirsin
+  workflow_dispatch: # Manuel test için
+
+permissions:
+  contents: write
 
 jobs:
   tarama_ve_guncelleme:
@@ -28,5 +31,7 @@ jobs:
           git config --global user.name "Gelecege Adim Bot"
           git config --global user.email "bot@gelecegeadim.com"
           git add ilanlar.json
-          git commit -m "Otomatik saatlik ilan güncellemesi ($(date +'%Y-%m-%d %H:%M'))" || exit 0
+          git commit -m "Otomatik saatlik ilan güncellemesi" || exit 0
           git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
