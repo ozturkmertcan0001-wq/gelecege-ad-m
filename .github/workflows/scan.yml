@@ -1,0 +1,32 @@
+name: Gelecege Adim 7/24 Saatlik Tarama Botu
+
+on:
+  schedule:
+    - cron: '0 * * * *' # Her saat başı otomatik çalışır
+  workflow_dispatch: # İstediğin an manuel tetikleyebilirsin
+
+jobs:
+  tarama_ve_guncelleme:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Depoyu Kopyala
+        uses: actions/checkout@v4
+
+      - name: Python Ortamını Kur
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Gerekli Kütüphaneleri Yükle
+        run: pip install requests beautifulsoup4
+
+      - name: Botu Çalıştır ve ilanlar.json Üret
+        run: python bot.py
+
+      - name: Güncel İlanları Depoya Kaydet ve Yayınla
+        run: |
+          git config --global user.name "Gelecege Adim Bot"
+          git config --global user.email "bot@gelecegeadim.com"
+          git add ilanlar.json
+          git commit -m "Otomatik saatlik ilan güncellemesi ($(date +'%Y-%m-%d %H:%M'))" || exit 0
+          git push
