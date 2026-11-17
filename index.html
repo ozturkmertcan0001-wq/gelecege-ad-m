@@ -291,6 +291,14 @@
 
         <div class="flex flex-wrap items-center gap-2">
           <select
+            id="quickProfessionSelect"
+            aria-label="İstenen Meslek / Kadro Seçimi"
+            class="px-3 py-2 text-xs font-bold bg-indigo-50/80 dark:bg-indigo-950/60 border border-indigo-200 dark:border-indigo-800 rounded-xl text-indigo-900 dark:text-indigo-200 focus:outline-none focus:border-indigo-500 cursor-pointer max-w-[220px]"
+          >
+            <option value="Tümü">Tüm Meslek / Kadrolar</option>
+          </select>
+
+          <select
             id="quickEduSelect"
             aria-label="Hızlı Öğrenim Seçimi"
             class="px-3 py-2 text-xs font-bold bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-800 dark:text-slate-100 focus:outline-none focus:border-indigo-500 cursor-pointer"
@@ -327,6 +335,15 @@
             <span>KPSS Şartsız</span>
           </button>
         </div>
+      </div>
+
+      <!-- Hızlı Meslek Etiketleri (Tek Tıkla Meslek Filtrele) -->
+      <div class="mt-3 pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center gap-2 overflow-x-auto no-scrollbar">
+        <span class="text-[11px] font-bold text-slate-400 shrink-0 inline-flex items-center gap-1">
+          <i data-lucide="stethoscope" class="w-3.5 h-3.5 text-indigo-500"></i>
+          <span>Hızlı Meslek:</span>
+        </span>
+        <div id="popularProfessionPills" class="flex items-center gap-1.5 shrink-0"></div>
       </div>
     </section>
 
@@ -521,6 +538,19 @@
               class="w-full mb-2 px-3 py-1.5 text-xs bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-slate-800 dark:text-slate-100 placeholder:text-slate-400 focus:outline-none focus:border-indigo-500"
             />
             <div id="sourceCheckboxesContainer" class="space-y-1 max-h-56 overflow-y-auto pr-1"></div>
+          </div>
+
+          <!-- İstenen Meslek / Unvan -->
+          <div>
+            <label for="professionSelect" class="block text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1.5">
+              İstenen Meslek / Kadro
+            </label>
+            <select
+              id="professionSelect"
+              class="w-full px-3 py-2 text-sm bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-800 dark:text-slate-100 font-medium focus:outline-none focus:border-indigo-500 cursor-pointer"
+            >
+              <option value="Tümü">Tüm Meslek / Kadrolar</option>
+            </select>
           </div>
 
           <!-- Öğrenim Düzeyi -->
@@ -1006,8 +1036,10 @@
         nextScanTimestamp: Date.now() + 3600 * 1000,
         lastScanTimeStr: '--:--:--'
       },
+      expandedCardIds: new Set(),
       filters: {
         category: 'Tümü',
+        profession: 'Tümü',
         keyword: '',
         sources: new Set(PORTALS.map(p => p.domain)),
         education: 'Tümü',
@@ -1038,6 +1070,19 @@
 
     function trLower(str) {
       return String(str || '').replace(/İ/g, 'i').replace(/I/g, 'ı').toLowerCase();
+    }
+
+    function normalizeSearchTr(str) {
+      return trLower(str)
+        .replace(/piskolok|piskolog|psikolok/g, 'psikolog')
+        .replace(/makina/g, 'makine')
+        .replace(/muhendis/g, 'mühendis')
+        .replace(/hemsire/g, 'hemşire')
+        .replace(/sofor/g, 'şoför')
+        .replace(/guvenlik/g, 'güvenlik')
+        .replace(/kâtip|katip/g, 'katip')
+        .replace(/ogretmen/g, 'öğretmen')
+        .replace(/isci/g, 'işçi');
     }
 
     function normalizeDomain(rawDomain) {
@@ -1112,55 +1157,124 @@
     }
 
     const POSITION_DICTIONARY = [
-      ['büro personeli', 'Büro Personeli'],
-      ['düz memur', 'Düz Memur'],
-      ['zabıt katibi', 'Zabıt Katibi'],
-      ['zabıt kâtibi', 'Zabıt Katibi'],
-      ['mübaşir', 'Mübaşir'],
-      ['icra katibi', 'İcra Katibi'],
-      ['infaz ve koruma memuru', 'İnfaz ve Koruma Memuru'],
-      ['gişe', 'Gişe / Servis Görevlisi'],
-      ['servis görevlisi', 'Servis Görevlisi'],
-      ['veznedar', 'Veznedar'],
-      ['veri hazırlama', 'VHKİ (Veri Hazırlama)'],
-      ['çağrı merkezi', 'Çağrı Merkezi Personeli'],
-      ['sekreter', 'Sekreter'],
-      ['avukat', 'Avukat'],
+      // Sağlık & Sosyal Hizmetler
+      ['psikolog', 'Psikolog'],
+      ['sosyal çalışmacı', 'Sosyal Çalışmacı'],
+      ['sosyolog', 'Sosyolog'],
+      ['çocuk gelişimcisi', 'Çocuk Gelişimcisi'],
+      ['çocuk gelişimi', 'Çocuk Gelişimcisi'],
       ['hemşire', 'Hemşire'],
       ['ebe', 'Ebe'],
       ['paramedik', 'Paramedik (İlk ve Acil Yardım)'],
       ['ilk ve acil yardım', 'Paramedik (İlk ve Acil Yardım)'],
       ['acil tıp teknisyeni', 'Acil Tıp Teknisyeni (ATT)'],
       ['tıbbi sekreter', 'Tıbbi Sekreter'],
-      ['sağlık teknikeri', 'Sağlık Teknikeri'],
       ['fizyoterapist', 'Fizyoterapist'],
       ['diyetisyen', 'Diyetisyen'],
-      ['psikolog', 'Psikolog'],
-      ['sosyal çalışmacı', 'Sosyal Çalışmacı'],
+      ['odyolog', 'Odyolog'],
+      ['ergoterapist', 'Ergoterapist'],
+      ['dil ve konuşma terapisti', 'Dil ve Konuşma Terapisti'],
+      ['perfüzyonist', 'Perfüzyonist'],
       ['eczacı', 'Eczacı'],
+      ['diş tabibi', 'Diş Tabibi'],
+      ['diş hekimi', 'Diş Tabibi'],
       ['tabip', 'Tabip / Doktor'],
       ['doktor', 'Tabip / Doktor'],
       ['veteriner', 'Veteriner Hekim'],
+      ['biyolog', 'Biyolog'],
+      ['kimyager', 'Kimyager'],
       ['laborant', 'Laborant'],
-      ['röntgen', 'Röntgen Teknisyeni'],
+      ['tıbbi görüntüleme', 'Tıbbi Görüntüleme (Röntgen)'],
+      ['röntgen', 'Tıbbi Görüntüleme (Röntgen)'],
+      ['anestezi', 'Anestezi Teknikeri'],
+      ['diyaliz', 'Diyaliz Teknikeri'],
+      ['ameliyathane', 'Ameliyathane Teknikeri'],
+      ['ağız ve diş sağlığı', 'Ağız ve Diş Sağlığı Teknikeri'],
+      ['optisyen', 'Optisyen'],
+      ['sağlık teknikeri', 'Sağlık Teknikeri'],
       ['sağlık personeli', 'Sağlık Personeli'],
+
+      // Mühendislik, Mimarlık & Fen Bilimleri
+      ['makine mühendisi', 'Makine Mühendisi'],
+      ['makina mühendisi', 'Makine Mühendisi'],
+      ['inşaat mühendisi', 'İnşaat Mühendisi'],
+      ['elektrik-elektronik mühendisi', 'Elektrik-Elektronik Mühendisi'],
+      ['elektrik elektronik mühendisi', 'Elektrik-Elektronik Mühendisi'],
+      ['elektrik mühendisi', 'Elektrik Mühendisi'],
+      ['elektronik mühendisi', 'Elektronik Mühendisi'],
+      ['bilgisayar mühendisi', 'Bilgisayar Mühendisi'],
+      ['yazılım mühendisi', 'Yazılım Mühendisi'],
+      ['endüstri mühendisi', 'Endüstri Mühendisi'],
+      ['çevre mühendisi', 'Çevre Mühendisi'],
+      ['gıda mühendisi', 'Gıda Mühendisi'],
+      ['ziraat mühendisi', 'Ziraat Mühendisi'],
+      ['orman mühendisi', 'Orman Mühendisi'],
+      ['harita mühendisi', 'Harita Mühendisi'],
+      ['jeoloji mühendisi', 'Jeoloji Mühendisi'],
+      ['jeofizik mühendisi', 'Jeofizik Mühendisi'],
+      ['maden mühendisi', 'Maden Mühendisi'],
+      ['metalurji ve malzeme mühendisi', 'Metalurji ve Malzeme Mühendisi'],
+      ['kimya mühendisi', 'Kimya Mühendisi'],
+      ['mekatronik mühendisi', 'Mekatronik Mühendisi'],
+      ['uçak mühendisi', 'Uçak / Havacılık Mühendisi'],
+      ['havacılık mühendisi', 'Uçak / Havacılık Mühendisi'],
+      ['otomotiv mühendisi', 'Otomotiv Mühendisi'],
+      ['biyomedikal mühendisi', 'Biyomedikal Mühendisi'],
+      ['enerji sistemleri mühendisi', 'Enerji Sistemleri Mühendisi'],
+      ['mühendis', 'Mühendis'],
+      ['iç mimar', 'İç Mimar'],
+      ['peyzaj mimarı', 'Peyzaj Mimarı'],
+      ['mimar', 'Mimar'],
+      ['şehir plancısı', 'Şehir Plancısı'],
+      ['istatistikçi', 'İstatistikçi'],
+      ['matematikçi', 'Matematikçi'],
+      ['fizikçi', 'Fizikçi'],
+
+      // Büro, Adalet, Finans & Kültür
+      ['büro personeli', 'Büro Personeli'],
+      ['düz memur', 'Düz Memur'],
+      ['veri hazırlama', 'VHKİ (Veri Hazırlama)'],
+      ['zabıt katibi', 'Zabıt Katibi'],
+      ['zabıt kâtibi', 'Zabıt Katibi'],
+      ['mübaşir', 'Mübaşir'],
+      ['icra katibi', 'İcra Katibi'],
+      ['icra kâtibi', 'İcra Katibi'],
+      ['infaz ve koruma memuru', 'İnfaz ve Koruma Memuru'],
+      ['avukat', 'Avukat'],
+      ['mütercim', 'Mütercim-Tercüman'],
+      ['tercüman', 'Mütercim-Tercüman'],
+      ['kütüphaneci', 'Kütüphaneci'],
+      ['arkeolog', 'Arkeolog'],
+      ['sanat tarihçisi', 'Sanat Tarihçisi'],
+      ['müze araştırmacısı', 'Müze Araştırmacısı'],
+      ['restoratör', 'Restoratör'],
+      ['gişe', 'Gişe / Servis Görevlisi'],
+      ['servis görevlisi', 'Servis Görevlisi'],
+      ['veznedar', 'Veznedar'],
+      ['çağrı merkezi', 'Çağrı Merkezi Personeli'],
+      ['sekreter', 'Sekreter'],
+      ['muhasebeci', 'Muhasebeci'],
+
+      // Bilişim & Tekniker / Teknisyen
       ['bilişim personeli', 'Sözleşmeli Bilişim Personeli'],
-      ['yazılım', 'Yazılım Uzmanı / Mühendisi'],
+      ['yazılım uzmanı', 'Yazılım Uzmanı'],
       ['siber güvenlik', 'Siber Güvenlik Uzmanı'],
       ['sistem uzmanı', 'Sistem / Ağ Uzmanı'],
       ['ağ uzmanı', 'Sistem / Ağ Uzmanı'],
-      ['bilgisayar mühendisi', 'Bilgisayar Mühendisi'],
-      ['elektrik-elektronik', 'Elektrik-Elektronik Mühendisi'],
-      ['inşaat mühendisi', 'İnşaat Mühendisi'],
-      ['makine mühendisi', 'Makine Mühendisi'],
-      ['ziraat mühendisi', 'Ziraat Mühendisi'],
-      ['gıda mühendisi', 'Gıda Mühendisi'],
-      ['harita mühendisi', 'Harita Mühendisi'],
-      ['mühendis', 'Mühendis'],
-      ['mimar', 'Mimar'],
+      ['veritabanı uzmanı', 'Veritabanı Uzmanı'],
+      ['programcı', 'Programcı'],
+      ['bilgisayar teknikeri', 'Bilgisayar Teknikeri'],
+      ['elektrik teknikeri', 'Elektrik Teknikeri'],
+      ['elektronik teknikeri', 'Elektronik Teknikeri'],
+      ['makine teknikeri', 'Makine Teknikeri'],
+      ['inşaat teknikeri', 'İnşaat Teknikeri'],
+      ['harita teknikeri', 'Harita Teknikeri'],
+      ['otomotiv teknikeri', 'Otomotiv Teknikeri'],
+      ['iklimlendirme', 'İklimlendirme Teknikeri'],
       ['tekniker', 'Tekniker'],
       ['teknisyen', 'Teknisyen'],
-      ['programcı', 'Programcı'],
+
+      // İşçi, Güvenlik & Destek
       ['koruma ve güvenlik', 'Koruma ve Güvenlik Görevlisi'],
       ['güvenlik görevlisi', 'Koruma ve Güvenlik Görevlisi'],
       ['destek personeli', 'Destek Personeli'],
@@ -1168,10 +1282,20 @@
       ['şoför', 'Şoför'],
       ['aşçı', 'Aşçı'],
       ['bahçıvan', 'Bahçıvan'],
+      ['kaloriferci', 'Kaloriferci'],
+      ['elektrikçi', 'Elektrikçi'],
+      ['sıhhi tesisat', 'Sıhhi Tesisatçı'],
+      ['marangoz', 'Marangoz'],
+      ['kaynakçı', 'Kaynakçı'],
+      ['boyacı', 'Boyacı'],
       ['operatör', 'İş Makinesi Operatörü'],
       ['bakım', 'Bakım-Onarım Personeli'],
       ['sürekli işçi', 'Sürekli İşçi'],
       ['işçi alım', 'Kamu İşçisi'],
+
+      // Uzman, Denetim & Akademik
+      ['gelir uzman yardımcısı', 'Gelir Uzman Yardımcısı'],
+      ['vergi müfettiş yardımcısı', 'Vergi Müfettiş Yardımcısı'],
       ['uzman yardımcısı', 'Uzman Yardımcısı'],
       ['müfettiş yardımcısı', 'Müfettiş Yardımcısı'],
       ['denetmen yardımcısı', 'Denetmen Yardımcısı'],
@@ -1182,26 +1306,60 @@
       ['öğretmen', 'Öğretmen']
     ];
 
+    const POPULAR_PROFESSIONS = [
+      'Psikolog',
+      'Makine Mühendisi',
+      'Hemşire',
+      'Paramedik (İlk ve Acil Yardım)',
+      'Büro Personeli',
+      'Zabıt Katibi',
+      'Koruma ve Güvenlik Görevlisi',
+      'Şoför'
+    ];
+
     function extractPositionsFromText(text, category = '') {
       const b = trLower(text);
       const found = [];
+      const details = [];
       for (const [key, label] of POSITION_DICTIONARY) {
-        if (b.includes(key) && !found.includes(label)) {
-          if (label === 'Mühendis' && found.some(u => u.includes('Mühendisi'))) continue;
-          found.push(label);
+        let matched = false;
+        if (key.length <= 5) {
+          const rx = new RegExp(`\\b${key.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}(?:i|ı|u|ü|ler|lar|leri|ları)?\\b`);
+          matched = rx.test(b);
+        } else {
+          matched = b.includes(key);
         }
-        if (found.length >= 5) break;
+
+        if (matched && !found.includes(label)) {
+          if (label === 'Mühendis' && found.some(u => u.includes('Mühendisi'))) continue;
+          if (label === 'Mimar' && found.some(u => u === 'İç Mimar' || u === 'Peyzaj Mimarı')) continue;
+          if (label === 'Tekniker' && found.some(u => u.includes('Teknikeri'))) continue;
+          found.push(label);
+
+          const escapedKey = key.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+          const mBefore = b.match(new RegExp(`\\b(\\d{1,4})\\s*(?:adet|kişi)?\\s*${escapedKey}`));
+          const mAfter = b.match(new RegExp(`${escapedKey}(?:i|ı|u|ü|ler|lar|leri|ları)?\\s*[\\(\\[\\:\\-\\|]?\\s*(\\d{1,4})\\s*(?:adet|kişi|kadro)?[\\)\\]]?`));
+          let count = null;
+          const rawNum = mBefore ? parseInt(mBefore[1], 10) : (mAfter ? parseInt(mAfter[1], 10) : null);
+          if (rawNum && rawNum >= 1 && rawNum <= 25000 && ![2001, 3001, 4001, 2024, 2025, 2026].includes(rawNum)) {
+            count = rawNum;
+          }
+          details.push(count ? `${label} (${count})` : label);
+        }
+        if (found.length >= 25) break;
       }
       if (found.length === 0) {
-        if (b.includes('sözleşmeli personel')) found.push('Sözleşmeli Personel (Çeşitli Unvanlar)');
-        else if (b.includes('memur alım')) found.push('Memur (Genel İdare / Meslek)');
-        else if (category === 'Sağlık Personeli') found.push('Sağlık Personeli');
-        else if (category === 'Bilişim & Teknik') found.push('Teknik / Bilişim Personeli');
-        else if (category === 'İşçi & Hizmetli') found.push('Sürekli İşçi / Destek Personeli');
-        else if (category === 'Uzman & Akademik') found.push('Uzman / Akademik Personel');
-        else found.push('Büro / İdari Personel');
+        let fallback = 'Büro / İdari Personel';
+        if (b.includes('sözleşmeli personel')) fallback = 'Sözleşmeli Personel (Çeşitli Unvanlar)';
+        else if (b.includes('memur alım')) fallback = 'Memur (Genel İdare / Meslek)';
+        else if (category === 'Sağlık Personeli') fallback = 'Sağlık Personeli';
+        else if (category === 'Bilişim & Teknik') fallback = 'Teknik / Bilişim Personeli';
+        else if (category === 'İşçi & Hizmetli') fallback = 'Sürekli İşçi / Destek Personeli';
+        else if (category === 'Uzman & Akademik') fallback = 'Uzman / Akademik Personel';
+        found.push(fallback);
+        details.push(fallback);
       }
-      return found;
+      return { positions: found, positionDetails: details };
     }
 
     function normalizeAnnouncementItem(raw, idx = 0) {
@@ -1251,12 +1409,17 @@
           : ['e-Devlet Mezuniyet Belgesi', 'KPSS Sonuç Belgesi']
       };
       normalized.isDuzMemurluk = isDuzMemurlukAnnouncement(normalized);
+      const extractedPos = extractPositionsFromText(`${normalized.title} ${normalized.requirements.join(' ')}`, normalized.category);
       const rawPositions = Array.isArray(raw.positions) && raw.positions.length > 0
         ? raw.positions.map(p => repairTurkishMojibake(String(p).trim())).filter(Boolean)
         : [];
-      normalized.positions = rawPositions.length > 0
-        ? rawPositions
-        : extractPositionsFromText(`${normalized.title} ${normalized.requirements.join(' ')}`, normalized.category);
+      const rawPositionDetails = Array.isArray(raw.positionDetails) && raw.positionDetails.length > 0
+        ? raw.positionDetails.map(p => repairTurkishMojibake(String(p).trim())).filter(Boolean)
+        : [];
+      normalized.positions = rawPositions.length > 0 ? rawPositions : extractedPos.positions;
+      normalized.positionDetails = rawPositionDetails.length > 0
+        ? rawPositionDetails
+        : (rawPositions.length > 0 ? rawPositions : extractedPos.positionDetails);
       return normalized;
     }
 
@@ -1358,16 +1521,20 @@
     /* Filtreleme Motoru */
     function getFilteredAnnouncements() {
       const {
-        category, keyword, sources, education, kpss, city,
+        category, profession, keyword, sources, education, kpss, city,
         includeTurkiyeGeneli, hideNoise, bookmarkedOnly,
         duzMemurlukOnly, urgentOnly, sortBy
       } = state.filters;
 
-      const q = trLower(keyword.trim());
+      const q = normalizeSearchTr(keyword.trim());
 
       return state.announcements.filter(item => {
         if (hideNoise && isLikelyNoiseAnnouncement(item)) return false;
         if (category !== 'Tümü' && item.category !== category) return false;
+        if (profession && profession !== 'Tümü') {
+          const itemPositions = (item.positions || []).map(p => trLower(p));
+          if (!itemPositions.includes(trLower(profession))) return false;
+        }
 
         const cleanDomain = normalizeDomain(item.sourceDomain);
         if (sources.size > 0 && !sources.has(cleanDomain)) return false;
@@ -1401,7 +1568,7 @@
         }
 
         if (q) {
-          const haystack = trLower([item.title, ...(item.positions || []), item.institution, item.city, item.qualCode, item.refNo, item.category, cleanDomain].join(' '));
+          const haystack = normalizeSearchTr([item.title, ...(item.positionDetails || item.positions || []), item.institution, item.city, item.qualCode, item.refNo, item.category, cleanDomain].join(' '));
           if (!haystack.includes(q)) return false;
         }
 
@@ -1499,7 +1666,58 @@
         });
       }
 
-      // Hızlı Uygunluk Barı Senkronizasyonu
+      // Hızlı Uygunluk Barı & Meslek Seçici Senkronizasyonu
+      const profCountMap = new Map();
+      validAll.forEach(a => {
+        (a.positions || []).forEach(p => {
+          profCountMap.set(p, (profCountMap.get(p) || 0) + 1);
+        });
+      });
+      const sortedProfs = [...profCountMap.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], 'tr'));
+      if (state.filters.profession !== 'Tümü' && !profCountMap.has(state.filters.profession)) {
+        sortedProfs.unshift([state.filters.profession, 0]);
+      }
+      const profOptionsHtml = `<option value="Tümü">Tüm Meslek / Kadrolar (${profCountMap.size})</option>` +
+        sortedProfs.map(([prof, cnt]) => `<option value="${escapeHtml(prof)}" ${state.filters.profession === prof ? 'selected' : ''}>${escapeHtml(prof)} (${cnt})</option>`).join('');
+
+      const quickProfEl = document.getElementById('quickProfessionSelect');
+      if (quickProfEl) quickProfEl.innerHTML = profOptionsHtml;
+      const sideProfEl = document.getElementById('professionSelect');
+      if (sideProfEl) sideProfEl.innerHTML = profOptionsHtml;
+
+      const popPillsEl = document.getElementById('popularProfessionPills');
+      if (popPillsEl) {
+        const pillList = [...new Set([...POPULAR_PROFESSIONS, ...sortedProfs.slice(0, 6).map(x => x[0])])];
+        popPillsEl.innerHTML = pillList.map(prof => {
+          const cnt = profCountMap.get(prof) || 0;
+          const isAct = state.filters.profession === prof;
+          const shortLabel = prof === 'Paramedik (İlk ve Acil Yardım)' ? 'Paramedik'
+            : (prof === 'Koruma ve Güvenlik Görevlisi' ? 'Güvenlik Görevlisi' : prof);
+          return `
+            <button
+              type="button"
+              data-quick-prof="${escapeHtml(prof)}"
+              class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-bold border transition cursor-pointer ${
+                isAct
+                  ? 'bg-indigo-600 text-white border-indigo-600 shadow-2xs'
+                  : 'bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-200 border-slate-200 dark:border-slate-700 hover:border-indigo-400 hover:text-indigo-600'
+              }"
+            >
+              <span>${escapeHtml(shortLabel)}</span>
+              ${cnt > 0 ? `<span class="px-1 rounded text-[10px] ${isAct ? 'bg-indigo-500 text-white' : 'bg-slate-200/80 dark:bg-slate-700 text-slate-600 dark:text-slate-300'}">${cnt}</span>` : ''}
+            </button>
+          `;
+        }).join('');
+
+        popPillsEl.querySelectorAll('[data-quick-prof]').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const clickedProf = btn.getAttribute('data-quick-prof');
+            state.filters.profession = state.filters.profession === clickedProf ? 'Tümü' : clickedProf;
+            renderAll();
+          });
+        });
+      }
+
       const quickEdu = document.getElementById('quickEduSelect');
       if (quickEdu) quickEdu.value = state.filters.education;
 
@@ -1726,6 +1944,7 @@
       if (!bar) return;
       const chips = [];
       if (state.filters.category !== 'Tümü') chips.push({ k: 'category', label: `Kategori: ${state.filters.category}` });
+      if (state.filters.profession !== 'Tümü') chips.push({ k: 'profession', label: `Meslek: ${state.filters.profession}` });
       if (state.filters.keyword.trim()) chips.push({ k: 'keyword', label: `Arama: "${state.filters.keyword.trim()}"` });
       if (state.filters.education !== 'Tümü') chips.push({ k: 'education', label: `Öğrenim: ${state.filters.education}` });
       if (state.filters.kpss !== 'Tümü') chips.push({ k: 'kpss', label: `KPSS: ${state.filters.kpss}` });
@@ -1753,6 +1972,7 @@
         btn.addEventListener('click', () => {
           const k = btn.getAttribute('data-rm-chip');
           if (k === 'category') state.filters.category = 'Tümü';
+          if (k === 'profession') state.filters.profession = 'Tümü';
           if (k === 'keyword') { state.filters.keyword = ''; document.getElementById('keywordInput').value = ''; }
           if (k === 'education') state.filters.education = 'Tümü';
           if (k === 'kpss') state.filters.kpss = 'Tümü';
@@ -1871,18 +2091,46 @@
                 ${escapeHtml(item.title)}
               </a>
 
-              <div class="mt-2.5 p-2.5 rounded-xl bg-indigo-50/70 dark:bg-indigo-950/40 border border-indigo-100 dark:border-indigo-900/70">
-                <span class="text-[10px] font-extrabold uppercase tracking-wider text-indigo-700 dark:text-indigo-300 block mb-1">
-                  Alım Yapılacak Kadro / Unvanlar
-                </span>
-                <div class="flex flex-wrap gap-1.5">
-                  ${(item.positions || []).map(pos => `
-                    <span class="inline-flex items-center px-2 py-0.5 rounded-md text-[11px] font-bold bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 border border-indigo-200/80 dark:border-slate-700 shadow-2xs">
-                      ${escapeHtml(pos)}
-                    </span>
-                  `).join('')}
-                </div>
-              </div>
+              ${(() => {
+                const posList = item.positionDetails || item.positions || [];
+                const isExpanded = state.expandedCardIds.has(item.id);
+                const visibleList = isExpanded ? posList : posList.slice(0, 6);
+                const hiddenCount = posList.length - visibleList.length;
+                return `
+                  <div class="mt-2.5 p-2.5 rounded-xl bg-indigo-50/70 dark:bg-indigo-950/40 border border-indigo-100 dark:border-indigo-900/70">
+                    <div class="flex items-center justify-between gap-2 mb-1.5">
+                      <span class="text-[10px] font-extrabold uppercase tracking-wider text-indigo-700 dark:text-indigo-300 inline-flex items-center gap-1">
+                        <i data-lucide="stethoscope" class="w-3 h-3"></i>
+                        <span>İstenen Meslek / Kadrolar (${posList.length})</span>
+                      </span>
+                    </div>
+                    <div class="flex flex-wrap gap-1.5">
+                      ${visibleList.map(pos => `
+                        <span class="inline-flex items-center px-2 py-0.5 rounded-md text-[11px] font-bold bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 border border-indigo-200/80 dark:border-slate-700 shadow-2xs">
+                          ${escapeHtml(pos)}
+                        </span>
+                      `).join('')}
+                      ${hiddenCount > 0 ? `
+                        <button
+                          type="button"
+                          data-expand-pos="${escapeHtml(item.id)}"
+                          class="inline-flex items-center px-2 py-0.5 rounded-md text-[11px] font-extrabold bg-indigo-600 text-white hover:bg-indigo-700 transition cursor-pointer"
+                        >
+                          +${hiddenCount} meslek daha
+                        </button>
+                      ` : (posList.length > 6 ? `
+                        <button
+                          type="button"
+                          data-expand-pos="${escapeHtml(item.id)}"
+                          class="inline-flex items-center px-2 py-0.5 rounded-md text-[11px] font-bold bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-300 transition cursor-pointer"
+                        >
+                          Daralt
+                        </button>
+                      ` : '')}
+                    </div>
+                  </div>
+                `;
+              })()}
 
               <div class="mt-4 pt-3.5 border-t border-slate-100 dark:border-slate-800 grid grid-cols-2 gap-2 text-xs text-slate-600 dark:text-slate-300">
                 <div class="flex items-center gap-1.5 min-w-0">
@@ -1948,6 +2196,14 @@
       grid.querySelectorAll('[data-share]').forEach(btn => {
         btn.addEventListener('click', () => shareAnnouncement(btn.getAttribute('data-share')));
       });
+      grid.querySelectorAll('[data-expand-pos]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const cid = btn.getAttribute('data-expand-pos');
+          if (state.expandedCardIds.has(cid)) state.expandedCardIds.delete(cid);
+          else state.expandedCardIds.add(cid);
+          renderAll();
+        });
+      });
     }
 
     /* Aksiyonlar & Modallar */
@@ -2007,8 +2263,9 @@
       document.getElementById('detailModalTitle').textContent = item.title;
       const posBox = document.getElementById('detailPositionsBox');
       if (posBox) {
-        posBox.innerHTML = `<span class="text-xs font-bold text-indigo-600 dark:text-indigo-400 mr-1">Alınacak Kadrolar:</span>` +
-          (item.positions || []).map(p => `<span class="px-2.5 py-0.5 rounded-lg text-xs font-bold bg-indigo-50 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-200 border border-indigo-200 dark:border-indigo-800">${escapeHtml(p)}</span>`).join('');
+        const modalPositions = item.positionDetails || item.positions || [];
+        posBox.innerHTML = `<span class="text-xs font-bold text-indigo-600 dark:text-indigo-400 mr-1">İstenen Meslek / Kadrolar:</span>` +
+          modalPositions.map(p => `<span class="px-2.5 py-0.5 rounded-lg text-xs font-bold bg-indigo-50 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-200 border border-indigo-200 dark:border-indigo-800">${escapeHtml(p)}</span>`).join('');
       }
       document.getElementById('detailCategory').textContent = item.category;
       document.getElementById('detailCity').textContent = item.city;
@@ -2049,6 +2306,7 @@
 
     function resetAllFilters() {
       state.filters.category = 'Tümü';
+      state.filters.profession = 'Tümü';
       state.filters.keyword = '';
       state.filters.sources = new Set(PORTALS.map(p => p.domain));
       state.filters.education = 'Tümü';
@@ -2083,7 +2341,9 @@
         document.getElementById('autoHourlyStatusLabel').textContent = e.target.checked ? 'Açık' : 'Kapalı';
       });
 
-      // Hızlı Uygunluk Barı
+      // Hızlı Uygunluk Barı & Meslek Seçici
+      document.getElementById('quickProfessionSelect').addEventListener('change', (e) => { state.filters.profession = e.target.value; renderAll(); });
+      document.getElementById('professionSelect').addEventListener('change', (e) => { state.filters.profession = e.target.value; renderAll(); });
       document.getElementById('quickEduSelect').addEventListener('change', (e) => { state.filters.education = e.target.value; renderAll(); });
       document.getElementById('quickCitySelect').addEventListener('change', (e) => { state.filters.city = e.target.value; renderAll(); });
       document.getElementById('quickOnlyDuzBtn').addEventListener('click', () => { state.filters.duzMemurlukOnly = !state.filters.duzMemurlukOnly; renderAll(); });
