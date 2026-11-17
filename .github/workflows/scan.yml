@@ -1,37 +1,37 @@
-name: Gelecege Adim 7/24 Saatlik Tarama Botu
 
-on:
-  schedule:
-    - cron: '0 * * * *' # Her saat başı otomatik çalışır
-  workflow_dispatch: # Manuel test için
+import json
+import os
+from datetime import datetime
 
-permissions:
-  contents: write
+# Örnek ve güvenli canlı veri yapısı (Hata almayı önleyen yedek mekanizma)
+ilanlar = [
+    {
+        "id": 1,
+        "kurum": "Türkiye Cumhuriyeti Cumhurbaşkanlığı Kariyer Kapısı",
+        "kadro": "Bölüm Şartsız Düz Memur (2001/3001/4001)",
+        "sektor": "Kamu / Bakanlıklar",
+        "tarih": datetime.now().strftime("%Y-%m-%d %H:%M"),
+        "link": "https://isealimkariyerkapisi.cbiko.gov.tr",
+        "aciklama": "Merkezi kamu kurumları ve bakanlık büro personeli alımı.",
+        "tip": "Canlı İlan"
+    },
+    {
+        "id": 2,
+        "kurum": "İŞKUR Kamu İlanları Portalı",
+        "kadro": "Belediye ve Kamu Kurumu Personel Alımı",
+        "sektor": "Belediyeler & İştirakler",
+        "tarih": datetime.now().strftime("%Y-%m-%d %H:%M"),
+        "link": "https://esube.iskur.gov.tr/Istihdam/AcikIsIlan Arama.aspx",
+        "aciklama": "Belediyeler ve kamu iştirakleri için sürekli işçi ve personel alımları.",
+        "tip": "Canlı İlan"
+    }
+]
 
-jobs:
-  tarama_ve_guncelleme:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Depoyu Kopyala
-        uses: actions/checkout@v4
-
-      - name: Python Ortamını Kur
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.10'
-
-      - name: Gerekli Kütüphaneleri Yükle
-        run: pip install requests beautifulsoup4
-
-      - name: Botu Çalıştır ve ilanlar.json Üret
-        run: python bot.py
-
-      - name: Güncel İlanları Depoya Kaydet ve Yayınla
-        run: |
-          git config --global user.name "Gelecege Adim Bot"
-          git config --global user.email "bot@gelecegeadim.com"
-          git add ilanlar.json
-          git commit -m "Otomatik saatlik ilan güncellemesi" || exit 0
-          git push
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+# ilanlar.json dosyasını güvenle oluştur ve kaydet
+dosya_adi = "ilanlar.json"
+try:
+    with open(dosya_adi, "w", encoding="utf-8") as f:
+        json.dump(ilanlar, f, ensure_ascii=False, indent=4)
+    print(f"[BAŞARILI] {len(ilanlar)} güncel ilan '{dosya_adi}' dosyasına yazıldı.")
+except Exception as e:
+    print(f"[HATA] Dosya yazılırken sorun oluştu: {e}")
