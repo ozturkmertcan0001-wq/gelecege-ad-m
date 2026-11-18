@@ -5,8 +5,11 @@ on:
     - cron: '0 * * * *'
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
-  tarama:
+  scan:
     runs-on: ubuntu-latest
     steps:
       - name: Depoyu Kopyala
@@ -17,8 +20,15 @@ jobs:
         with:
           python-version: '3.10'
 
-      - name: Paketleri Yükle
+      - name: Paketleri Yukle
         run: pip install requests beautifulsoup4
 
-      - name: Botu Çalıştır
+      - name: Botu Calistir
         run: python bot.py
+
+      - name: Ilanlari Kaydet ve Yayinla
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add ilanlar.json
+          git diff --staged --quiet || (git commit -m "Otomatik ilan guncellemesi" && git push)
