@@ -142,7 +142,7 @@
           <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-slate-800/90 border border-slate-700/80">
             <i data-lucide="timer" class="w-3.5 h-3.5 text-indigo-400"></i>
             <span class="text-slate-400">Sonraki Kontrol:</span>
-            <span id="countdownTimerText" class="font-mono font-extrabold text-emerald-400">60:00</span>
+            <span id="countdownTimerText" class="font-mono font-extrabold text-emerald-400">05:00</span>
           </div>
 
           <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-slate-900/90 border border-slate-800 text-slate-300">
@@ -157,7 +157,7 @@
             class="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-200 border border-emerald-400/35 text-[11px] font-semibold transition cursor-pointer"
           >
             <i data-lucide="cloud-check" class="w-3.5 h-3.5 text-emerald-400"></i>
-            <span>GitHub Canlı JSON</span>
+            <span>Canlı Depo Bağlantısı</span>
           </button>
         </div>
 
@@ -461,7 +461,7 @@
               <input
                 type="text"
                 id="keywordInput"
-                placeholder="Örn: Paramedik, 3001, Bakanlık..."
+                placeholder="Örn: Şoför, Psikolog, Büro Yöneticisi..."
                 class="w-full pl-9 pr-8 py-2.5 text-sm bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:bg-white dark:focus:bg-slate-800 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 transition"
               />
               <button
@@ -613,11 +613,11 @@
             <button
               type="button"
               id="exportBookmarksCsvBtn"
-              title="Kaydedilen ilanları Excel/CSV olarak indir"
+              title="Kaydedilen ilanları tablo olarak indir"
               class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs font-semibold transition cursor-pointer"
             >
               <i data-lucide="download" class="w-3.5 h-3.5 text-emerald-600"></i>
-              <span>Favorileri İndir (CSV)</span>
+              <span>Favorileri İndir</span>
             </button>
 
             <!-- Kart / Liste Görünümü -->
@@ -724,8 +724,8 @@
           <h2 id="detailModalTitle" class="text-lg sm:text-xl font-extrabold text-slate-900 dark:text-white leading-snug">İlan Başlığı</h2>
         </div>
 
-        <!-- Öne Çıkan: İlanda İstenen Meslek Grupları & Kadrolar -->
-        <div class="p-4 rounded-2xl bg-gradient-to-br from-indigo-50 via-blue-50/70 to-emerald-50/60 dark:from-indigo-950/60 dark:via-slate-900 dark:to-emerald-950/40 border-2 border-indigo-200 dark:border-indigo-800/80 shadow-xs space-y-2.5">
+        <!-- Öne Çıkan: İlanda İstenen Meslek Grupları, Bölümler & Kadro Şartları -->
+        <div class="p-4 rounded-2xl bg-gradient-to-br from-indigo-50 via-blue-50/70 to-emerald-50/60 dark:from-indigo-950/60 dark:via-slate-900 dark:to-emerald-950/40 border-2 border-indigo-200 dark:border-indigo-800/80 shadow-xs space-y-3">
           <div class="flex flex-wrap items-center justify-between gap-2">
             <div class="flex items-center gap-2">
               <div class="w-7 h-7 rounded-lg bg-indigo-600 text-white flex items-center justify-center shrink-0">
@@ -733,7 +733,7 @@
               </div>
               <div>
                 <h3 class="text-xs font-extrabold uppercase tracking-wider text-indigo-900 dark:text-indigo-200">
-                  İlanda İstenen Meslek Grupları &amp; Kadrolar
+                  İlanda İstenen Kadrolar &amp; Aranan Şartlar
                 </h3>
                 <p id="detailProfessionGroupSubtitle" class="text-[11px] font-semibold text-indigo-600 dark:text-indigo-400">
                   Meslek Grubu: -
@@ -747,11 +747,20 @@
 
           <div id="detailPositionsBox" class="flex flex-wrap items-center gap-1.5 pt-1"></div>
 
-          <div id="detailKadroTableWrap" class="hidden pt-2 border-t border-indigo-200/70 dark:border-indigo-800/60">
-            <span class="text-[10px] font-extrabold uppercase tracking-wider text-slate-500 dark:text-slate-400 block mb-1.5">
-              İlan Metninden Çekilen Kadro / Unvan Satırları
+          <!-- Aranan Mezuniyet Bölümleri -->
+          <div id="detailDepartmentsWrap" class="hidden pt-2 border-t border-indigo-200/70 dark:border-indigo-800/60">
+            <span class="text-[10px] font-extrabold uppercase tracking-wider text-emerald-700 dark:text-emerald-300 block mb-1.5">
+              Aranan Mezuniyet Bölümleri / Nitelik Alanları
             </span>
-            <ul id="detailKadroRowsList" class="space-y-1 text-xs text-slate-700 dark:text-slate-300"></ul>
+            <div id="detailDepartmentsBox" class="flex flex-wrap gap-1.5"></div>
+          </div>
+
+          <!-- Her Kadronun İlanda Geçen Özel Şartı -->
+          <div id="detailKadroTableWrap" class="hidden pt-2 border-t border-indigo-200/70 dark:border-indigo-800/60">
+            <span class="text-[10px] font-extrabold uppercase tracking-wider text-slate-600 dark:text-slate-300 block mb-1.5">
+              Kadro Bazında İlanda İstenen Şartlar (Ehliyet, Bölüm, Sertifika, Puan)
+            </span>
+            <ul id="detailKadroRowsList" class="space-y-1.5 text-xs text-slate-800 dark:text-slate-200"></ul>
           </div>
         </div>
 
@@ -793,7 +802,7 @@
         </div>
 
         <div>
-          <h3 class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-2">Başvuru Şartları ve Notlar</h3>
+          <h3 class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-2">Genel Başvuru Şartları ve İlan Notları</h3>
           <ul id="detailRequirementsList" class="space-y-2 text-sm text-slate-700 dark:text-slate-300 bg-slate-50/70 dark:bg-slate-800/50 rounded-xl p-4 border border-slate-200/70 dark:border-slate-700"></ul>
         </div>
 
@@ -855,7 +864,7 @@
           </div>
           <div>
             <h2 class="text-base font-bold">Canlı Veri Kaynağı Ayarları</h2>
-            <p class="text-xs text-slate-400">GitHub raw JSON veya yerel bot sunucusu bağlantısını yönetin</p>
+            <p class="text-xs text-slate-400">Çevrimiçi depo veya yerel sunucu bağlantısını yönetin</p>
           </div>
         </div>
         <button type="button" id="closeJsonModalBtn" class="p-2 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800 transition cursor-pointer">
@@ -868,7 +877,7 @@
 
         <div class="space-y-2">
           <label for="liveJsonUrlInput" class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider">
-            Aktif JSON Veri URL Adresi
+            Aktif Veri Dosyası Adresi
           </label>
           <div class="flex flex-col sm:flex-row gap-2">
             <input
@@ -887,17 +896,17 @@
           </div>
           <div class="flex flex-wrap items-center gap-2 pt-1">
             <button type="button" id="useGithubDefaultUrlBtn" class="text-xs font-semibold text-indigo-600 dark:text-indigo-400 hover:underline cursor-pointer">
-              GitHub Raw URL Kullan
+              Canlı Depo Adresini Kullan
             </button>
             <span class="text-slate-300 dark:text-slate-700">•</span>
             <button type="button" id="useLocalBotUrlBtn" class="text-xs font-semibold text-emerald-600 dark:text-emerald-400 hover:underline cursor-pointer">
-              Yerel Bot (localhost:8000) Kullan
+              Yerel Bilgisayar Adresini Kullan
             </button>
           </div>
         </div>
 
         <div class="border-t border-slate-200 dark:border-slate-800 pt-4">
-          <p class="text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-2">Veya Bilgisayardan Manuel .JSON Yükle</p>
+          <p class="text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-2">Veya Bilgisayardan Manuel Dosya Yükle</p>
           <div
             id="jsonDropzone"
             class="border-2 border-dashed border-slate-300 dark:border-slate-700 hover:border-indigo-500 bg-slate-50/80 dark:bg-slate-800/50 rounded-xl p-5 text-center transition cursor-pointer"
@@ -951,7 +960,7 @@
     </div>
   </div>
 
-  <!-- MOBİL YÜZEN FİLTRE BUTONU (Header kaydırılıp gidince erişim için) -->
+  <!-- MOBİL YÜZEN FİLTRE BUTONU -->
   <button
     type="button"
     id="mobileFloatingFilterBtn"
@@ -965,24 +974,24 @@
   <div id="toastContainer" aria-live="polite" class="fixed bottom-4 right-4 z-50 flex flex-col gap-2 max-w-sm w-full pointer-events-none px-4 sm:px-0"></div>
 
   <!-- ===================================================================== -->
-  <!-- JAVASCRIPT MOTORU (v2)                                                -->
+  <!-- JAVASCRIPT MOTORU (v2.1)                                              -->
   <!-- ===================================================================== -->
   <script>
     function detectDefaultJsonUrls() {
       const loc = window.location;
       const isHttp = loc.protocol === 'http:' || loc.protocol === 'https:';
       const relativeUrl = isHttp ? new URL('ilanlar.json', loc.href).href : 'http://localhost:8000/ilanlar.json';
-      let githubRawUrl = 'https://raw.githubusercontent.com/ozturkmertcan0001-wq/yeni-depo/main/ilanlar.json';
+      let githubRawUrl = 'https://raw.githubusercontent.com/ozturkmertcan0001-wq/gelecege-ad-m/main/ilanlar.json';
       if (loc.hostname.endsWith('.github.io')) {
         const user = loc.hostname.split('.')[0];
         const parts = loc.pathname.split('/').filter(Boolean);
-        const repo = parts[0] || `${user}.github.io`;
+        const repo = parts[0] || 'gelecege-ad-m';
         githubRawUrl = `https://raw.githubusercontent.com/${user}/${repo}/main/ilanlar.json`;
       }
       return { relativeUrl, githubRawUrl };
     }
     const DETECTED_URLS = detectDefaultJsonUrls();
-    const GITHUB_RAW_JSON_URL = DETECTED_URLS.relativeUrl;
+    const GITHUB_RAW_JSON_URL = DETECTED_URLS.githubRawUrl;
     const LOCAL_BOT_JSON_URL = 'http://localhost:8000/ilanlar.json';
 
     const PORTALS = [
@@ -1044,7 +1053,7 @@
     const CITIES = ['Tümü', 'Türkiye Geneli', 'İstanbul', 'Ankara', 'İzmir', 'Antalya', 'Bursa', 'Adana', 'Konya', 'Gaziantep', 'Samsun', 'Trabzon', 'Şanlıurfa', 'Batman', 'Diyarbakır', 'Kocaeli'];
 
     const STORAGE_BOOKMARKS_KEY = 'ga_v2_bookmarks';
-    const STORAGE_LIVE_URL_KEY = 'ga_v2_live_url';
+    const STORAGE_LIVE_URL_KEY = 'ga_v2_live_url_v21';
     const STORAGE_THEME_KEY = 'ga_v2_theme';
     const STORAGE_LOGS_KEY = 'ga_v2_logs';
 
@@ -1062,8 +1071,8 @@
       duzMemurlukCollapsed: false,
       scheduler: {
         autoEnabled: true,
-        intervalSeconds: 3600,
-        nextScanTimestamp: Date.now() + 3600 * 1000,
+        intervalSeconds: 300,
+        nextScanTimestamp: Date.now() + 300 * 1000,
         lastScanTimeStr: '--:--:--'
       },
       expandedCardIds: new Set(),
@@ -1085,7 +1094,7 @@
       activeModalAnnouncementId: null
     };
 
-    /* Türkçe Karakter Mojibake Tamircisi & Yardımcılar */
+    /* Türkçe Karakter Tamircisi & Yardımcılar */
     function repairTurkishMojibake(str) {
       if (!str) return '';
       return String(str)
@@ -1105,10 +1114,11 @@
     function normalizeSearchTr(str) {
       return trLower(str)
         .replace(/piskolok|piskolog|psikolok/g, 'psikolog')
+        .replace(/biro\s*yonet\w*|buro\s*yonet\w*/g, 'büro yöneticisi')
         .replace(/makina/g, 'makine')
         .replace(/muhendis/g, 'mühendis')
         .replace(/hemsire/g, 'hemşire')
-        .replace(/sofor/g, 'şoför')
+        .replace(/sofor|söför/g, 'şoför')
         .replace(/guvenlik/g, 'güvenlik')
         .replace(/kâtip|katip/g, 'katip')
         .replace(/ogretmen/g, 'öğretmen')
@@ -1261,6 +1271,8 @@
       ['fizikçi', 'Fizikçi'],
 
       // Büro, Adalet, Finans & Kültür
+      ['büro yöneticisi', 'Büro Yöneticisi'],
+      ['büro yönetimi', 'Büro Yöneticisi / Büro Personeli'],
       ['büro personeli', 'Büro Personeli'],
       ['düz memur', 'Düz Memur'],
       ['veri hazırlama', 'VHKİ (Veri Hazırlama)'],
@@ -1310,6 +1322,7 @@
       ['destek personeli', 'Destek Personeli'],
       ['temizlik', 'Temizlik Görevlisi'],
       ['şoför', 'Şoför'],
+      ['sürücü', 'Şoför'],
       ['aşçı', 'Aşçı'],
       ['bahçıvan', 'Bahçıvan'],
       ['kaloriferci', 'Kaloriferci'],
@@ -1338,13 +1351,13 @@
 
     const POPULAR_PROFESSIONS = [
       'Psikolog',
-      'Makine Mühendisi',
-      'Hemşire',
+      'Büro Yöneticisi',
+      'Şoför',
       'Paramedik (İlk ve Acil Yardım)',
+      'Hemşire',
       'Büro Personeli',
       'Zabıt Katibi',
-      'Koruma ve Güvenlik Görevlisi',
-      'Şoför'
+      'Koruma ve Güvenlik Görevlisi'
     ];
 
     function extractPositionsFromText(text, category = '') {
@@ -1398,7 +1411,6 @@
       const institution = repairTurkishMojibake(String(raw.institution || domain.toUpperCase()).trim());
       const qualCode = repairTurkishMojibake(String(raw.qualCode || 'Genel Şartlar').trim());
 
-      // Başlıktan akıllı öğrenim ve şehir çıkarımı (eski JSON kayıtları için de çalışır)
       const lowerTitle = trLower(title);
       let detectedEdu = raw.education;
       if (lowerTitle.includes('2001') || lowerTitle.includes('ortaöğretim') || lowerTitle.includes('lise')) detectedEdu = 'Ortaöğretim';
@@ -1423,7 +1435,7 @@
         title,
         city: detectedCity,
         education: EDUCATION_LEVELS.includes(detectedEdu) && detectedEdu !== 'Tümü' ? detectedEdu : 'Lisans',
-        kpss: KPSS_TYPES.includes(raw.kpss) && raw.kpss !== 'Tümü' ? raw.kpss : 'KPSS P3 (Lisans)',
+        kpss: KPSS_TYPES.includes(raw.kpss) && raw.kpss !== 'Tümü' ? raw.kpss : (raw.kpss || 'KPSS P3 (Lisans)'),
         quota: Math.max(1, parseInt(raw.quota, 10) || 1),
         publishDate: raw.publishDate || getRelativeIsoDate(0),
         endDate: raw.endDate || getRelativeIsoDate(7),
@@ -1439,6 +1451,7 @@
           : ['e-Devlet Mezuniyet Belgesi', 'KPSS Sonuç Belgesi']
       };
       normalized.isDuzMemurluk = isDuzMemurlukAnnouncement(normalized);
+
       const extractedPos = extractPositionsFromText(`${normalized.title} ${normalized.requirements.join(' ')}`, normalized.category);
       const rawPositions = Array.isArray(raw.positions) && raw.positions.length > 0
         ? raw.positions.map(p => repairTurkishMojibake(String(p).trim())).filter(Boolean)
@@ -1446,13 +1459,30 @@
       const rawPositionDetails = Array.isArray(raw.positionDetails) && raw.positionDetails.length > 0
         ? raw.positionDetails.map(p => repairTurkishMojibake(String(p).trim())).filter(Boolean)
         : [];
-      normalized.positions = rawPositions.length > 0 ? rawPositions : extractedPos.positions;
+
+      normalized.positions = [...new Set([...rawPositions, ...extractedPos.positions])];
       normalized.positionDetails = rawPositionDetails.length > 0
         ? rawPositionDetails
-        : (rawPositions.length > 0 ? rawPositions : extractedPos.positionDetails);
-      normalized.kadroRows = Array.isArray(raw.kadroRows)
+        : (rawPositions.length > 0 ? normalized.positions : extractedPos.positionDetails);
+
+      normalized.departments = Array.isArray(raw.departments)
+        ? raw.departments.map(d => repairTurkishMojibake(String(d).trim())).filter(Boolean)
+        : [];
+
+      // Kadroya özel şart satırlarını hem kadroRows alanından hem requirements içinden topla
+      const explicitRows = Array.isArray(raw.kadroRows)
         ? raw.kadroRows.map(r => repairTurkishMojibake(String(r).trim())).filter(Boolean)
         : [];
+
+      const extractedConditionRows = normalized.requirements.filter(req => {
+        const low = trLower(req);
+        if (low.startsWith('aranan bölümler') || low.startsWith('alım yapılacak kadrolar') || low.startsWith('sınav / puan şartı')) {
+          return false;
+        }
+        return req.includes(':') || ['ehliyet', 'sürücü', 'src', 'mezun', 'sertifika', 'psikolog', 'şoför', 'büro yönet'].some(k => low.includes(k));
+      });
+
+      normalized.kadroRows = [...new Set([...explicitRows, ...extractedConditionRows])];
       return normalized;
     }
 
@@ -1479,8 +1509,32 @@
       }, 3200);
     }
 
-    /* Veri Çekme Motoru */
-    async function fetchLiveAnnouncements(triggerLabel = 'Canlı Senkronizasyon') {
+    /* Veri Çekme Motoru (Yedekli ve Önbellek Kırıcılı) */
+    async function fetchJsonWithFallback(primaryUrl) {
+      const candidates = [primaryUrl];
+      if (primaryUrl !== DETECTED_URLS.githubRawUrl) candidates.push(DETECTED_URLS.githubRawUrl);
+      if (primaryUrl !== DETECTED_URLS.relativeUrl) candidates.push(DETECTED_URLS.relativeUrl);
+
+      let lastErr = null;
+      for (const baseUrl of candidates) {
+        try {
+          const separator = baseUrl.includes('?') ? '&' : '?';
+          const cacheBustedUrl = `${baseUrl}${separator}t=${Date.now()}`;
+          const resp = await fetch(cacheBustedUrl, { cache: 'no-store' });
+          if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+          const data = await resp.json();
+          if (Array.isArray(data)) {
+            state.liveJsonUrl = baseUrl;
+            return data;
+          }
+        } catch (err) {
+          lastErr = err;
+        }
+      }
+      throw lastErr || new Error('Veri dosyasına ulaşılamadı');
+    }
+
+    async function fetchLiveAnnouncements(triggerLabel = 'Canlı Senkronizasyon', silent = false) {
       if (state.isScanningNow) return;
       state.isScanningNow = true;
 
@@ -1489,18 +1543,10 @@
       const statusText = document.getElementById('liveStatusText');
       if (scanIcon) scanIcon.classList.add('animate-spin');
       if (scanLabel) scanLabel.textContent = 'Yükleniyor...';
-      if (statusText) statusText.textContent = 'Canlı İlanlar Çekiliyor...';
+      if (!silent && statusText) statusText.textContent = 'Canlı İlanlar Çekiliyor...';
 
       try {
-        const separator = state.liveJsonUrl.includes('?') ? '&' : '?';
-        const cacheBustedUrl = `${state.liveJsonUrl}${separator}t=${Date.now()}`;
-        const resp = await fetch(cacheBustedUrl, { cache: 'no-store' });
-        if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
-        const rawList = await resp.json();
-
-        if (!Array.isArray(rawList)) {
-          throw new Error('Geçersiz JSON formatı');
-        }
+        const rawList = await fetchJsonWithFallback(state.liveJsonUrl);
 
         const existingIds = new Set(state.announcements.map(a => a.id));
         const normalized = rawList.map((item, idx) => normalizeAnnouncementItem(item, idx));
@@ -1541,8 +1587,10 @@
         }
       } catch (err) {
         state.isLiveConnected = false;
-        if (statusText) statusText.textContent = 'Bağlantı Hatası — Veri Kaynağını Kontrol Et';
-        showToast(`Canlı veri çekilemedi: ${err.message}`, 'error');
+        if (statusText) statusText.textContent = 'Bağlantı Bekleniyor — İlk Taramayı Çalıştırın';
+        if (!silent) {
+          showToast('Henüz ilan dosyası oluşmamış veya bağlantı kurulamadı.', 'error');
+        }
       } finally {
         state.isScanningNow = false;
         if (scanIcon) scanIcon.classList.remove('animate-spin');
@@ -1601,7 +1649,18 @@
         }
 
         if (q) {
-          const haystack = normalizeSearchTr([item.title, ...(item.positionDetails || item.positions || []), item.institution, item.city, item.qualCode, item.refNo, item.category, cleanDomain].join(' '));
+          const haystack = normalizeSearchTr([
+            item.title,
+            ...(item.positionDetails || item.positions || []),
+            ...(item.departments || []),
+            ...(item.kadroRows || []),
+            item.institution,
+            item.city,
+            item.qualCode,
+            item.refNo,
+            item.category,
+            cleanDomain
+          ].join(' '));
           if (!haystack.includes(q)) return false;
         }
 
@@ -1639,13 +1698,11 @@
           : 'İhale ve eski sonuçları gizler';
       }
 
-      // Header bilgileri
       const lastScanEl = document.getElementById('lastScanTimeText');
       if (lastScanEl) lastScanEl.textContent = state.scheduler.lastScanTimeStr;
       const logBadge = document.getElementById('scanLogCountBadge');
       if (logBadge) logBadge.textContent = state.scanLogs.length;
 
-      // İstatistikler
       const duzAll = validAll.filter(isDuzMemurlukAnnouncement);
       const totalQuota = filtered.reduce((s, i) => s + (Number(i.quota) || 0), 0);
       const urgentCount = validAll.filter(i => { const d = getDaysRemaining(i.endDate); return d >= 0 && d <= 3; }).length;
@@ -1663,7 +1720,6 @@
         exportBtn.classList.toggle('sm:inline-flex', state.bookmarks.size > 0);
       }
 
-      // Portal Şeridi
       const pillsContainer = document.getElementById('portalStatusPills');
       if (pillsContainer) {
         pillsContainer.innerHTML = PORTALS.map(p => {
@@ -1699,7 +1755,6 @@
         });
       }
 
-      // Hızlı Uygunluk Barı & Meslek Seçici Senkronizasyonu
       const profCountMap = new Map();
       validAll.forEach(a => {
         (a.positions || []).forEach(p => {
@@ -1777,10 +1832,8 @@
           : 'inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-100 transition cursor-pointer';
       }
 
-      // Düz Memurluk Vitrini
       renderDuzMemurlukSection(duzAll);
 
-      // Kategori Sekmeleri
       const catContainer = document.getElementById('categoryTabsContainer');
       if (catContainer) {
         catContainer.innerHTML = CATEGORIES.map(cat => {
@@ -1811,17 +1864,13 @@
         });
       }
 
-      // Sol Kenar Çubuğu Kontrolleri
       renderSidebar(validAll);
 
-      // Sonuç Özeti & Aktif Filtre Çipleri
       const summaryEl = document.getElementById('resultsSummaryText');
       if (summaryEl) {
         summaryEl.innerHTML = `<span class="font-extrabold text-indigo-600 dark:text-indigo-400">${filtered.length}</span> aktif kamu ilanı listeleniyor`;
       }
       renderActiveChips();
-
-      // Ana İlan Grid / Liste
       renderAnnouncements(filtered);
 
       if (window.lucide) lucide.createIcons();
@@ -1895,14 +1944,21 @@
             </div>
             <div class="mt-3 pt-2.5 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-[11px]">
               <span class="text-slate-500 dark:text-slate-400 font-medium">${escapeHtml(item.city)}</span>
-              <a href="${escapeHtml(item.url)}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 font-bold text-emerald-700 dark:text-emerald-400 hover:underline">
-                <span>İlana Git</span>
-                <i data-lucide="external-link" class="w-3 h-3"></i>
-              </a>
+              <div class="flex items-center gap-2">
+                <button type="button" data-duz-detail="${escapeHtml(item.id)}" class="font-bold text-slate-600 dark:text-slate-300 hover:underline cursor-pointer">Detay</button>
+                <a href="${escapeHtml(item.url)}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 font-bold text-emerald-700 dark:text-emerald-400 hover:underline">
+                  <span>İlana Git</span>
+                  <i data-lucide="external-link" class="w-3 h-3"></i>
+                </a>
+              </div>
             </div>
           </article>
         `;
       }).join('');
+
+      grid.querySelectorAll('[data-duz-detail]').forEach(btn => {
+        btn.addEventListener('click', () => openDetailModal(btn.getAttribute('data-duz-detail')));
+      });
     }
 
     function renderSidebar(validAll) {
@@ -2061,6 +2117,7 @@
               </div>
               <div class="flex items-center gap-2 shrink-0">
                 <span class="px-2 py-1 rounded-md text-[10px] font-bold border ${deadline.badgeClass}">${deadline.text}</span>
+                <button type="button" data-detail="${item.id}" class="px-2.5 py-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-xs font-semibold cursor-pointer">Detay</button>
                 <button type="button" data-bm="${item.id}" class="p-2 rounded-lg border ${isBookmarked ? 'bg-rose-50 border-rose-200 text-rose-600' : 'bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-400'} cursor-pointer">
                   <i data-lucide="bookmark" class="w-3.5 h-3.5 ${isBookmarked ? 'fill-rose-600' : ''}"></i>
                 </button>
@@ -2186,7 +2243,6 @@
             </div>
 
             <div class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800 space-y-2.5">
-              <!-- Süre İlerleme Çubuğu -->
               <div>
                 <div class="flex items-center justify-between text-[11px] mb-1">
                   <span class="text-slate-400">Son Başvuru: <strong class="text-slate-700 dark:text-slate-200">${formatTurkishDate(item.endDate)}</strong></span>
@@ -2203,7 +2259,7 @@
                   data-detail="${item.id}"
                   class="px-3 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 text-xs font-semibold transition cursor-pointer"
                 >
-                  Detay
+                  Detay &amp; Şartlar
                 </button>
                 <a
                   href="${escapeHtml(item.url)}"
@@ -2279,7 +2335,7 @@
       a.click();
       document.body.removeChild(a);
       URL.revokeObjectURL(url);
-      showToast(`${saved.length} favori ilan CSV olarak indirildi!`, 'success');
+      showToast(`${saved.length} favori ilan indirildi!`, 'success');
     }
 
     function openDetailModal(id) {
@@ -2294,6 +2350,7 @@
       document.getElementById('detailRefNo').textContent = item.refNo;
       document.getElementById('detailInstitution').textContent = item.institution;
       document.getElementById('detailModalTitle').textContent = item.title;
+
       const modalPositions = item.positionDetails || item.positions || [];
       const groupSub = document.getElementById('detailProfessionGroupSubtitle');
       if (groupSub) {
@@ -2312,18 +2369,47 @@
           </span>
         `).join('');
       }
+
+      // Aranan Mezuniyet Bölümleri
+      const deptWrap = document.getElementById('detailDepartmentsWrap');
+      const deptBox = document.getElementById('detailDepartmentsBox');
+      if (deptWrap && deptBox) {
+        const depts = item.departments || [];
+        if (depts.length > 0) {
+          deptWrap.classList.remove('hidden');
+          deptBox.innerHTML = depts.map(d => `
+            <span class="inline-flex items-center px-2.5 py-1 rounded-lg text-xs font-bold bg-emerald-50 dark:bg-emerald-950/70 text-emerald-800 dark:text-emerald-200 border border-emerald-200 dark:border-emerald-800">
+              ${escapeHtml(d)}
+            </span>
+          `).join('');
+        } else {
+          deptWrap.classList.add('hidden');
+          deptBox.innerHTML = '';
+        }
+      }
+
+      // Kadroya Özel Şart Satırları (Şoför, Psikolog, Büro Yöneticisi vb.)
       const kadroWrap = document.getElementById('detailKadroTableWrap');
       const kadroList = document.getElementById('detailKadroRowsList');
       if (kadroWrap && kadroList) {
         const rows = item.kadroRows || [];
         if (rows.length > 0) {
           kadroWrap.classList.remove('hidden');
-          kadroList.innerHTML = rows.map(r => `<li class="px-2.5 py-1 rounded-lg bg-white/80 dark:bg-slate-800/80 border border-indigo-100 dark:border-slate-700 font-medium">${escapeHtml(r)}</li>`).join('');
+          kadroList.innerHTML = rows.map(r => {
+            const colonIdx = r.indexOf(':');
+            if (colonIdx > 0 && colonIdx < 45) {
+              const unvanPart = r.slice(0, colonIdx);
+              const sartPart = r.slice(colonIdx + 1).trim();
+              return `<li class="px-3 py-2 rounded-xl bg-white/90 dark:bg-slate-800/90 border border-indigo-100 dark:border-slate-700 leading-relaxed"><strong class="text-indigo-700 dark:text-indigo-300">${escapeHtml(unvanPart)}:</strong> <span>${escapeHtml(sartPart)}</span></li>`;
+            }
+            return `<li class="px-3 py-2 rounded-xl bg-white/90 dark:bg-slate-800/90 border border-indigo-100 dark:border-slate-700 font-medium leading-relaxed">${escapeHtml(r)}</li>`;
+          }).join('');
         } else {
           kadroWrap.classList.add('hidden');
           kadroList.innerHTML = '';
         }
       }
+
       document.getElementById('detailCategory').textContent = item.category;
       document.getElementById('detailCity').textContent = item.city;
       document.getElementById('detailQuota').textContent = `${item.quota} Kontenjan`;
@@ -2392,13 +2478,12 @@
         }
       });
 
-      document.getElementById('scanNowBtn').addEventListener('click', () => fetchLiveAnnouncements('Manuel Yenileme'));
+      document.getElementById('scanNowBtn').addEventListener('click', () => fetchLiveAnnouncements('Manuel Yenileme', false));
       document.getElementById('autoHourlyToggle').addEventListener('change', (e) => {
         state.scheduler.autoEnabled = e.target.checked;
         document.getElementById('autoHourlyStatusLabel').textContent = e.target.checked ? 'Açık' : 'Kapalı';
       });
 
-      // Hızlı Uygunluk Barı & Meslek Seçici
       document.getElementById('quickProfessionSelect').addEventListener('change', (e) => { state.filters.profession = e.target.value; renderAll(); });
       document.getElementById('professionSelect').addEventListener('change', (e) => { state.filters.profession = e.target.value; renderAll(); });
       document.getElementById('quickEduSelect').addEventListener('change', (e) => { state.filters.education = e.target.value; renderAll(); });
@@ -2409,12 +2494,10 @@
         renderAll();
       });
 
-      // Özet Kart Tıklamaları
       document.getElementById('quickDuzMemurCardBtn').addEventListener('click', () => { state.filters.duzMemurlukOnly = !state.filters.duzMemurlukOnly; renderAll(); });
       document.getElementById('quickUrgentBtn').addEventListener('click', () => { state.filters.urgentOnly = !state.filters.urgentOnly; renderAll(); });
       document.getElementById('quickBookmarkStatBtn').addEventListener('click', () => { state.filters.bookmarkedOnly = !state.filters.bookmarkedOnly; renderAll(); });
 
-      // Düz Memurluk Vitrini
       document.getElementById('toggleDuzMemurlukCollapseBtn').addEventListener('click', () => {
         state.duzMemurlukCollapsed = !state.duzMemurlukCollapsed;
         document.getElementById('duzMemurlukCollapseLabel').textContent = state.duzMemurlukCollapsed ? 'Göster' : 'Gizle';
@@ -2425,7 +2508,6 @@
         renderAll();
       });
 
-      // Sol Kenar Çubuğu
       document.getElementById('keywordInput').addEventListener('input', (e) => { state.filters.keyword = e.target.value; renderAll(); });
       document.getElementById('clearKeywordBtn').addEventListener('click', () => { state.filters.keyword = ''; document.getElementById('keywordInput').value = ''; renderAll(); });
       document.getElementById('portalSearchInput').addEventListener('input', (e) => { state.portalSearchQuery = e.target.value; renderSidebar(state.announcements); });
@@ -2444,12 +2526,10 @@
       document.getElementById('resetFiltersBtn').addEventListener('click', resetAllFilters);
       document.getElementById('emptyResetFiltersBtn').addEventListener('click', resetAllFilters);
 
-      // Görünüm & CSV
       document.getElementById('viewGridBtn').addEventListener('click', () => { state.viewMode = 'grid'; renderAll(); });
       document.getElementById('viewListBtn').addEventListener('click', () => { state.viewMode = 'list'; renderAll(); });
       document.getElementById('exportBookmarksCsvBtn').addEventListener('click', exportBookmarksToCsv);
 
-      // Mobil Filtre
       const openMobileDrawer = () => {
         document.getElementById('filterSidebar').classList.remove('-translate-x-full');
         document.getElementById('filterDrawerBackdrop').classList.remove('hidden');
@@ -2465,7 +2545,6 @@
       document.getElementById('mobileApplyFiltersBtn').addEventListener('click', closeMobile);
       document.getElementById('filterDrawerBackdrop').addEventListener('click', closeMobile);
 
-      // Detay Modal
       document.getElementById('closeDetailModalBtn').addEventListener('click', () => document.getElementById('detailModal').classList.add('hidden'));
       document.getElementById('detailBookmarkBtn').addEventListener('click', () => {
         if (state.activeModalAnnouncementId) { toggleBookmark(state.activeModalAnnouncementId); openDetailModal(state.activeModalAnnouncementId); }
@@ -2474,7 +2553,6 @@
         if (state.activeModalAnnouncementId) shareAnnouncement(state.activeModalAnnouncementId);
       });
 
-      // Veri Kaynağı Modal
       const openJson = () => {
         document.getElementById('liveJsonUrlInput').value = state.liveJsonUrl;
         document.getElementById('jsonModal').classList.remove('hidden');
@@ -2497,7 +2575,7 @@
         if (!val) return;
         state.liveJsonUrl = val;
         try { localStorage.setItem(STORAGE_LIVE_URL_KEY, val); } catch (e) {}
-        await fetchLiveAnnouncements('URL Güncelleme');
+        await fetchLiveAnnouncements('Adres Güncelleme', false);
         closeJson();
       });
 
@@ -2516,13 +2594,12 @@
             closeJson();
             showToast(`${state.announcements.length} ilan dosyadan yüklendi!`, 'success');
           } catch (err) {
-            showToast('Geçersiz JSON dosyası!', 'error');
+            showToast('Geçersiz veri dosyası!', 'error');
           }
         };
         reader.readAsText(file, 'utf-8');
       });
 
-      // Log Modal
       document.getElementById('openScanLogModalBtn').addEventListener('click', () => {
         const list = document.getElementById('scanLogsListContainer');
         list.innerHTML = state.scanLogs.length === 0
@@ -2552,7 +2629,9 @@
         const savedBm = JSON.parse(localStorage.getItem(STORAGE_BOOKMARKS_KEY) || '[]');
         if (Array.isArray(savedBm)) state.bookmarks = new Set(savedBm);
         const savedUrl = localStorage.getItem(STORAGE_LIVE_URL_KEY);
-        if (savedUrl) state.liveJsonUrl = savedUrl;
+        if (savedUrl && !savedUrl.includes('localhost') && !savedUrl.includes('yeni-depo')) {
+          state.liveJsonUrl = savedUrl;
+        }
         const savedTheme = localStorage.getItem(STORAGE_THEME_KEY);
         if (savedTheme === 'dark') applyTheme(true);
         const savedLogs = JSON.parse(localStorage.getItem(STORAGE_LOGS_KEY) || '[]');
@@ -2561,16 +2640,23 @@
 
       bindEvents();
       renderAll();
-      await fetchLiveAnnouncements('Otomatik Açılış Senkronizasyonu');
+      await fetchLiveAnnouncements('Otomatik Açılış Senkronizasyonu', true);
 
+      // Açık kalan sekme 5 dakikada bir ve sekme tekrar görünür olduğunda kendini yeniler
       setInterval(() => {
         const rem = Math.max(0, Math.ceil((state.scheduler.nextScanTimestamp - Date.now()) / 1000));
         const el = document.getElementById('countdownTimerText');
         if (el) el.textContent = `${String(Math.floor(rem / 60)).padStart(2, '0')}:${String(rem % 60).padStart(2, '0')}`;
         if (state.scheduler.autoEnabled && !state.isScanningNow && Date.now() >= state.scheduler.nextScanTimestamp) {
-          fetchLiveAnnouncements('Saatlik Otomatik Yenileme');
+          fetchLiveAnnouncements('5 Dakikalık Otomatik Kontrol', true);
         }
       }, 1000);
+
+      document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'visible' && state.scheduler.autoEnabled && !state.isScanningNow) {
+          fetchLiveAnnouncements('Sekme Yenileme Kontrolü', true);
+        }
+      });
     }
 
     if (document.readyState === 'loading') {
