@@ -14,7 +14,7 @@
     "kadroRows": [],
     "city": "Türkiye Geneli",
     "education": "Lisans",
-    "kpss": "KPSS P3 (Lisans)",
+    "kpss": "Resmi İlanda Belirtilmiş",
     "quota": 1,
     "publishDate": "2026-11-19",
     "endDate": "2026-11-29",
@@ -46,7 +46,7 @@
     "kadroRows": [],
     "city": "Türkiye Geneli",
     "education": "İlköğretim",
-    "kpss": "KPSS Şartsız",
+    "kpss": "Resmi İlanda Belirtilmiş",
     "quota": 1,
     "publishDate": "2026-11-19",
     "endDate": "2026-11-29",
@@ -78,7 +78,7 @@
     "kadroRows": [],
     "city": "Türkiye Geneli",
     "education": "Lisans",
-    "kpss": "KPSS Şartsız",
+    "kpss": "Resmi İlanda Belirtilmiş",
     "quota": 1,
     "publishDate": "2026-11-19",
     "endDate": "2026-11-29",
@@ -112,7 +112,7 @@
     "kadroRows": [],
     "city": "Türkiye Geneli",
     "education": "Lisans",
-    "kpss": "KPSS Şartsız",
+    "kpss": "Resmi İlanda Belirtilmiş",
     "quota": 1,
     "publishDate": "2026-11-19",
     "endDate": "2026-11-29",
@@ -160,13 +160,13 @@
     "kadroRows": [],
     "city": "Türkiye Geneli",
     "education": "Lisans",
-    "kpss": "KPSS P3 (Lisans)",
+    "kpss": "Resmi İlanda Belirtilmiş",
     "quota": 35,
     "publishDate": "2026-11-19",
     "endDate": "2026-11-29",
     "refNo": "GA-31-240",
-    "qualCode": "Özel Nitelik",
-    "isDuzMemurluk": false,
+    "qualCode": "Bölüm Şartsız (Lisans)",
+    "isDuzMemurluk": true,
     "url": "https://www.yok.gov.tr/tr/announcements/20-nisan-2026-tarihli-ve-33230-sayili-resmi-gazetede-yayimlanan-35-sozlesmeli-personel-alimi-yedek-aday-duyurusu-euG6w",
     "requirements": [
       "657 Sayılı Devlet Memurları Kanunu’nun 4.",
@@ -199,7 +199,7 @@
     "kadroRows": [],
     "city": "Türkiye Geneli",
     "education": "Lisans",
-    "kpss": "KPSS P3 (Lisans)",
+    "kpss": "Resmi İlanda Belirtilmiş",
     "quota": 35,
     "publishDate": "2026-11-19",
     "endDate": "2026-11-29",
@@ -236,7 +236,7 @@
     "kadroRows": [],
     "city": "Türkiye Geneli",
     "education": "Lisans",
-    "kpss": "KPSS P3 (Lisans)",
+    "kpss": "Resmi İlanda Belirtilmiş",
     "quota": 35,
     "publishDate": "2026-11-19",
     "endDate": "2026-11-27",
@@ -271,7 +271,7 @@
     "kadroRows": [],
     "city": "Türkiye Geneli",
     "education": "Lisans",
-    "kpss": "KPSS P3 (Lisans)",
+    "kpss": "Resmi İlanda Belirtilmiş",
     "quota": 1,
     "publishDate": "2026-11-19",
     "endDate": "2026-11-29",
@@ -303,7 +303,7 @@
     "kadroRows": [],
     "city": "Türkiye Geneli",
     "education": "Lisans",
-    "kpss": "KPSS P3 (Lisans)",
+    "kpss": "Resmi İlanda Belirtilmiş",
     "quota": 16,
     "publishDate": "2026-11-19",
     "endDate": "2026-11-29",
@@ -339,7 +339,7 @@
     "kadroRows": [],
     "city": "Türkiye Geneli",
     "education": "Lisans",
-    "kpss": "KPSS P3 (Lisans)",
+    "kpss": "Resmi İlanda Belirtilmiş",
     "quota": 1,
     "publishDate": "2026-11-19",
     "endDate": "2026-11-29",
@@ -349,43 +349,6 @@
     "url": "https://yhgm.saglik.gov.tr/TR-12092/sozlesmeli-personel-kuralari.html",
     "requirements": [
       "Dönem Sağlık Bakanlığı 657-4/B Sözleşmeli Personelin Eş Durumu Nedeniyle Yer Değişikliği Kurası"
-    ],
-    "documents": [
-      "e-Devlet Mezuniyet Belgesi",
-      "KPSS Sonuç Belgesi"
-    ]
-  },
-  {
-    "id": "ga-24-155",
-    "sourceDomain": "yhgm.saglik.gov.tr",
-    "category": "İşçi & Hizmetli",
-    "institution": "YHGM.SAGLIK.GOV.TR",
-    "title": "Sürekli İşçilerin 2025 Yılı İller Arası Yer Değişikliği Başvuruları",
-    "positions": [
-      "Hemşire",
-      "Ebe",
-      "Sağlık Personeli",
-      "Sürekli İşçi"
-    ],
-    "positionDetails": [
-      "Hemşire",
-      "Ebe",
-      "Sağlık Personeli",
-      "Sürekli İşçi"
-    ],
-    "kadroRows": [],
-    "city": "Türkiye Geneli",
-    "education": "İlköğretim",
-    "kpss": "KPSS Şartsız",
-    "quota": 1,
-    "publishDate": "2026-11-19",
-    "endDate": "2026-11-29",
-    "refNo": "GA-25-255",
-    "qualCode": "Özel Nitelik",
-    "isDuzMemurluk": false,
-    "url": "https://yhgm.saglik.gov.tr/TR-109040/surekli-iscilerin-2025-yili-iller-arasi-yer-degisikligi-basvurulari.html",
-    "requirements": [
-      "İlgili kurumun resmi duyuru sayfasındaki genel ve özel başvuru şartlarını inceleyiniz."
     ],
     "documents": [
       "e-Devlet Mezuniyet Belgesi",
@@ -413,7 +376,7 @@
     "kadroRows": [],
     "city": "Türkiye Geneli",
     "education": "İlköğretim",
-    "kpss": "KPSS Şartsız",
+    "kpss": "Resmi İlanda Belirtilmiş",
     "quota": 1,
     "publishDate": "2026-11-19",
     "endDate": "2026-11-29",
@@ -428,71 +391,6 @@
       "e-Devlet Mezuniyet Belgesi",
       "KPSS Sonuç Belgesi"
     ]
-  },
-  {
-    "id": "ga-22-78",
-    "sourceDomain": "aile.gov.tr",
-    "category": "İşçi & Hizmetli",
-    "institution": "AILE.GOV.TR",
-    "title": "26 Haziran 2025 2025 Yılı Engelli, Eski Hükümlü/Terörle Mücadelede Malul Sayılmayacak Şekilde Yaralananların (TMY) Sürekli İşçi (Temizlik Görevlisi) Olarak İstihdam Edilmesine Yönelik Duyuru",
-    "positions": [
-      "Temizlik Görevlisi",
-      "Sürekli İşçi"
-    ],
-    "positionDetails": [
-      "Temizlik Görevlisi",
-      "Sürekli İşçi"
-    ],
-    "kadroRows": [],
-    "city": "Türkiye Geneli",
-    "education": "İlköğretim",
-    "kpss": "KPSS Şartsız",
-    "quota": 1,
-    "publishDate": "2026-11-19",
-    "endDate": "2026-11-29",
-    "refNo": "GA-23-178",
-    "qualCode": "Özel Nitelik",
-    "isDuzMemurluk": false,
-    "url": "https://www.aile.gov.tr/duyurular/2025-yili-engelli-eski-hukumlu-terorle-mucadelede-malul-sayilmayacak-sekilde-yaralananlarin-tmy-surekli-isci-temizlik-gorevlisi-olarak-istihdam-edilmesine-yonelik-duyuru/",
-    "requirements": [
-      "İlgili kurumun resmi duyuru sayfasındaki genel ve özel başvuru şartlarını inceleyiniz."
-    ],
-    "documents": [
-      "e-Devlet Mezuniyet Belgesi",
-      "KPSS Sonuç Belgesi"
-    ]
-  },
-  {
-    "id": "ga-22-64",
-    "sourceDomain": "aile.gov.tr",
-    "category": "Büro & İdari",
-    "institution": "AILE.GOV.TR",
-    "title": "15 Aralık 2025 AİLE VE SOSYAL HİZMETLER BAKANLIĞI 3.000 SÖZLEŞMELİ PERSONEL ALIM İLANI",
-    "positions": [
-      "Sözleşmeli Personel (Çeşitli Unvanlar)"
-    ],
-    "positionDetails": [
-      "Sözleşmeli Personel (Çeşitli Unvanlar)"
-    ],
-    "kadroRows": [],
-    "city": "Türkiye Geneli",
-    "education": "Lisans",
-    "kpss": "KPSS P3 (Lisans)",
-    "quota": 0,
-    "publishDate": "2026-11-19",
-    "endDate": "2026-11-29",
-    "refNo": "GA-23-164",
-    "qualCode": "Özel Nitelik",
-    "isDuzMemurluk": false,
-    "url": "https://www.aile.gov.tr/duyurular/aile-ve-sosyal-hizmetler-bakanligi-3-000-sozlesmeli-personel-alim-ilani/",
-    "requirements": [
-      "Gerçeğe aykırı belge verenler ya da beyanda bulunanlar hakkında yasal işlem yapılacak, atamaları yapılmış ise atamaları iptal edilecek ve idare tarafından kendilerine bir bedel ödenmiş ise bu bedel yasal faizi ile birlikte tazmin edilecektir."
-    ],
-    "documents": [
-      "e-Devlet Mezuniyet Belgesi",
-      "KPSS Sonuç Belgesi"
-    ],
-    "detailParsed": true
   },
   {
     "id": "ga-22-58",
@@ -537,13 +435,13 @@
     "kadroRows": [],
     "city": "Van",
     "education": "Lisans",
-    "kpss": "KPSS P3 (Lisans)",
+    "kpss": "Resmi İlanda Belirtilmiş",
     "quota": 0,
     "publishDate": "2026-11-19",
     "endDate": "2026-11-29",
     "refNo": "GA-23-158",
-    "qualCode": "Özel Nitelik",
-    "isDuzMemurluk": false,
+    "qualCode": "Bölüm Şartsız (Lisans)",
+    "isDuzMemurluk": true,
     "url": "https://www.aile.gov.tr/duyurular/aile-ve-sosyal-hizmetler-bakanligi-3-000-sozlesmeli-personel-alimi-tavan-ve-taban-puanlari-hakkinda-duyuru/",
     "requirements": [
       "Aile ve Sosyal Hizmetler Bakanlığı | Aile ve Sosyal Hizmetler Bakanlığı 3.000 Sözleşmeli Personel Alımı Tavan ve Taban Puanları Hakkında Duyuru",
@@ -573,7 +471,7 @@
     "kadroRows": [],
     "city": "Türkiye Geneli",
     "education": "Lisans",
-    "kpss": "KPSS P3 (Lisans)",
+    "kpss": "Resmi İlanda Belirtilmiş",
     "quota": 0,
     "publishDate": "2026-11-19",
     "endDate": "2026-11-29",
@@ -612,7 +510,7 @@
     "kadroRows": [],
     "city": "Türkiye Geneli",
     "education": "Lisans",
-    "kpss": "KPSS P3 (Lisans)",
+    "kpss": "Resmi İlanda Belirtilmiş",
     "quota": 2026,
     "publishDate": "2026-11-19",
     "endDate": "2026-11-29",
@@ -644,7 +542,7 @@
     "kadroRows": [],
     "city": "Türkiye Geneli",
     "education": "Lisans",
-    "kpss": "KPSS P3 (Lisans)",
+    "kpss": "Resmi İlanda Belirtilmiş",
     "quota": 680,
     "publishDate": "2026-11-19",
     "endDate": "2026-11-29",
@@ -700,13 +598,13 @@
     "kadroRows": [],
     "city": "Van",
     "education": "Lisans",
-    "kpss": "KPSS P3 (Lisans)",
+    "kpss": "Resmi İlanda Belirtilmiş",
     "quota": 680,
     "publishDate": "2026-11-19",
     "endDate": "2026-11-29",
     "refNo": "GA-23-130",
-    "qualCode": "Özel Nitelik",
-    "isDuzMemurluk": false,
+    "qualCode": "Bölüm Şartsız (Lisans)",
+    "isDuzMemurluk": true,
     "url": "https://www.aile.gov.tr/duyurular/aile-ve-sosyal-hizmetler-bakanligi-680-sozlesmeli-personel-alimi-tavan-ve-taban-puanlari-hakkinda-duyuru/",
     "requirements": [
       "AİLE VE SOSYAL HİZMETLER BAKANLIĞI 680 SÖZLEŞMELİ PERSONEL ALIMI TAVAN VE TABAN PUANLARI HAKKINDA DUYURU",
@@ -742,13 +640,13 @@
     "kadroRows": [],
     "city": "Türkiye Geneli",
     "education": "Lisans",
-    "kpss": "KPSS P3 (Lisans)",
+    "kpss": "Resmi İlanda Belirtilmiş",
     "quota": 680,
     "publishDate": "2026-11-19",
     "endDate": "2026-11-29",
     "refNo": "GA-23-129",
-    "qualCode": "Özel Nitelik",
-    "isDuzMemurluk": false,
+    "qualCode": "Bölüm Şartsız (Lisans)",
+    "isDuzMemurluk": true,
     "url": "https://www.aile.gov.tr/duyurular/aile-ve-sosyal-hizmetler-bakanligi-2026-yili-680-sozlesmeli-personel-alimi-kapsaminda-yerlesen-adaylardan-istenilen-belgelere-iliskin-duyuru/",
     "requirements": [
       "Aile ve Sosyal Hizmetler Bakanlığı 2026 Yılı 680 Sözleşmeli Personel Alımı Kapsamında Yerleşen Adaylardan İstenilen Belgelere İlişkin Duyuru",
@@ -766,6 +664,70 @@
       "Sürücü Belgesi (Ehliyet) Fotokopisi",
       "Biyometrik / Vesikalık Fotoğraf"
     ]
+  },
+  {
+    "id": "ga-22-273",
+    "sourceDomain": "aile.gov.tr",
+    "category": "Büro & İdari",
+    "institution": "AILE.GOV.TR",
+    "title": "06 Kasım 2020 Sözleşmeli Personel Alım İlanı",
+    "positions": [
+      "Sözleşmeli Personel (Çeşitli Unvanlar)"
+    ],
+    "positionDetails": [
+      "Sözleşmeli Personel (Çeşitli Unvanlar)"
+    ],
+    "kadroRows": [],
+    "city": "Türkiye Geneli",
+    "education": "Lisans",
+    "kpss": "Resmi İlanda Belirtilmiş",
+    "quota": 2020,
+    "publishDate": "2026-11-19",
+    "endDate": "Resmi İlanda Belirtilmiş",
+    "refNo": "GA-23-373",
+    "qualCode": "Özel Nitelik",
+    "isDuzMemurluk": false,
+    "url": "https://ailevecalisma.gov.tr/pdb/duyurular/duyuru27/",
+    "requirements": [
+      "İlgili kurumun resmi duyuru metnindeki başvuru şartlarını inceleyiniz."
+    ],
+    "documents": [
+      "e-Devlet Mezuniyet Belgesi",
+      "Kimlik Belgesi Fotokopisi"
+    ],
+    "detailParsed": false
+  },
+  {
+    "id": "ga-22-270",
+    "sourceDomain": "aile.gov.tr",
+    "category": "Büro & İdari",
+    "institution": "AILE.GOV.TR",
+    "title": "29 Aralık 2020 Sosyal Hizmetler Kanunu Kapsamında İstihdam Edilecekler İçin 2020 Aralık Dönemi Tercih Kılavuzu Ankara, Türkiye",
+    "positions": [
+      "Büro / İdari Personel"
+    ],
+    "positionDetails": [
+      "Büro / İdari Personel"
+    ],
+    "kadroRows": [],
+    "city": "Ankara",
+    "education": "Lisans",
+    "kpss": "Resmi İlanda Belirtilmiş",
+    "quota": 1,
+    "publishDate": "2026-11-19",
+    "endDate": "Resmi İlanda Belirtilmiş",
+    "refNo": "GA-23-370",
+    "qualCode": "Özel Nitelik",
+    "isDuzMemurluk": false,
+    "url": "https://ailevecalisma.gov.tr/media/64371/2828_3donem_20201224_v1.pdf",
+    "requirements": [
+      "İlgili kurumun resmi duyuru metnindeki başvuru şartlarını inceleyiniz."
+    ],
+    "documents": [
+      "e-Devlet Mezuniyet Belgesi",
+      "Kimlik Belgesi Fotokopisi"
+    ],
+    "detailParsed": false
   },
   {
     "id": "ga-18-6",
@@ -787,7 +749,7 @@
     ],
     "city": "Şanlıurfa",
     "education": "Lisans",
-    "kpss": "KPSS P3 (Lisans)",
+    "kpss": "Resmi İlanda Belirtilmiş",
     "quota": 1,
     "publishDate": "2026-11-19",
     "endDate": "2026-11-29",
@@ -820,7 +782,7 @@
     "kadroRows": [],
     "city": "Türkiye Geneli",
     "education": "İlköğretim",
-    "kpss": "KPSS Şartsız",
+    "kpss": "Resmi İlanda Belirtilmiş",
     "quota": 29,
     "publishDate": "2026-11-19",
     "endDate": "2026-11-29",
@@ -851,7 +813,7 @@
     "kadroRows": [],
     "city": "Türkiye Geneli",
     "education": "Lisans",
-    "kpss": "KPSS P3 (Lisans)",
+    "kpss": "Resmi İlanda Belirtilmiş",
     "quota": 402,
     "publishDate": "2026-11-19",
     "endDate": "2026-11-29",
@@ -859,38 +821,6 @@
     "qualCode": "Özel Nitelik",
     "isDuzMemurluk": false,
     "url": "https://www.teias.gov.tr/402-isci-personel-alimi-yedek-kazanan-listesinden-aciktan-atamalar",
-    "requirements": [
-      "İlgili kurumun resmi duyuru sayfasındaki genel ve özel başvuru şartlarını inceleyiniz."
-    ],
-    "documents": [
-      "e-Devlet Mezuniyet Belgesi",
-      "KPSS Sonuç Belgesi"
-    ],
-    "detailParsed": true
-  },
-  {
-    "id": "ga-13-114",
-    "sourceDomain": "botas.gov.tr",
-    "category": "Bilişim & Teknik",
-    "institution": "BOTAS.GOV.TR",
-    "title": "Dargeçit İlçesi Doğal Gaz Boru Hattı Etüt ve Mühendislik İşi Hizmet Alımı",
-    "positions": [
-      "Mühendis"
-    ],
-    "positionDetails": [
-      "Mühendis"
-    ],
-    "kadroRows": [],
-    "city": "Türkiye Geneli",
-    "education": "Lisans",
-    "kpss": "KPSS P3 (Lisans)",
-    "quota": 1,
-    "publishDate": "2026-11-19",
-    "endDate": "2026-11-23",
-    "refNo": "GA-14-214",
-    "qualCode": "Özel Nitelik",
-    "isDuzMemurluk": false,
-    "url": "https://www.botas.gov.tr/Icerik/dargecit-ilcesi-dogal-gaz-boru/1374",
     "requirements": [
       "İlgili kurumun resmi duyuru sayfasındaki genel ve özel başvuru şartlarını inceleyiniz."
     ],
@@ -915,7 +845,7 @@
     "kadroRows": [],
     "city": "Türkiye Geneli",
     "education": "Lisans",
-    "kpss": "KPSS P3 (Lisans)",
+    "kpss": "Resmi İlanda Belirtilmiş",
     "quota": 223,
     "publishDate": "2026-11-19",
     "endDate": "2026-11-29",
@@ -947,7 +877,7 @@
     "kadroRows": [],
     "city": "Türkiye Geneli",
     "education": "Lisans",
-    "kpss": "KPSS P3 (Lisans)",
+    "kpss": "Resmi İlanda Belirtilmiş",
     "quota": 1,
     "publishDate": "2026-11-19",
     "endDate": "2026-11-29",
@@ -965,71 +895,6 @@
     "detailParsed": true
   },
   {
-    "id": "ga-13-103",
-    "sourceDomain": "botas.gov.tr",
-    "category": "Büro & İdari",
-    "institution": "BOTAS.GOV.TR",
-    "title": "10-14 Kasım 2025 Tarihli Personel Alımına Yönelik İŞKUR İlanları Hakkında",
-    "positions": [
-      "Büro / İdari Personel"
-    ],
-    "positionDetails": [
-      "Büro / İdari Personel"
-    ],
-    "kadroRows": [],
-    "city": "Türkiye Geneli",
-    "education": "Lisans",
-    "kpss": "KPSS P3 (Lisans)",
-    "quota": 1,
-    "publishDate": "2026-11-19",
-    "endDate": "2026-11-29",
-    "refNo": "GA-14-203",
-    "qualCode": "Özel Nitelik",
-    "isDuzMemurluk": false,
-    "url": "https://www.botas.gov.tr/Icerik/1014-kasim-2025-tarihli-perso/1212",
-    "requirements": [
-      "Kuruluşumuzun iş gücü ilanında aranılan şartları taşıyıp taşımadığınızın kontrolü amacıyla 25.11.2025 - 30.11.2025 tarihleri arasında",
-      "internet adresinde yer alan “Aday Bilgi Sistemine\" giriş yaparak aday bilgi formunu doldurmanız ve istenilen belgeleri sisteme yüklemeniz gerekmektedir.",
-      "Belgelerinizin incelenmesi sonucunda, başvuruda aranan şartları sağlamanız halinde sözlü sınav tarihi tarafınıza bilahare bildirilecektir."
-    ],
-    "documents": [
-      "e-Devlet Mezuniyet Belgesi",
-      "KPSS Sonuç Belgesi"
-    ]
-  },
-  {
-    "id": "ga-13-101",
-    "sourceDomain": "botas.gov.tr",
-    "category": "Büro & İdari",
-    "institution": "BOTAS.GOV.TR",
-    "title": "10 Kasım 2025 / 14 Kasım 2025 Tarihli 223 Kişilik Personel Alımına Yönelik Sözlü Sınav Tarih Duyurusu",
-    "positions": [
-      "Büro / İdari Personel"
-    ],
-    "positionDetails": [
-      "Büro / İdari Personel"
-    ],
-    "kadroRows": [],
-    "city": "Türkiye Geneli",
-    "education": "Lisans",
-    "kpss": "KPSS P3 (Lisans)",
-    "quota": 223,
-    "publishDate": "2026-11-19",
-    "endDate": "2026-11-29",
-    "refNo": "GA-14-201",
-    "qualCode": "Özel Nitelik",
-    "isDuzMemurluk": false,
-    "url": "https://www.botas.gov.tr/Icerik/10-kasim-2025-14-kasim-2025/1222",
-    "requirements": [
-      "10 Kasım 2025 / 14 Kasım 2025 Tarihli 223 Kişilik Personel Alımına Yönelik Sözlü Sınav Tarih Duyurusu | BOTAŞ",
-      "Mülakat tarih ve saatleri SMS ile tarafınıza bildirilmiş olup, Aday Bilgi Sisteminde yer alan ilan kartı üzerinden de sözlü sınav tarih ve saatinizi öğrenebilirsiniz."
-    ],
-    "documents": [
-      "e-Devlet Mezuniyet Belgesi",
-      "KPSS Sonuç Belgesi"
-    ]
-  },
-  {
     "id": "ga-0-9",
     "sourceDomain": "kamuilan.sbb.gov.tr",
     "category": "Uzman & Akademik",
@@ -1044,7 +909,7 @@
     "kadroRows": [],
     "city": "Türkiye Geneli",
     "education": "Lisans",
-    "kpss": "KPSS P3 (Lisans)",
+    "kpss": "Resmi İlanda Belirtilmiş",
     "quota": 1,
     "publishDate": "2026-11-19",
     "endDate": "2026-11-29",
@@ -1075,7 +940,7 @@
     "kadroRows": [],
     "city": "Türkiye Geneli",
     "education": "Lisans",
-    "kpss": "KPSS P3 (Lisans)",
+    "kpss": "Resmi İlanda Belirtilmiş",
     "quota": 1,
     "publishDate": "2026-11-19",
     "endDate": "2026-11-29",
@@ -1106,7 +971,7 @@
     "kadroRows": [],
     "city": "Türkiye Geneli",
     "education": "Lisans",
-    "kpss": "KPSS P3 (Lisans)",
+    "kpss": "Resmi İlanda Belirtilmiş",
     "quota": 16,
     "publishDate": "2026-11-19",
     "endDate": "2026-11-29",
@@ -1137,7 +1002,7 @@
     "kadroRows": [],
     "city": "Türkiye Geneli",
     "education": "Lisans",
-    "kpss": "KPSS P3 (Lisans)",
+    "kpss": "Resmi İlanda Belirtilmiş",
     "quota": 1,
     "publishDate": "2026-11-19",
     "endDate": "2026-11-29",
@@ -1168,7 +1033,7 @@
     "kadroRows": [],
     "city": "Bursa",
     "education": "Lisans",
-    "kpss": "KPSS P3 (Lisans)",
+    "kpss": "Resmi İlanda Belirtilmiş",
     "quota": 1,
     "publishDate": "2026-11-19",
     "endDate": "2026-11-29",
@@ -1199,7 +1064,7 @@
     "kadroRows": [],
     "city": "Türkiye Geneli",
     "education": "Lisans",
-    "kpss": "KPSS P3 (Lisans)",
+    "kpss": "Resmi İlanda Belirtilmiş",
     "quota": 5,
     "publishDate": "2026-11-19",
     "endDate": "2026-11-29",
@@ -1230,7 +1095,7 @@
     "kadroRows": [],
     "city": "Türkiye Geneli",
     "education": "İlköğretim",
-    "kpss": "KPSS Şartsız",
+    "kpss": "Resmi İlanda Belirtilmiş",
     "quota": 3,
     "publishDate": "2026-11-19",
     "endDate": "2026-11-29",
@@ -1261,7 +1126,7 @@
     "kadroRows": [],
     "city": "Türkiye Geneli",
     "education": "Lisans",
-    "kpss": "KPSS P3 (Lisans)",
+    "kpss": "Resmi İlanda Belirtilmiş",
     "quota": 1,
     "publishDate": "2026-11-19",
     "endDate": "2026-11-29",
