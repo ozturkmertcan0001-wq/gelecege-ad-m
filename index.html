@@ -3,12 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Geleceğe Adım — Kamu İlan | 42 Resmi Portal Merkezi Memur & Personel Alım Sistemi</title>
+  <title>Geleceğe Adım — Kamu İlan | Merkezi Kamu & Belediye İlan Takip Sistemi</title>
   <meta name="description" content="Geleceğe Adım Kamu İlan: 42 resmi kamu kurumu, bakanlık ve belediye portalını saatlik tarayan; 2001, 3001, 4001 bölüm şartsız düz memurluk ve meslek bazlı ilan takip platformu." />
-  <meta name="keywords" content="geleceğe adım kamu ilan, kamu personel alımı, memur alımı 2026, 2001 3001 4001 düz memurluk, kpss ilanları, kariyer kapısı, resmi gazete ilanları" />
-  <meta property="og:title" content="Geleceğe Adım — Kamu İlan | Merkezi Kamu & Belediye İlan Takip Sistemi" />
-  <meta property="og:description" content="42 resmi portaldan saatlik otomatik güncellenen kamu, belediye ve kurum personel alım ilanları." />
-  <meta property="og:type" content="website" />
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -19,12 +15,9 @@
             brand: {
               50: '#eff6ff',
               100: '#dbeafe',
-              200: '#bfdbfe',
               500: '#3b82f6',
               600: '#2563eb',
               700: '#1d4ed8',
-              800: '#1e40af',
-              900: '#1e3a8a',
             }
           }
         }
@@ -37,217 +30,127 @@
     .custom-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 9999px; }
     .dark .custom-scroll::-webkit-scrollbar-thumb { background: #475569; }
     @keyframes fadeSlideUp {
-      from { opacity: 0; transform: translateY(10px); }
+      from { opacity: 0; transform: translateY(8px); }
       to { opacity: 1; transform: translateY(0); }
     }
-    .animate-toast { animation: fadeSlideUp 0.25s ease-out forwards; }
+    .animate-toast { animation: fadeSlideUp 0.2s ease-out forwards; }
   </style>
 </head>
 <body class="bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-100 transition-colors duration-200 min-h-screen flex flex-col">
 
-  <!-- Üst Bilgilendirme Şeridi -->
-  <div class="bg-slate-900 text-slate-300 text-xs py-1.5 px-4 border-b border-slate-800">
-    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
-      <div class="flex items-center gap-2">
-        <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-        <span><strong>Geleceğe Adım Kamu İlan</strong> • 42 Resmi Kurum, Bakanlık ve Belediye Portalı 7/24 Taranıyor</span>
-      </div>
-      <div class="flex items-center gap-3">
-        <span id="syncStatusText" class="text-slate-400">Saatlik otomatik senkronizasyon aktif</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- Ana Navigasyon -->
-  <header class="sticky top-0 z-30 bg-white/95 dark:bg-slate-900/95 backdrop-blur border-b border-slate-200 dark:border-slate-800 shadow-xs">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-3">
-      <a href="#" id="brandLogoReset" class="flex items-center gap-3 group">
-        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-brand-600 to-indigo-700 text-white flex items-center justify-center font-extrabold text-base shadow-sm group-hover:scale-105 transition">
+  <!-- Sade Üst Bar -->
+  <header class="sticky top-0 z-30 bg-white/95 dark:bg-slate-900/95 backdrop-blur border-b border-slate-200/80 dark:border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+      <a href="#" id="brandLogoReset" class="flex items-center gap-3">
+        <div class="w-9 h-9 rounded-xl bg-brand-600 text-white flex items-center justify-center font-bold text-sm shadow-xs">
           GA
         </div>
         <div>
           <div class="flex items-center gap-2">
-            <span class="font-extrabold text-base sm:text-lg tracking-tight text-slate-900 dark:text-white">
+            <h1 class="font-bold text-base sm:text-lg tracking-tight text-slate-900 dark:text-white leading-none">
               Geleceğe Adım
-            </span>
-            <span class="px-2 py-0.5 rounded-md text-[11px] font-bold bg-brand-50 text-brand-700 dark:bg-brand-900/50 dark:text-brand-300 border border-brand-200 dark:border-brand-800">
-              KAMU İLAN
+            </h1>
+            <span class="text-[11px] font-semibold px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
+              Kamu İlan
             </span>
           </div>
-          <p class="text-[11px] text-slate-500 dark:text-slate-400 hidden sm:block">
-            Merkezi Kamu, Belediye & Kurum Personel Alım Portalı
+          <p id="syncStatusText" class="text-[11px] text-slate-500 dark:text-slate-400 mt-1">
+            42 resmi portal • Saatlik otomatik tarama
           </p>
         </div>
       </a>
 
-      <div class="flex items-center gap-1.5 sm:gap-2">
-        <button id="btnOpenGuideModal" type="button"
-          class="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-blue-50 hover:bg-blue-100 dark:bg-blue-950/60 dark:hover:bg-blue-900/60 text-brand-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800 transition">
-          📘 2001/3001/4001 Rehberi
-        </button>
-
-        <button id="btnTogglePortalsDrawer" type="button"
-          class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition">
-          🏛️ <span class="hidden sm:inline">42 Portal</span>
-        </button>
-
-        <button id="btnManualRefresh" type="button" title="İlan Listesini Yenile"
-          class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition">
-          <svg id="refreshIcon" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <div class="flex items-center gap-2">
+        <button id="btnManualRefresh" type="button" title="Listeyi Yenile"
+          class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition">
+          <svg id="refreshIcon" class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
           </svg>
-          <span class="hidden lg:inline">Yenile</span>
+          <span class="hidden sm:inline">Yenile</span>
         </button>
 
         <button id="btnToggleFavorites" type="button"
-          class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition">
-          <span>★</span>
+          class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition">
+          <span class="text-amber-500">★</span>
           <span class="hidden sm:inline">Favoriler</span>
-          <span id="favCountBadge" class="px-1.5 py-0.2 rounded-full bg-amber-500 text-white text-[11px] font-bold">0</span>
+          <span id="favCountBadge" class="px-1.5 py-0.2 rounded-full bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 text-[11px] font-semibold">0</span>
         </button>
 
-        <button id="btnExportCsv" type="button" title="Filtrelenen İlanları Excel (CSV) İndir"
-          class="hidden sm:inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition">
-          📥 CSV
+        <button id="btnExportCsv" type="button" title="Excel (CSV) İndir"
+          class="hidden sm:inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition">
+          CSV İndir
         </button>
 
-        <button id="btnThemeToggle" type="button" title="Açık / Koyu Tema"
+        <button id="btnThemeToggle" type="button" title="Tema Değiştir"
           class="p-2 rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition">
-          <span id="themeIcon">🌙</span>
+          <span id="themeIcon" class="text-xs">🌙</span>
         </button>
       </div>
     </div>
   </header>
 
-  <!-- Hero Arama & Vitrin Alanı -->
-  <section class="bg-gradient-to-br from-slate-900 via-brand-900 to-indigo-950 text-white border-b border-slate-800">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-7 sm:py-9 space-y-6">
-      <div class="max-w-3xl space-y-2">
-        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/15 text-xs font-semibold text-blue-200">
-          <span>🚀 Doğrudan Resmi Kaynaklardan Saatlik Tarama</span>
-        </div>
-        <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight leading-tight">
-          Tüm Kamu, Belediye ve Kurum İlanları Tek Merkezde
-        </h1>
-        <p class="text-xs sm:text-sm text-blue-100/90 leading-relaxed">
-          Botumuz 42 resmi portalı saat başı tarar, her ilanın içine girerek <strong>aranan meslek gruplarını</strong> ve <strong>başvuru şartlarını</strong> çıkarır; ihale ve geçmiş sonuç duyurularını otomatik eler.
-        </p>
-      </div>
-
-      <!-- Hero Hızlı Arama Çubuğu -->
-      <div class="bg-white/10 backdrop-blur-md p-2 rounded-2xl border border-white/15 max-w-4xl">
-        <div class="flex flex-col sm:flex-row gap-2">
-          <div class="relative flex-1">
-            <span class="absolute inset-y-0 left-3.5 flex items-center text-slate-400">🔍</span>
-            <input id="heroSearchInput" type="text"
-              placeholder="Meslek, unvan, nitelik kodu veya kurum ara (Örn: Paramedik, Büro Personeli, 3001, 4001, İBB, DSİ...)"
-              class="w-full pl-10 pr-4 py-3 rounded-xl bg-white dark:bg-slate-900 text-slate-900 dark:text-white placeholder-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500" />
-          </div>
-          <button id="btnHeroSearchClear" type="button"
-            class="px-5 py-3 rounded-xl bg-brand-600 hover:bg-brand-500 text-white font-bold text-sm shadow-sm transition shrink-0">
-            İlanlarda Ara
-          </button>
-        </div>
-
-        <!-- Tek Tıkla Hızlı Etiketler -->
-        <div class="flex flex-wrap items-center gap-1.5 mt-2.5 px-1">
-          <span class="text-[11px] font-semibold text-blue-200 mr-1">Hızlı Seçim:</span>
-          <button type="button" data-quick-tag="2001" class="quick-tag-btn px-2.5 py-0.5 rounded-md text-[11px] font-semibold bg-white/15 hover:bg-white/25 text-white transition">2001 (Lise Düz)</button>
-          <button type="button" data-quick-tag="3001" class="quick-tag-btn px-2.5 py-0.5 rounded-md text-[11px] font-semibold bg-white/15 hover:bg-white/25 text-white transition">3001 (Önlisans Düz)</button>
-          <button type="button" data-quick-tag="4001" class="quick-tag-btn px-2.5 py-0.5 rounded-md text-[11px] font-semibold bg-white/15 hover:bg-white/25 text-white transition">4001 (Lisans Düz)</button>
-          <button type="button" data-quick-tag="Büro Personeli" class="quick-tag-btn px-2.5 py-0.5 rounded-md text-[11px] font-semibold bg-white/15 hover:bg-white/25 text-white transition">Büro Personeli</button>
-          <button type="button" data-quick-tag="Paramedik" class="quick-tag-btn px-2.5 py-0.5 rounded-md text-[11px] font-semibold bg-white/15 hover:bg-white/25 text-white transition">Paramedik</button>
-          <button type="button" data-quick-tag="Hemşire" class="quick-tag-btn px-2.5 py-0.5 rounded-md text-[11px] font-semibold bg-white/15 hover:bg-white/25 text-white transition">Hemşire</button>
-          <button type="button" data-quick-tag="Mühendis" class="quick-tag-btn px-2.5 py-0.5 rounded-md text-[11px] font-semibold bg-white/15 hover:bg-white/25 text-white transition">Mühendis</button>
-          <button type="button" data-quick-tag="Koruma ve Güvenlik" class="quick-tag-btn px-2.5 py-0.5 rounded-md text-[11px] font-semibold bg-white/15 hover:bg-white/25 text-white transition">Güvenlik Görevlisi</button>
-        </div>
-      </div>
-
-      <!-- 4 KPI İstatistik Kartı -->
-      <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 pt-1">
-        <div class="bg-white/10 backdrop-blur border border-white/15 rounded-2xl p-4">
-          <p class="text-xs font-medium text-blue-200">Aktif Doğrulanmış İlan</p>
-          <p id="statTotalListings" class="text-2xl sm:text-3xl font-extrabold mt-1 text-white">0</p>
-        </div>
-        <div class="bg-emerald-500/15 backdrop-blur border border-emerald-400/30 rounded-2xl p-4">
-          <p class="text-xs font-medium text-emerald-200">Bölüm Şartsız (2001/3001/4001)</p>
-          <p id="statDuzMemurluk" class="text-2xl sm:text-3xl font-extrabold mt-1 text-emerald-300">0</p>
-        </div>
-        <div class="bg-white/10 backdrop-blur border border-white/15 rounded-2xl p-4">
-          <p class="text-xs font-medium text-blue-200">Listelenen Toplam Kadro</p>
-          <p id="statTotalQuota" class="text-2xl sm:text-3xl font-extrabold mt-1 text-white">0</p>
-        </div>
-        <div class="bg-white/10 backdrop-blur border border-white/15 rounded-2xl p-4">
-          <p class="text-xs font-medium text-blue-200">Sonraki Saatlik Tarama</p>
-          <p id="statCountdown" class="text-2xl sm:text-3xl font-extrabold mt-1 text-amber-300">--:--</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 42 Resmi Portal Açılır Vitrini -->
-  <section id="portalsDirectorySection" class="hidden bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 space-y-4">
-      <div class="flex flex-wrap items-center justify-between gap-2">
-        <div>
-          <h2 class="text-sm sm:text-base font-bold text-slate-900 dark:text-white">
-            Entegre 42 Resmi Kamu, Belediye ve Kurum Portalı
-          </h2>
-          <p class="text-xs text-slate-500 dark:text-slate-400">
-            Herhangi bir kurumun üzerine tıklayarak sadece o portaldan çekilen ilanları süzebilirsiniz.
-          </p>
-        </div>
-        <div class="flex items-center gap-2">
-          <button id="btnClearPortalFilter" type="button" class="hidden px-3 py-1 rounded-lg text-xs font-semibold bg-rose-50 text-rose-700 dark:bg-rose-950 dark:text-rose-300">
-            Kurum Filtresini Kaldır ×
-          </button>
-          <button id="btnClosePortalsDrawer" type="button" class="px-3 py-1 rounded-lg text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
-            Kapat ✕
-          </button>
-        </div>
-      </div>
-      <div id="portalsGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2 max-h-72 overflow-y-auto custom-scroll pr-1"></div>
-    </div>
-  </section>
-
   <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6 flex-1 w-full">
 
-    <!-- Bölüm Şartsız Düz Memurluk Özel Vitrini -->
-    <section class="bg-gradient-to-r from-emerald-600 to-teal-700 rounded-2xl p-4 sm:p-5 text-white shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-      <div class="space-y-1">
-        <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-white/15 text-xs font-bold">
-          2001 Lise • 3001 Önlisans • 4001 Lisans
-        </div>
-        <h2 class="text-base sm:text-lg font-extrabold">Bölüm Şartsız Düz Memurluk & Büro Kadroları Vitrini</h2>
-        <p class="text-xs sm:text-sm text-emerald-50">
-          Herhangi bir lise, önlisans veya lisans bölümünden mezun adayların başvurabileceği büro personeli, zabıt katipliği, mübaşirlik ve destek kadrolarını tek tıkla filtreleyin.
-        </p>
+    <!-- 4 Sade İstatistik Kartı -->
+    <section class="grid grid-cols-2 lg:grid-cols-4 gap-3.5">
+      <div class="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-2xl p-4">
+        <p class="text-xs text-slate-500 dark:text-slate-400">Aktif İlan Sayısı</p>
+        <p id="statTotalListings" class="text-2xl font-bold mt-1 text-slate-900 dark:text-white">0</p>
       </div>
-      <button id="btnDuzMemurlukOnly" type="button"
-        class="shrink-0 px-4 py-2.5 rounded-xl bg-white text-emerald-800 hover:bg-emerald-50 font-bold text-xs sm:text-sm shadow-sm transition">
-        Sadece Bölüm Şartsızları Göster
-      </button>
+      <div class="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-2xl p-4">
+        <p class="text-xs text-slate-500 dark:text-slate-400">Bölüm Şartsız (2001/3001/4001)</p>
+        <p id="statDuzMemurluk" class="text-2xl font-bold mt-1 text-emerald-600 dark:text-emerald-400">0</p>
+      </div>
+      <div class="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-2xl p-4">
+        <p class="text-xs text-slate-500 dark:text-slate-400">Toplam Kadro</p>
+        <p id="statTotalQuota" class="text-2xl font-bold mt-1 text-brand-600 dark:text-brand-400">0</p>
+      </div>
+      <div class="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-2xl p-4">
+        <p class="text-xs text-slate-500 dark:text-slate-400">Sonraki Tarama</p>
+        <p id="statCountdown" class="text-2xl font-bold mt-1 text-slate-700 dark:text-slate-200">--:--</p>
+      </div>
     </section>
 
-    <!-- Ana 2 Sütunlu Düzen: Sol Filtre Paneli + Sağ İlan Akışı -->
+    <!-- Sade Arama & Hızlı Sekme Çubuğu -->
+    <section class="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-2xl p-3.5 sm:p-4 flex flex-col md:flex-row items-stretch md:items-center gap-3">
+      <div class="relative flex-1">
+        <span class="absolute inset-y-0 left-3.5 flex items-center text-slate-400 text-sm">🔍</span>
+        <input id="searchInput" type="text"
+          placeholder="Meslek, unvan, nitelik kodu veya kurum ara (Örn: Paramedik, Büro Personeli, 3001, 4001, İBB...)"
+          class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50/70 dark:bg-slate-800/70 text-sm focus:bg-white dark:focus:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-brand-500 transition" />
+      </div>
+
+      <div class="inline-flex p-1 rounded-xl bg-slate-100 dark:bg-slate-800 shrink-0 self-start md:self-auto">
+        <button id="quickTabAll" type="button"
+          class="px-3.5 py-1.5 rounded-lg text-xs font-semibold transition bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-xs">
+          Tüm İlanlar
+        </button>
+        <button id="quickTabDuz" type="button"
+          class="px-3.5 py-1.5 rounded-lg text-xs font-semibold transition text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white">
+          Bölüm Şartsız (2001/3001/4001)
+        </button>
+      </div>
+    </section>
+
+    <!-- Ana 2 Sütunlu Yerleşim -->
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
 
       <!-- Sol Filtre Paneli -->
-      <aside class="lg:col-span-4 xl:col-span-3 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 sm:p-5 space-y-4 shadow-sm lg:sticky lg:top-20">
-        <div class="flex items-center justify-between pb-2 border-b border-slate-100 dark:border-slate-800">
-          <h3 class="font-bold text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400">Detaylı Filtreleme</h3>
-          <button id="btnResetFilters" type="button" class="text-xs font-semibold text-brand-600 dark:text-brand-400 hover:underline">
-            Tümünü Sıfırla
+      <aside class="lg:col-span-4 xl:col-span-3 bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-2xl p-5 space-y-4 lg:sticky lg:top-20">
+        <div class="flex items-center justify-between pb-2.5 border-b border-slate-100 dark:border-slate-800">
+          <h2 class="font-semibold text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400">Filtreler</h2>
+          <button id="btnResetFilters" type="button" class="text-xs font-medium text-brand-600 dark:text-brand-400 hover:underline">
+            Sıfırla
           </button>
         </div>
 
-        <!-- İlanda Aranan Meslek / Kadro -->
+        <!-- İlanda Aranan Meslek -->
         <div>
-          <label for="professionSelect" class="block text-xs font-bold mb-1.5 text-slate-700 dark:text-slate-300">
-            İlanda Aranan Meslek / Kadro
+          <label for="professionSelect" class="block text-xs font-semibold mb-1.5 text-slate-700 dark:text-slate-300">
+            Aranan Meslek / Unvan
           </label>
           <select id="professionSelect"
-            class="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500">
+            class="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50/70 dark:bg-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500">
             <option value="">Tüm Meslek Grupları</option>
           </select>
           <div id="popularProfessionsPills" class="flex flex-wrap gap-1.5 mt-2"></div>
@@ -255,18 +158,18 @@
 
         <!-- Şehir -->
         <div>
-          <label for="citySelect" class="block text-xs font-bold mb-1.5 text-slate-700 dark:text-slate-300">Şehir / Bölge</label>
+          <label for="citySelect" class="block text-xs font-semibold mb-1.5 text-slate-700 dark:text-slate-300">Şehir</label>
           <select id="citySelect"
-            class="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500">
+            class="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50/70 dark:bg-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500">
             <option value="">Tüm Şehirler</option>
           </select>
         </div>
 
         <!-- Eğitim Düzeyi -->
         <div>
-          <label for="educationSelect" class="block text-xs font-bold mb-1.5 text-slate-700 dark:text-slate-300">Eğitim Düzeyi</label>
+          <label for="educationSelect" class="block text-xs font-semibold mb-1.5 text-slate-700 dark:text-slate-300">Eğitim Düzeyi</label>
           <select id="educationSelect"
-            class="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500">
+            class="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50/70 dark:bg-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500">
             <option value="">Tüm Eğitim Düzeyleri</option>
             <option value="İlköğretim">İlköğretim</option>
             <option value="Ortaöğretim">Ortaöğretim (Lise)</option>
@@ -275,11 +178,11 @@
           </select>
         </div>
 
-        <!-- KPSS Durumu -->
+        <!-- KPSS Puan Türü -->
         <div>
-          <label for="kpssSelect" class="block text-xs font-bold mb-1.5 text-slate-700 dark:text-slate-300">KPSS Puan Türü</label>
+          <label for="kpssSelect" class="block text-xs font-semibold mb-1.5 text-slate-700 dark:text-slate-300">KPSS Durumu</label>
           <select id="kpssSelect"
-            class="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500">
+            class="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50/70 dark:bg-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500">
             <option value="">Tümü (KPSS'li ve Şartsız)</option>
             <option value="KPSS Şartsız">KPSS Şartsız</option>
             <option value="KPSS P94">KPSS P94 (Ortaöğretim)</option>
@@ -288,11 +191,11 @@
           </select>
         </div>
 
-        <!-- Hizmet Grubu -->
+        <!-- Hizmet Sınıfı -->
         <div>
-          <label for="categorySelect" class="block text-xs font-bold mb-1.5 text-slate-700 dark:text-slate-300">Hizmet Sınıfı</label>
+          <label for="categorySelect" class="block text-xs font-semibold mb-1.5 text-slate-700 dark:text-slate-300">Hizmet Sınıfı</label>
           <select id="categorySelect"
-            class="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500">
+            class="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50/70 dark:bg-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500">
             <option value="">Tüm Hizmet Sınıfları</option>
             <option value="Büro & İdari">Büro & İdari</option>
             <option value="Sağlık Personeli">Sağlık Personeli</option>
@@ -302,11 +205,11 @@
           </select>
         </div>
 
-        <!-- Kaynak Portal -->
+        <!-- Kaynak Resmi Portal -->
         <div>
-          <label for="portalSelect" class="block text-xs font-bold mb-1.5 text-slate-700 dark:text-slate-300">Kaynak Resmi Portal</label>
+          <label for="portalSelect" class="block text-xs font-semibold mb-1.5 text-slate-700 dark:text-slate-300">Kaynak Resmi Portal</label>
           <select id="portalSelect"
-            class="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500">
+            class="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50/70 dark:bg-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500">
             <option value="">Tüm Portallar (42 Kaynak)</option>
           </select>
         </div>
@@ -315,24 +218,19 @@
       <!-- Sağ İlan Akışı -->
       <section class="lg:col-span-8 xl:col-span-9 space-y-4">
 
-        <!-- Üst Sıralama & Aktif Filtre Çubuğu -->
-        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl px-4 py-3 shadow-sm space-y-2.5">
+        <!-- Üst Sıralama & Aktif Filtre Özeti -->
+        <div class="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-2xl px-4 py-3 space-y-2">
           <div class="flex flex-wrap items-center justify-between gap-2">
-            <p id="resultSummaryText" class="text-sm font-semibold text-slate-700 dark:text-slate-200">
+            <p id="resultSummaryText" class="text-sm font-medium text-slate-700 dark:text-slate-200">
               İlanlar yükleniyor...
             </p>
-            <div class="flex items-center gap-2">
-              <label for="sortSelect" class="text-xs text-slate-500 dark:text-slate-400 hidden sm:inline">Sırala:</label>
-              <select id="sortSelect"
-                class="px-3 py-1.5 rounded-lg border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs font-semibold">
-                <option value="newest">En Yeni İlanlar</option>
-                <option value="deadline">Son Başvuru Yaklaşanlar</option>
-                <option value="quota">Kontenjan Sayısı (Yüksek → Düşük)</option>
-              </select>
-            </div>
+            <select id="sortSelect"
+              class="px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs font-medium text-slate-700 dark:text-slate-200">
+              <option value="newest">En Yeni İlanlar</option>
+              <option value="deadline">Son Başvuru Yaklaşanlar</option>
+              <option value="quota">Kontenjan Sayısı</option>
+            </select>
           </div>
-
-          <!-- Seçili Filtre Etiketleri -->
           <div id="activeFilterChips" class="hidden flex-wrap items-center gap-1.5 pt-2 border-t border-slate-100 dark:border-slate-800"></div>
         </div>
 
@@ -342,54 +240,26 @@
     </div>
   </main>
 
-  <!-- Kurumsal Alt Bilgi (Footer) -->
-  <footer class="bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 mt-12">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-xs text-slate-600 dark:text-slate-400">
-        <div class="space-y-2">
-          <div class="flex items-center gap-2">
-            <span class="w-7 h-7 rounded-lg bg-brand-600 text-white font-bold flex items-center justify-center">GA</span>
-            <span class="font-bold text-sm text-slate-900 dark:text-white">Geleceğe Adım — Kamu İlan</span>
-          </div>
-          <p class="leading-relaxed">
-            Kamu kurumları, bakanlıklar, belediyeler ve kamu iktisadi teşebbüslerinin resmi duyurularını tek ekranda toplayan açık kaynaklı ilan takip sistemi.
-          </p>
-        </div>
-        <div class="space-y-1.5">
-          <p class="font-bold text-slate-900 dark:text-white">Hızlı Erişim</p>
-          <ul class="space-y-1">
-            <li><button type="button" id="footerBtnDuz" class="hover:text-brand-600 dark:hover:text-brand-400">• 2001 / 3001 / 4001 Bölüm Şartsız Kadrolar</button></li>
-            <li><button type="button" id="footerBtnGuide" class="hover:text-brand-600 dark:hover:text-brand-400">• KPSS Puan Türleri ve Nitelik Kodları Rehberi</button></li>
-            <li><button type="button" id="footerBtnPortals" class="hover:text-brand-600 dark:hover:text-brand-400">• Taranan 42 Resmi Portal Listesi</button></li>
-          </ul>
-        </div>
-        <div class="space-y-1.5">
-          <p class="font-bold text-slate-900 dark:text-white">Bilgilendirme</p>
-          <p class="leading-relaxed">
-            Tüm ilan kartları doğrudan ilgili kamu kurumunun resmi duyuru adresine yönlendirir. Başvuru öncesinde kurumun resmi kılavuzundaki son tarih ve şartları teyit ediniz.
-          </p>
-        </div>
-      </div>
-      <div class="mt-6 pt-4 border-t border-slate-100 dark:border-slate-800 flex flex-wrap items-center justify-between gap-2 text-[11px] text-slate-500">
-        <span>© 2026 Geleceğe Adım Kamu İlan • Tüm Hakları Saklıdır.</span>
-        <span>Saatlik Otomatik Veri Senkronizasyonu</span>
-      </div>
+  <!-- Sade Alt Bilgi -->
+  <footer class="border-t border-slate-200/80 dark:border-slate-800 mt-12 py-6 text-center text-xs text-slate-500 dark:text-slate-400">
+    <div class="max-w-7xl mx-auto px-4">
+      Geleceğe Adım — Kamu İlan • 42 resmi kamu, bakanlık ve belediye portalından saatlik güncellenir.
     </div>
   </footer>
 
   <!-- İlan Detay Modalı (Meslek Grupları & Aranan Şartlar) -->
-  <div id="detailModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-950/65 backdrop-blur-sm p-4">
-    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl max-w-2xl w-full max-h-[90vh] flex flex-col shadow-2xl overflow-hidden">
-      <div class="px-6 py-4 border-b border-slate-200 dark:border-slate-800 flex items-start justify-between gap-4">
+  <div id="detailModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-950/60 backdrop-blur-xs p-4">
+    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl max-w-2xl w-full max-h-[88vh] flex flex-col shadow-xl overflow-hidden">
+      <div class="px-6 py-4 border-b border-slate-100 dark:border-slate-800 flex items-start justify-between gap-4">
         <div>
           <div class="flex flex-wrap items-center gap-2 mb-1.5">
-            <span id="modalInstitution" class="px-2.5 py-0.5 rounded-md text-xs font-bold bg-brand-50 text-brand-700 dark:bg-brand-900/40 dark:text-brand-300"></span>
-            <span id="modalCategory" class="px-2.5 py-0.5 rounded-md text-xs font-medium bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300"></span>
-            <span id="modalDuzBadge" class="hidden px-2.5 py-0.5 rounded-md text-xs font-bold bg-emerald-100 text-emerald-800 dark:bg-emerald-900/40 dark:text-emerald-300">
+            <span id="modalInstitution" class="px-2.5 py-0.5 rounded-md text-xs font-semibold bg-brand-50 text-brand-700 dark:bg-brand-900/40 dark:text-brand-300"></span>
+            <span id="modalCategory" class="px-2.5 py-0.5 rounded-md text-xs font-medium bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-300"></span>
+            <span id="modalDuzBadge" class="hidden px-2.5 py-0.5 rounded-md text-xs font-semibold bg-emerald-50 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300">
               Bölüm Şartsız
             </span>
           </div>
-          <h3 id="modalTitle" class="text-base sm:text-lg font-extrabold text-slate-900 dark:text-white leading-snug"></h3>
+          <h3 id="modalTitle" class="text-base sm:text-lg font-bold text-slate-900 dark:text-white leading-snug"></h3>
         </div>
         <button id="btnCloseModal" type="button" class="p-1.5 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100 dark:hover:bg-slate-800">
           ✕
@@ -397,110 +267,86 @@
       </div>
 
       <div class="p-6 overflow-y-auto custom-scroll space-y-5 text-sm">
-        <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 bg-slate-50 dark:bg-slate-800/60 p-3.5 rounded-xl border border-slate-200/80 dark:border-slate-700/80">
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 bg-slate-50 dark:bg-slate-800/60 p-3.5 rounded-xl border border-slate-200/60 dark:border-slate-700/60">
           <div>
             <span class="text-xs text-slate-500 dark:text-slate-400 block">Şehir / Bölge</span>
-            <span id="modalCity" class="font-bold"></span>
+            <span id="modalCity" class="font-semibold"></span>
           </div>
           <div>
             <span class="text-xs text-slate-500 dark:text-slate-400 block">Eğitim Düzeyi</span>
-            <span id="modalEducation" class="font-bold"></span>
+            <span id="modalEducation" class="font-semibold"></span>
           </div>
           <div>
             <span class="text-xs text-slate-500 dark:text-slate-400 block">KPSS Şartı</span>
-            <span id="modalKpss" class="font-bold"></span>
+            <span id="modalKpss" class="font-semibold"></span>
           </div>
           <div>
             <span class="text-xs text-slate-500 dark:text-slate-400 block">Nitelik Kodu</span>
-            <span id="modalQualCode" class="font-bold"></span>
+            <span id="modalQualCode" class="font-semibold"></span>
           </div>
           <div>
             <span class="text-xs text-slate-500 dark:text-slate-400 block">Kontenjan</span>
-            <span id="modalQuota" class="font-bold"></span>
+            <span id="modalQuota" class="font-semibold"></span>
           </div>
           <div>
             <span class="text-xs text-slate-500 dark:text-slate-400 block">Son Başvuru</span>
-            <span id="modalEndDate" class="font-bold text-rose-600 dark:text-rose-400"></span>
+            <span id="modalEndDate" class="font-semibold text-rose-600 dark:text-rose-400"></span>
           </div>
         </div>
 
         <!-- İlanda Aranan Meslek Grupları -->
-        <div class="bg-blue-50/75 dark:bg-blue-950/35 border border-blue-200 dark:border-blue-900/60 rounded-xl p-4">
+        <div class="bg-slate-50 dark:bg-slate-800/50 border border-slate-200/70 dark:border-slate-700/70 rounded-xl p-4">
           <div class="flex items-center justify-between mb-2.5">
-            <h4 class="font-extrabold text-sm text-brand-900 dark:text-blue-200">
+            <h4 class="font-semibold text-sm text-slate-900 dark:text-white">
               İlanda Aranan Meslek Grupları & Kadrolar
             </h4>
-            <span id="modalProfessionCount" class="text-xs font-bold px-2.5 py-0.5 rounded-full bg-brand-600 text-white"></span>
+            <span id="modalProfessionCount" class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-brand-50 text-brand-700 dark:bg-brand-900/50 dark:text-brand-300"></span>
           </div>
-          <div id="modalPositionsList" class="flex flex-wrap gap-2"></div>
+          <div id="modalPositionsList" class="flex flex-wrap gap-1.5"></div>
 
-          <div id="modalKadroRowsWrap" class="hidden mt-3 pt-3 border-t border-blue-200/80 dark:border-blue-800/60">
-            <p class="text-xs font-bold text-slate-600 dark:text-slate-300 mb-1.5">İlan Metni / Tablosundan Çıkarılan Kadro Satırları:</p>
-            <ul id="modalKadroRowsList" class="space-y-1 text-xs text-slate-700 dark:text-slate-300 list-disc pl-4"></ul>
+          <div id="modalKadroRowsWrap" class="hidden mt-3 pt-3 border-t border-slate-200/80 dark:border-slate-700/80">
+            <p class="text-xs font-semibold text-slate-600 dark:text-slate-300 mb-1.5">İlan Tablosundan Çıkarılan Kadro Satırları:</p>
+            <ul id="modalKadroRowsList" class="space-y-1 text-xs text-slate-600 dark:text-slate-300 list-disc pl-4"></ul>
           </div>
         </div>
 
         <!-- Aranan Şartlar -->
         <div>
-          <h4 class="font-extrabold text-sm text-slate-900 dark:text-white mb-2">
-            İlan İçeriğinden Çıkarılan Aranan Şartlar & Nitelikler
+          <h4 class="font-semibold text-sm text-slate-900 dark:text-white mb-2">
+            İlan İçeriğinden Çıkarılan Başvuru Şartları
           </h4>
-          <ul id="modalRequirementsList" class="space-y-2 text-slate-700 dark:text-slate-300 list-disc pl-5 leading-relaxed"></ul>
+          <ul id="modalRequirementsList" class="space-y-2 text-slate-600 dark:text-slate-300 list-disc pl-5 leading-relaxed text-[13px]"></ul>
         </div>
 
         <!-- İstenen Belgeler -->
         <div>
-          <h4 class="font-extrabold text-sm text-slate-900 dark:text-white mb-2">
+          <h4 class="font-semibold text-sm text-slate-900 dark:text-white mb-2">
             Başvuruda İstenebilecek Belgeler
           </h4>
-          <div id="modalDocumentsList" class="flex flex-wrap gap-2"></div>
+          <div id="modalDocumentsList" class="flex flex-wrap gap-1.5"></div>
         </div>
       </div>
 
-      <div class="px-6 py-3.5 border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 flex flex-wrap items-center justify-between gap-2">
+      <div class="px-6 py-3.5 border-t border-slate-100 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-900 flex flex-wrap items-center justify-between gap-2">
         <div class="flex items-center gap-2">
           <button id="modalBtnFav" type="button"
-            class="px-3.5 py-2 rounded-xl border border-slate-300 dark:border-slate-700 text-xs font-bold hover:bg-slate-100 dark:hover:bg-slate-800 transition">
+            class="px-3.5 py-2 rounded-xl border border-slate-200 dark:border-slate-700 text-xs font-semibold hover:bg-slate-100 dark:hover:bg-slate-800 transition">
             ★ Favorilere Ekle
           </button>
           <button id="modalBtnCopyLink" type="button"
-            class="px-3.5 py-2 rounded-xl border border-slate-300 dark:border-slate-700 text-xs font-bold hover:bg-slate-100 dark:hover:bg-slate-800 transition">
-            🔗 Linki Kopyala
+            class="px-3.5 py-2 rounded-xl border border-slate-200 dark:border-slate-700 text-xs font-semibold hover:bg-slate-100 dark:hover:bg-slate-800 transition">
+            Linki Kopyala
           </button>
         </div>
         <a id="modalOfficialLink" href="#" target="_blank" rel="noopener noreferrer"
-          class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white text-xs sm:text-sm font-bold shadow-sm transition">
-          Resmi Başvuru Sayfasına Git ↗
+          class="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white text-xs sm:text-sm font-semibold transition">
+          Resmi İlana Git ↗
         </a>
       </div>
     </div>
   </div>
 
-  <!-- 2001 / 3001 / 4001 Rehber Modalı -->
-  <div id="guideModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-950/65 backdrop-blur-sm p-4">
-    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl max-w-xl w-full p-6 shadow-2xl space-y-4">
-      <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3">
-        <h3 class="text-base font-extrabold text-slate-900 dark:text-white">Bölüm Şartsız Nitelik Kodları & KPSS Rehberi</h3>
-        <button id="btnCloseGuideModal" type="button" class="p-1.5 rounded-lg text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800">✕</button>
-      </div>
-      <div class="space-y-3 text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
-        <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
-          <p class="font-bold text-brand-700 dark:text-blue-300">2001 Nitelik Kodu (Ortaöğretim / Lise)</p>
-          <p class="mt-0.5">Herhangi bir lise veya dengi okuldan mezun olan adayların <strong>KPSS P94</strong> puanıyla başvurabileceği bölüm şartsız kadrolardır.</p>
-        </div>
-        <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
-          <p class="font-bold text-brand-700 dark:text-blue-300">3001 Nitelik Kodu (Önlisans)</p>
-          <p class="mt-0.5">Herhangi bir 2 yıllık önlisans programından mezun olan adayların <strong>KPSS P93</strong> puanıyla başvurabileceği düz memurluk ve büro kadrolarıdır.</p>
-        </div>
-        <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
-          <p class="font-bold text-brand-700 dark:text-blue-300">4001 Nitelik Kodu (Lisans)</p>
-          <p class="mt-0.5">Herhangi bir 4 yıllık lisans fakültesinden mezun olan adayların <strong>KPSS P3</strong> puanıyla başvurabileceği bölüm şartsız genel idare kadrolarıdır.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Bildirim (Toast) Alanı -->
+  <!-- Toast Bildirim Alanı -->
   <div id="toastContainer" class="fixed bottom-4 right-4 z-50 space-y-2 pointer-events-none"></div>
 
   <script>
@@ -549,10 +395,19 @@
       { domain: 'bddk.org.tr', name: 'BDDK' }
     ];
 
+    function safeLoadFavorites() {
+      try {
+        const parsed = JSON.parse(localStorage.getItem('ga_favorites') || '[]');
+        return new Set(Array.isArray(parsed) ? parsed : []);
+      } catch (e) {
+        return new Set();
+      }
+    }
+
     const STATE = {
       allListings: [],
       filteredListings: [],
-      favorites: new Set(JSON.parse(localStorage.getItem('ga_favorites') || '[]')),
+      favorites: safeLoadFavorites(),
       onlyFavorites: false,
       onlyDuzMemurluk: false,
       lastFingerprint: '',
@@ -598,14 +453,37 @@
     function showToast(msg) {
       const container = document.getElementById('toastContainer');
       const el = document.createElement('div');
-      el.className = 'animate-toast bg-slate-900 dark:bg-slate-800 text-white text-xs font-semibold px-4 py-2.5 rounded-xl shadow-lg border border-slate-700';
+      el.className = 'animate-toast bg-slate-900 dark:bg-slate-800 text-white text-xs font-medium px-4 py-2.5 rounded-xl shadow-lg border border-slate-700';
       el.textContent = msg;
       container.appendChild(el);
       setTimeout(() => {
         el.style.opacity = '0';
-        el.style.transition = 'opacity 0.25s';
-        setTimeout(() => el.remove(), 260);
-      }, 2500);
+        el.style.transition = 'opacity 0.2s';
+        setTimeout(() => el.remove(), 220);
+      }, 2400);
+    }
+
+    function syncTabsAndButtons() {
+      const tabAll = document.getElementById('quickTabAll');
+      const tabDuz = document.getElementById('quickTabDuz');
+      const activeCls = ['bg-white', 'dark:bg-slate-700', 'text-slate-900', 'dark:text-white', 'shadow-xs'];
+      const inactiveCls = ['text-slate-600', 'dark:text-slate-300'];
+
+      if (STATE.onlyDuzMemurluk) {
+        tabDuz.classList.add(...activeCls);
+        tabDuz.classList.remove(...inactiveCls);
+        tabAll.classList.remove(...activeCls);
+        tabAll.classList.add(...inactiveCls);
+      } else {
+        tabAll.classList.add(...activeCls);
+        tabAll.classList.remove(...inactiveCls);
+        tabDuz.classList.remove(...activeCls);
+        tabDuz.classList.add(...inactiveCls);
+      }
+
+      const favBtn = document.getElementById('btnToggleFavorites');
+      favBtn.classList.toggle('ring-2', STATE.onlyFavorites);
+      favBtn.classList.toggle('ring-amber-400', STATE.onlyFavorites);
     }
 
     function getRemainingDaysBadge(endDateStr) {
@@ -614,10 +492,10 @@
       const end = new Date(endDateStr + 'T00:00:00');
       if (isNaN(end.getTime())) return '';
       const diff = Math.round((end - today) / 86400000);
-      if (diff < 0) return '<span class="px-2 py-0.5 rounded text-[11px] font-bold bg-slate-200 text-slate-600">Süresi Doldu</span>';
-      if (diff === 0) return '<span class="px-2 py-0.5 rounded text-[11px] font-bold bg-rose-100 text-rose-700 dark:bg-rose-950 dark:text-rose-300">Bugün Son Gün!</span>';
-      if (diff <= 3) return `<span class="px-2 py-0.5 rounded text-[11px] font-bold bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300">Son ${diff} gün</span>`;
-      return `<span class="px-2 py-0.5 rounded text-[11px] font-medium bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-300">${diff} gün kaldı</span>`;
+      if (diff < 0) return '<span class="px-2 py-0.5 rounded-md text-[11px] font-medium bg-slate-100 text-slate-500">Süresi Doldu</span>';
+      if (diff === 0) return '<span class="px-2 py-0.5 rounded-md text-[11px] font-semibold bg-rose-50 text-rose-600 dark:bg-rose-950/60 dark:text-rose-300">Son Gün</span>';
+      if (diff <= 3) return `<span class="px-2 py-0.5 rounded-md text-[11px] font-semibold bg-amber-50 text-amber-700 dark:bg-amber-950/60 dark:text-amber-300">Son ${diff} gün</span>`;
+      return `<span class="px-2 py-0.5 rounded-md text-[11px] font-medium bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-300">${diff} gün kaldı</span>`;
     }
 
     function normalizeListing(item, idx) {
@@ -659,7 +537,7 @@
     }
 
     function buildFingerprint(list) {
-      return list.map(x => `${x.url}|${x.title}|${x.positions.length}`).join(';;');
+      return list.map(x => `${x.url}|${x.title}|${x.positions.length}|${x.requirements.length}`).join(';;');
     }
 
     async function fetchListings(silent = false) {
@@ -677,8 +555,8 @@
         const newFp = buildFingerprint(normalized);
 
         if (STATE.allListings.length > 0 && newFp === STATE.lastFingerprint) {
-          statusEl.textContent = `Son kontrol: ${nowTime} • Yeni ilan yok, mevcut liste güncel`;
-          if (!silent) showToast('Liste kontrol edildi: Yeni ilan yok, mevcut ilanlar güncel.');
+          statusEl.textContent = `Son kontrol: ${nowTime} • Yeni ilan yok`;
+          if (!silent) showToast('Liste güncel: Yeni ilan bulunmadı.');
           return;
         }
 
@@ -686,12 +564,11 @@
           STATE.allListings = normalized;
           STATE.lastFingerprint = newFp;
           populateFilterOptions();
-          renderPortalsGrid();
           applyFilters();
-          statusEl.textContent = `Son güncelleme: ${nowTime} • ${normalized.length} aktif ilan`;
+          statusEl.textContent = `Güncellendi: ${nowTime} • ${normalized.length} aktif ilan`;
           if (!silent && normalized.length > 0) showToast(`${normalized.length} güncel ilan yüklendi.`);
         } else {
-          statusEl.textContent = `Son kontrol: ${nowTime} • Mevcut önbellek korundu`;
+          statusEl.textContent = `Son kontrol: ${nowTime} • Mevcut liste korundu`;
         }
       } catch (err) {
         const nowTime = new Date().toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' });
@@ -699,46 +576,6 @@
       } finally {
         refreshIcon.classList.remove('animate-spin');
       }
-    }
-
-    function renderPortalsGrid() {
-      const grid = document.getElementById('portalsGrid');
-      const portalSelect = document.getElementById('portalSelect');
-      const activePortal = portalSelect.value;
-
-      const domainCounts = {};
-      STATE.allListings.forEach(item => {
-        domainCounts[item.sourceDomain] = (domainCounts[item.sourceDomain] || 0) + 1;
-      });
-
-      grid.innerHTML = TUM_PORTALLAR.map(p => {
-        const cnt = domainCounts[p.domain] || 0;
-        const isSelected = activePortal === p.domain;
-        return `
-          <button type="button" data-portal-domain="${escapeHtml(p.domain)}"
-            class="portal-card-btn text-left p-2.5 rounded-xl border text-xs transition flex flex-col justify-between gap-1 ${
-              isSelected
-                ? 'bg-brand-600 text-white border-brand-600 shadow-sm'
-                : 'bg-slate-50 dark:bg-slate-800/70 hover:border-brand-400 border-slate-200 dark:border-slate-700'
-            }">
-            <span class="font-bold truncate">${escapeHtml(p.name)}</span>
-            <div class="flex items-center justify-between text-[11px] ${isSelected ? 'text-blue-100' : 'text-slate-500 dark:text-slate-400'}">
-              <span class="truncate">${escapeHtml(p.domain)}</span>
-              <span class="font-extrabold ml-1 ${cnt > 0 && !isSelected ? 'text-emerald-600 dark:text-emerald-400' : ''}">${cnt}</span>
-            </div>
-          </button>
-        `;
-      }).join('');
-
-      grid.querySelectorAll('.portal-card-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-          const dom = btn.getAttribute('data-portal-domain');
-          portalSelect.value = portalSelect.value === dom ? '' : dom;
-          document.getElementById('btnClearPortalFilter').classList.toggle('hidden', !portalSelect.value);
-          renderPortalsGrid();
-          applyFilters();
-        });
-      });
     }
 
     function populateFilterOptions() {
@@ -780,14 +617,14 @@
       if (prevPortal) portalSelect.value = prevPortal;
 
       const pillsEl = document.getElementById('popularProfessionsPills');
-      const topProfs = sortedProfs.slice(0, 6);
+      const topProfs = sortedProfs.slice(0, 5);
       pillsEl.innerHTML = topProfs.map(([name]) => {
         const active = profSelect.value === name;
         return `<button type="button" data-prof="${escapeHtml(name)}"
-          class="prof-pill px-2 py-0.5 rounded-md text-[11px] font-semibold border transition ${
+          class="prof-pill px-2 py-0.5 rounded-md text-[11px] font-medium border transition ${
             active
               ? 'bg-brand-600 text-white border-brand-600'
-              : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:border-brand-400'
+              : 'bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:border-brand-400'
           }">${escapeHtml(name)}</button>`;
       }).join('');
 
@@ -805,7 +642,7 @@
       const wrap = document.getElementById('activeFilterChips');
       const chips = [];
 
-      const q = document.getElementById('heroSearchInput').value.trim();
+      const q = document.getElementById('searchInput').value.trim();
       const prof = document.getElementById('professionSelect').value;
       const city = document.getElementById('citySelect').value;
       const edu = document.getElementById('educationSelect').value;
@@ -813,15 +650,15 @@
       const cat = document.getElementById('categorySelect').value;
       const portal = document.getElementById('portalSelect').value;
 
-      if (q) chips.push({ label: `Arama: "${q}"`, clear: () => { document.getElementById('heroSearchInput').value = ''; } });
-      if (STATE.onlyDuzMemurluk) chips.push({ label: 'Bölüm Şartsız Düz Memurluk', clear: () => { STATE.onlyDuzMemurluk = false; document.getElementById('btnDuzMemurlukOnly').textContent = 'Sadece Bölüm Şartsızları Göster'; } });
-      if (STATE.onlyFavorites) chips.push({ label: 'Sadece Favoriler', clear: () => { STATE.onlyFavorites = false; } });
-      if (prof) chips.push({ label: `Meslek: ${prof}`, clear: () => { document.getElementById('professionSelect').value = ''; } });
-      if (city) chips.push({ label: `Şehir: ${city}`, clear: () => { document.getElementById('citySelect').value = ''; } });
-      if (edu) chips.push({ label: `Eğitim: ${edu}`, clear: () => { document.getElementById('educationSelect').value = ''; } });
-      if (kpss) chips.push({ label: `KPSS: ${kpss}`, clear: () => { document.getElementById('kpssSelect').value = ''; } });
-      if (cat) chips.push({ label: `Sınıf: ${cat}`, clear: () => { document.getElementById('categorySelect').value = ''; } });
-      if (portal) chips.push({ label: `Portal: ${portal}`, clear: () => { document.getElementById('portalSelect').value = ''; } });
+      if (q) chips.push({ label: `Arama: "${q}"`, clear: () => { document.getElementById('searchInput').value = ''; } });
+      if (STATE.onlyDuzMemurluk) chips.push({ label: 'Bölüm Şartsız (2001/3001/4001)', clear: () => { STATE.onlyDuzMemurluk = false; syncTabsAndButtons(); } });
+      if (STATE.onlyFavorites) chips.push({ label: 'Favoriler', clear: () => { STATE.onlyFavorites = false; syncTabsAndButtons(); } });
+      if (prof) chips.push({ label: prof, clear: () => { document.getElementById('professionSelect').value = ''; } });
+      if (city) chips.push({ label: city, clear: () => { document.getElementById('citySelect').value = ''; } });
+      if (edu) chips.push({ label: edu, clear: () => { document.getElementById('educationSelect').value = ''; } });
+      if (kpss) chips.push({ label: kpss, clear: () => { document.getElementById('kpssSelect').value = ''; } });
+      if (cat) chips.push({ label: cat, clear: () => { document.getElementById('categorySelect').value = ''; } });
+      if (portal) chips.push({ label: portal, clear: () => { document.getElementById('portalSelect').value = ''; } });
 
       if (chips.length === 0) {
         wrap.classList.add('hidden');
@@ -832,27 +669,25 @@
 
       wrap.classList.remove('hidden');
       wrap.classList.add('flex');
-      wrap.innerHTML = '<span class="text-[11px] text-slate-400 mr-1">Aktif Filtreler:</span>' +
-        chips.map((c, i) => `
-          <button type="button" data-chip-idx="${i}"
-            class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-brand-50 text-brand-700 dark:bg-brand-900/40 dark:text-brand-300 border border-brand-200 dark:border-brand-800 hover:bg-brand-100">
-            ${escapeHtml(c.label)} <span class="font-bold">×</span>
-          </button>
-        `).join('');
+      wrap.innerHTML = chips.map((c, i) => `
+        <button type="button" data-chip-idx="${i}"
+          class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium bg-brand-50 text-brand-700 dark:bg-brand-900/40 dark:text-brand-300 border border-brand-200/70 dark:border-brand-800 hover:bg-brand-100">
+          ${escapeHtml(c.label)} <span>×</span>
+        </button>
+      `).join('');
 
       wrap.querySelectorAll('[data-chip-idx]').forEach(btn => {
         btn.addEventListener('click', () => {
           const idx = Number(btn.getAttribute('data-chip-idx'));
           chips[idx].clear();
           populateFilterOptions();
-          renderPortalsGrid();
           applyFilters();
         });
       });
     }
 
     function applyFilters() {
-      const q = normalizeSearch(document.getElementById('heroSearchInput').value);
+      const q = normalizeSearch(document.getElementById('searchInput').value);
       const prof = document.getElementById('professionSelect').value;
       const city = document.getElementById('citySelect').value;
       const edu = document.getElementById('educationSelect').value;
@@ -912,12 +747,12 @@
       const container = document.getElementById('listingsContainer');
       const summary = document.getElementById('resultSummaryText');
 
-      summary.textContent = `${STATE.filteredListings.length} aktif ilan listeleniyor`;
+      summary.textContent = `${STATE.filteredListings.length} aktif ilan gösteriliyor`;
 
       if (STATE.allListings.length === 0) {
         container.innerHTML = `
-          <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-10 text-center space-y-2">
-            <p class="text-base font-extrabold text-slate-800 dark:text-slate-100">Henüz Taranmış İlan Verisi Yok</p>
+          <div class="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-2xl p-10 text-center space-y-2">
+            <p class="text-base font-semibold text-slate-800 dark:text-slate-100">Henüz Taranmış İlan Verisi Yok</p>
             <p class="text-xs text-slate-500 dark:text-slate-400 max-w-md mx-auto leading-relaxed">
               GitHub Actions üzerinde <strong>Saatlik Kamu İlan Tarayıcı</strong> ilk taramayı tamamladığında 42 resmi portaldan çekilen ilanlar burada otomatik görünecektir.
             </p>
@@ -927,10 +762,10 @@
 
       if (STATE.filteredListings.length === 0) {
         container.innerHTML = `
-          <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-10 text-center space-y-2">
-            <p class="text-base font-extrabold text-slate-800 dark:text-slate-200">Seçtiğiniz kriterlere uygun ilan bulunamadı</p>
+          <div class="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-2xl p-10 text-center space-y-2">
+            <p class="text-base font-semibold text-slate-800 dark:text-slate-200">Seçtiğiniz kriterlere uygun ilan bulunamadı</p>
             <p class="text-xs text-slate-500 dark:text-slate-400">
-              Arama kelimesini değiştirebilir veya sol paneldeki "Tümünü Sıfırla" butonunu kullanabilirsiniz.
+              Arama kelimesini değiştirebilir veya sol paneldeki "Sıfırla" butonunu kullanabilirsiniz.
             </p>
           </div>`;
         return;
@@ -939,87 +774,83 @@
       container.innerHTML = STATE.filteredListings.map(item => {
         const isFav = STATE.favorites.has(item.id);
         const isExpanded = STATE.expandedCards.has(item.id);
-        const visiblePositions = isExpanded ? item.positionDetails : item.positionDetails.slice(0, 5);
-        const hiddenCount = item.positionDetails.length - 5;
-        const primaryReq = item.requirements[0] || '';
+        const visiblePositions = isExpanded ? item.positionDetails : item.positionDetails.slice(0, 3);
+        const hiddenCount = item.positionDetails.length - 3;
 
         return `
-          <article class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-brand-400 dark:hover:border-brand-600 rounded-2xl p-4 sm:p-5 shadow-sm transition">
+          <article class="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 rounded-2xl p-5 transition">
+            <!-- Üst Satır -->
             <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
-              <div class="flex flex-wrap items-center gap-1.5">
-                <span class="px-2.5 py-0.5 rounded-md text-xs font-extrabold bg-brand-50 text-brand-700 dark:bg-brand-900/40 dark:text-brand-300">
+              <div class="flex flex-wrap items-center gap-2">
+                <span class="text-xs font-semibold text-brand-600 dark:text-brand-400">
                   ${escapeHtml(item.institution)}
                 </span>
-                <span class="px-2.5 py-0.5 rounded-md text-xs font-semibold bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-300">
+                <span class="text-slate-300 dark:text-slate-700">•</span>
+                <span class="text-xs text-slate-500 dark:text-slate-400">
                   ${escapeHtml(item.category)}
                 </span>
                 ${item.isDuzMemurluk ? `
-                  <span class="px-2.5 py-0.5 rounded-md text-xs font-bold bg-emerald-100 text-emerald-800 dark:bg-emerald-900/40 dark:text-emerald-300">
+                  <span class="px-2 py-0.5 rounded-md text-[11px] font-medium bg-emerald-50 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-300">
                     ${escapeHtml(item.qualCode)}
                   </span>` : ''}
               </div>
               <div class="flex items-center gap-2">
                 ${getRemainingDaysBadge(item.endDate)}
-                <span class="text-xs text-slate-500 dark:text-slate-400">
-                  Son: <strong class="text-slate-700 dark:text-slate-200">${escapeHtml(item.endDate)}</strong>
-                </span>
+                <span class="text-xs text-slate-400">${escapeHtml(item.endDate)}</span>
               </div>
             </div>
 
-            <h3 class="font-extrabold text-sm sm:text-base text-slate-900 dark:text-white leading-snug mb-2.5">
+            <!-- Başlık -->
+            <h3 class="font-semibold text-[15px] sm:text-base text-slate-900 dark:text-white leading-snug mb-3">
               <button type="button" data-open-id="${escapeHtml(item.id)}" class="text-left hover:text-brand-600 dark:hover:text-brand-400 transition">
                 ${escapeHtml(item.title)}
               </button>
             </h3>
 
-            <!-- İlanda Aranan Meslek Grupları -->
-            <div class="flex flex-wrap items-center gap-1.5 mb-2.5">
-              <span class="text-[11px] font-bold text-slate-500 dark:text-slate-400 mr-0.5">Aranan Meslekler:</span>
+            <!-- Sade Meslek Etiketleri -->
+            <div class="flex flex-wrap items-center gap-1.5 mb-3.5">
               ${visiblePositions.map(p => `
-                <span class="px-2 py-0.5 rounded-md text-xs font-semibold bg-indigo-50 text-indigo-700 dark:bg-indigo-950/60 dark:text-indigo-300 border border-indigo-100 dark:border-indigo-900">
+                <span class="px-2.5 py-0.5 rounded-md text-xs font-medium bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300">
                   ${escapeHtml(p)}
                 </span>
               `).join('')}
               ${hiddenCount > 0 ? `
                 <button type="button" data-expand-id="${escapeHtml(item.id)}"
-                  class="px-2 py-0.5 rounded-md text-xs font-bold text-brand-600 dark:text-brand-400 hover:underline">
-                  ${isExpanded ? 'Daralt' : `+${hiddenCount} meslek daha`}
+                  class="px-2 py-0.5 text-xs font-medium text-brand-600 dark:text-brand-400 hover:underline">
+                  ${isExpanded ? 'Daralt' : `+${hiddenCount} meslek`}
                 </button>` : ''}
             </div>
 
-            <!-- İlan İçeriğinden Özet Şart Önizlemesi -->
-            ${primaryReq ? `
-              <p class="text-xs text-slate-600 dark:text-slate-400 bg-slate-50 dark:bg-slate-800/50 rounded-lg px-3 py-2 mb-3 line-clamp-2 border border-slate-100 dark:border-slate-800">
-                <strong class="text-slate-700 dark:text-slate-300">Şart Özeti:</strong> ${escapeHtml(primaryReq)}
-              </p>` : ''}
-
-            <!-- Alt Meta ve Butonlar -->
-            <div class="pt-3 border-t border-slate-100 dark:border-slate-800 flex flex-wrap items-center justify-between gap-3">
-              <div class="flex flex-wrap items-center gap-3 text-xs font-medium text-slate-600 dark:text-slate-400">
-                <span>📍 ${escapeHtml(item.city)}</span>
-                <span>🎓 ${escapeHtml(item.education)}</span>
-                <span>📝 ${escapeHtml(item.kpss)}</span>
-                <span>👥 ${item.quota} Kadro</span>
+            <!-- Alt Meta ve Sade Butonlar -->
+            <div class="pt-3 border-t border-slate-100 dark:border-slate-800/80 flex flex-wrap items-center justify-between gap-3">
+              <div class="flex flex-wrap items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
+                <span>${escapeHtml(item.city)}</span>
+                <span>•</span>
+                <span>${escapeHtml(item.education)}</span>
+                <span>•</span>
+                <span>${escapeHtml(item.kpss)}</span>
+                <span>•</span>
+                <span>${item.quota} Kadro</span>
               </div>
 
               <div class="flex items-center gap-2">
                 <button type="button" data-fav-id="${escapeHtml(item.id)}"
-                  class="px-2.5 py-1.5 rounded-lg border text-xs font-bold transition ${
+                  class="px-2.5 py-1.5 rounded-lg text-xs font-medium border transition ${
                     isFav
-                      ? 'border-amber-400 bg-amber-50 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300'
+                      ? 'border-amber-300 bg-amber-50/70 text-amber-700 dark:border-amber-800 dark:bg-amber-950/40 dark:text-amber-300'
                       : 'border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800'
                   }">
                   ${isFav ? '★ Kayıtlı' : '☆ Kaydet'}
                 </button>
 
                 <button type="button" data-open-id="${escapeHtml(item.id)}"
-                  class="px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 text-xs font-bold transition">
+                  class="px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs font-medium transition">
                   Detay & Şartlar
                 </button>
 
                 <a href="${escapeHtml(item.url)}" target="_blank" rel="noopener noreferrer"
-                  class="px-3 py-1.5 rounded-lg bg-brand-600 hover:bg-brand-700 text-white text-xs font-bold transition">
-                  Resmi İlana Git ↗
+                  class="px-3 py-1.5 rounded-lg bg-brand-600 hover:bg-brand-700 text-white text-xs font-medium transition">
+                  İlana Git ↗
                 </a>
               </div>
             </div>
@@ -1046,9 +877,9 @@
 
       document.getElementById('modalDuzBadge').classList.toggle('hidden', !item.isDuzMemurluk);
 
-      document.getElementById('modalProfessionCount').textContent = `${item.positionDetails.length} Meslek / Unvan`;
+      document.getElementById('modalProfessionCount').textContent = `${item.positionDetails.length} Meslek`;
       document.getElementById('modalPositionsList').innerHTML = item.positionDetails.map(p => `
-        <span class="px-2.5 py-1 rounded-lg text-xs font-bold bg-white dark:bg-slate-900 text-brand-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800">
+        <span class="px-2.5 py-1 rounded-lg text-xs font-medium bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700">
           ${escapeHtml(p)}
         </span>
       `).join('');
@@ -1068,8 +899,8 @@
       `).join('');
 
       document.getElementById('modalDocumentsList').innerHTML = item.documents.map(doc => `
-        <span class="px-2.5 py-1 rounded-lg text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">
-          ✓ ${escapeHtml(doc)}
+        <span class="px-2.5 py-1 rounded-lg text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">
+          ${escapeHtml(doc)}
         </span>
       `).join('');
 
@@ -1094,7 +925,9 @@
         STATE.favorites.add(id);
         showToast('İlan favorilere kaydedildi.');
       }
-      localStorage.setItem('ga_favorites', JSON.stringify(Array.from(STATE.favorites)));
+      try {
+        localStorage.setItem('ga_favorites', JSON.stringify(Array.from(STATE.favorites)));
+      } catch (e) {}
       updateStats();
       renderListings();
       if (STATE.activeModalId === id) updateModalFavButton();
@@ -1160,78 +993,33 @@
 
       document.getElementById('btnThemeToggle').addEventListener('click', () => {
         const isDark = document.documentElement.classList.toggle('dark');
-        localStorage.setItem('ga_theme', isDark ? 'dark' : 'light');
+        try { localStorage.setItem('ga_theme', isDark ? 'dark' : 'light'); } catch (e) {}
         document.getElementById('themeIcon').textContent = isDark ? '☀️' : '🌙';
       });
 
       document.getElementById('btnManualRefresh').addEventListener('click', () => fetchListings(false));
       document.getElementById('btnExportCsv').addEventListener('click', exportCsv);
 
-      // 42 Portal Vitrini Aç/Kapat
-      const portalsSection = document.getElementById('portalsDirectorySection');
-      document.getElementById('btnTogglePortalsDrawer').addEventListener('click', () => {
-        portalsSection.classList.toggle('hidden');
-      });
-      document.getElementById('btnClosePortalsDrawer').addEventListener('click', () => {
-        portalsSection.classList.add('hidden');
-      });
-      document.getElementById('btnClearPortalFilter').addEventListener('click', () => {
-        document.getElementById('portalSelect').value = '';
-        document.getElementById('btnClearPortalFilter').classList.add('hidden');
-        renderPortalsGrid();
+      document.getElementById('quickTabAll').addEventListener('click', () => {
+        STATE.onlyDuzMemurluk = false;
+        syncTabsAndButtons();
         applyFilters();
       });
 
-      // Rehber Modalı
-      const guideModal = document.getElementById('guideModal');
-      const openGuide = () => { guideModal.classList.remove('hidden'); guideModal.classList.add('flex'); };
-      const closeGuide = () => { guideModal.classList.add('hidden'); guideModal.classList.remove('flex'); };
-      document.getElementById('btnOpenGuideModal').addEventListener('click', openGuide);
-      document.getElementById('btnCloseGuideModal').addEventListener('click', closeGuide);
-      guideModal.addEventListener('click', (e) => { if (e.target.id === 'guideModal') closeGuide(); });
-
-      // Footer Hızlı Erişim
-      document.getElementById('footerBtnDuz').addEventListener('click', () => {
-        STATE.onlyDuzMemurluk = true;
-        document.getElementById('btnDuzMemurlukOnly').textContent = 'Tüm İlanları Göster';
-        applyFilters();
-        window.scrollTo({ top: 300, behavior: 'smooth' });
-      });
-      document.getElementById('footerBtnGuide').addEventListener('click', openGuide);
-      document.getElementById('footerBtnPortals').addEventListener('click', () => {
-        portalsSection.classList.remove('hidden');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      });
-
-      // Hızlı Etiketler
-      document.querySelectorAll('.quick-tag-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-          const tag = btn.getAttribute('data-quick-tag');
-          const input = document.getElementById('heroSearchInput');
-          input.value = input.value === tag ? '' : tag;
-          applyFilters();
-        });
-      });
-
-      document.getElementById('btnHeroSearchClear').addEventListener('click', applyFilters);
-
-      document.getElementById('btnToggleFavorites').addEventListener('click', (e) => {
-        STATE.onlyFavorites = !STATE.onlyFavorites;
-        e.currentTarget.classList.toggle('ring-2', STATE.onlyFavorites);
-        e.currentTarget.classList.toggle('ring-amber-400', STATE.onlyFavorites);
-        applyFilters();
-      });
-
-      document.getElementById('btnDuzMemurlukOnly').addEventListener('click', (e) => {
+      document.getElementById('quickTabDuz').addEventListener('click', () => {
         STATE.onlyDuzMemurluk = !STATE.onlyDuzMemurluk;
-        e.currentTarget.textContent = STATE.onlyDuzMemurluk
-          ? 'Tüm İlanları Göster'
-          : 'Sadece Bölüm Şartsızları Göster';
+        syncTabsAndButtons();
+        applyFilters();
+      });
+
+      document.getElementById('btnToggleFavorites').addEventListener('click', () => {
+        STATE.onlyFavorites = !STATE.onlyFavorites;
+        syncTabsAndButtons();
         applyFilters();
       });
 
       const resetAll = () => {
-        document.getElementById('heroSearchInput').value = '';
+        document.getElementById('searchInput').value = '';
         document.getElementById('professionSelect').value = '';
         document.getElementById('citySelect').value = '';
         document.getElementById('educationSelect').value = '';
@@ -1240,10 +1028,8 @@
         document.getElementById('portalSelect').value = '';
         STATE.onlyDuzMemurluk = false;
         STATE.onlyFavorites = false;
-        document.getElementById('btnDuzMemurlukOnly').textContent = 'Sadece Bölüm Şartsızları Göster';
-        document.getElementById('btnClearPortalFilter').classList.add('hidden');
+        syncTabsAndButtons();
         populateFilterOptions();
-        renderPortalsGrid();
         applyFilters();
       };
 
@@ -1253,14 +1039,10 @@
         resetAll();
       });
 
-      ['heroSearchInput', 'professionSelect', 'citySelect', 'educationSelect', 'kpssSelect', 'categorySelect', 'portalSelect', 'sortSelect']
+      ['searchInput', 'professionSelect', 'citySelect', 'educationSelect', 'kpssSelect', 'categorySelect', 'portalSelect', 'sortSelect']
         .forEach(id => {
           document.getElementById(id).addEventListener('input', () => {
             if (id === 'professionSelect') populateFilterOptions();
-            if (id === 'portalSelect') {
-              document.getElementById('btnClearPortalFilter').classList.toggle('hidden', !document.getElementById('portalSelect').value);
-              renderPortalsGrid();
-            }
             applyFilters();
           });
         });
@@ -1293,20 +1075,16 @@
         const item = STATE.allListings.find(x => x.id === STATE.activeModalId);
         if (item && navigator.clipboard) {
           navigator.clipboard.writeText(item.url);
-          showToast('Resmi ilan bağlantısı panoya kopyalandı.');
+          showToast('İlan bağlantısı kopyalandı.');
         }
       });
       document.getElementById('detailModal').addEventListener('click', (e) => {
         if (e.target.id === 'detailModal') closeDetailModal();
       });
       document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') {
-          closeDetailModal();
-          closeGuide();
-        }
+        if (e.key === 'Escape') closeDetailModal();
       });
 
-      renderPortalsGrid();
       fetchListings(false);
       startHourlyTimer();
     });
