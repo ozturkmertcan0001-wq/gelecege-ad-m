@@ -243,6 +243,8 @@ def gercek_ilan_mi(baslik: str, url: str) -> bool:
         return False
     if any(h in b for h in HARIC_TUTULACAKLAR):
         return False
+    if not u.startswith(("http://", "https://")):
+        return False
     if u.endswith("#") or "javascript:" in u or "mailto:" in u:
         return False
     return any(
@@ -470,6 +472,7 @@ def temel_analiz(baslik: str, domain: str):
 
 
 def ilan_detay_analiz_et(istemci: GuvenliIstemci, ilan: dict) -> dict:
+    """Her bir ilanın kendi sayfasına girer; site engelli veya kapalıysa çökmek yerine mevcut veriyi döndürür."""
     try:
         yanit = istemci.sayfa_getir(ilan["url"], timeout=12, js_destegi=True)
         if not yanit.get("ok"):
@@ -542,6 +545,7 @@ def ilan_detay_analiz_et(istemci: GuvenliIstemci, ilan: dict) -> dict:
         ilan["requirements"] = sartlar
         ilan["documents"] = belgeler
         ilan["endDate"] = son_tarih
+        ilan["detailParsed"] = True
         return ilan
     except Exception:
         return ilan
@@ -563,7 +567,7 @@ def tek_portal_tara(istemci: GuvenliIstemci, idx: int, domain: str, base_url: st
     try:
         yanit = istemci.sayfa_getir(base_url, timeout=15, js_destegi=True)
         if not yanit.get("ok") or not yanit.get("html"):
-            print(f"Bilgi ({domain}): Portal yanıt vermedi veya korumalı, atlandı.")
+            print(f"Bilgi ({domain}): Portal erişime kapalı veya koruma altında, atlandı.")
             return []
 
         soup = BeautifulSoup(yanit["html"], "html.parser")
@@ -601,12 +605,13 @@ def tek_portal_tara(istemci: GuvenliIstemci, idx: int, domain: str, base_url: st
                     "url": tam_url,
                     "requirements": ["İlgili kurumun resmi duyuru metnindeki başvuru şartlarını inceleyiniz."],
                     "documents": ["e-Devlet Mezuniyet Belgesi", "KPSS Sonuç Belgesi"],
+                    "detailParsed": False,
                 }
             )
             if len(bulunan_adaylar) >= 8:
                 break
     except Exception as hata:
-        print(f"Uyarı ({domain}): {hata}")
+        print(f"Bilgi ({domain}): Güvenli atlama ({type(hata).__name__}).")
     return bulunan_adaylar
 
 
@@ -618,7 +623,7 @@ def portallari_tara():
     mevcut_liste = mevcut_ilanlari_yukle()
     mevcut_harita = {item.get("url"): item for item in mevcut_liste if item.get("url")}
 
-    aday_ilanlar = []
+    yeni_aday_ilanlar = []
     gorulen_url = set()
 
     with ThreadPoolExecutor(max_workers=8) as havuz:
@@ -627,22 +632,41 @@ def portallari_tara():
             for idx, (domain, url) in enumerate(PORTALLAR)
         ]
         for f in as_completed(gelecekler):
-            for ilan in f.result():
-                if ilan["url"] not in gorulen_url:
-                    gorulen_url.add(ilan["url"])
-                    if ilan["url"] in mevcut_harita:
-                        eski = mevcut_harita[ilan["url"]]
-                        ilan["publishDate"] = eski.get("publishDate", ilan["publishDate"])
-                        ilan["id"] = eski.get("id", ilan["id"])
-                    aday_ilanlar.append(ilan)
+            try:
+                sonuc_listesi = f.result()
+            except Exception:
+                sonuc_listesi = []
+
+            for ilan in sonuc_listesi:
+                u = ilan["url"]
+                if u in gorulen_url:
+                    continue
+                gorulen_url.add(u)
+
+                if u in mevcut_harita:
+                    eski = mevcut_harita[u]
+                    if (
+                        eski.get("detailParsed")
+                        or len(eski.get("requirements", [])) > 1
+                        or len(eski.get("positionDetails", [])) > 1
+                        or len(eski.get("kadroRows", [])) > 0
+                    ):
+                        continue
+                    ilan["publishDate"] = eski.get("publishDate", ilan["publishDate"])
+                    ilan["id"] = eski.get("id", ilan["id"])
+
+                yeni_aday_ilanlar.append(ilan)
 
     zengin_ilanlar = []
-    if aday_ilanlar:
-        print(f"[{datetime.now().strftime('%H:%M:%S')}] {len(aday_ilanlar)} ilanın detay sayfası tek tek inceleniyor...")
+    if yeni_aday_ilanlar:
+        print(f"[{datetime.now().strftime('%H:%M:%S')}] {len(yeni_aday_ilanlar)} yeni/eksik ilanın detay sayfası inceleniyor...")
         with ThreadPoolExecutor(max_workers=6) as detay_havuzu:
-            detay_isler = [detay_havuzu.submit(ilan_detay_analiz_et, istemci, ilan) for ilan in aday_ilanlar]
+            detay_isler = [detay_havuzu.submit(ilan_detay_analiz_et, istemci, ilan) for ilan in yeni_aday_ilanlar]
             for f in as_completed(detay_isler):
-                zengin_ilanlar.append(f.result())
+                try:
+                    zengin_ilanlar.append(f.result())
+                except Exception:
+                    pass
 
     bugun_str = datetime.now().strftime("%Y-%m-%d")
     sonuc_haritasi = {}
@@ -654,13 +678,23 @@ def portallari_tara():
 
     yeni_eklenen_sayisi = 0
     for yeni in zengin_ilanlar:
-        if yeni["url"] not in sonuc_haritasi:
+        u = yeni["url"]
+        if u not in sonuc_haritasi:
             yeni_eklenen_sayisi += 1
-        sonuc_haritasi[yeni["url"]] = yeni
+            sonuc_haritasi[u] = yeni
+        else:
+            # Sadece yeni çekilen detay daha zenginse güncelle; boşsa eskiyi koru
+            if yeni.get("detailParsed") or len(yeni.get("requirements", [])) > 1:
+                sonuc_haritasi[u] = yeni
 
     nihai_liste = list(sonuc_haritasi.values())
-    nihai_liste.sort(key=lambda x: (x.get("publishDate", ""), x.get("id", "")), reverse=True)
 
+    # Tüm sitelere geçici olarak erişilemediyse mevcut listeyi asla silme
+    if not nihai_liste and mevcut_liste:
+        print(f"[{datetime.now().strftime('%H:%M:%S')}] Portallara geçici erişim sağlanamadı; mevcut {len(mevcut_liste)} ilan korundu.")
+        return
+
+    nihai_liste.sort(key=lambda x: (x.get("publishDate", ""), x.get("id", "")), reverse=True)
     sure = round(time.time() - baslangic, 1)
 
     if yeni_eklenen_sayisi == 0 and len(nihai_liste) == len(mevcut_liste):
@@ -686,7 +720,11 @@ class CORSHandler(SimpleHTTPRequestHandler):
 
 
 if __name__ == "__main__":
-    portallari_tara()
+    try:
+        portallari_tara()
+    except Exception as genel_hata:
+        print(f"Tarama uyarısı (kurtarıldı): {genel_hata}")
+
     if "--once" in sys.argv:
         sys.exit(0)
 
