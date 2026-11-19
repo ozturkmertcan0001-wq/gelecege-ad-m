@@ -1,0 +1,43 @@
+name: Saatlik Kamu İlan Tarayıcı
+
+on:
+  schedule:
+    - cron: '0 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  tara-ve-guncelle:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Depoyu İndir
+        uses: actions/checkout@v4
+
+      - name: Python Kur
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Gerekli Kütüphaneleri ve Yardımcı Tarayıcıyı Kur
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt
+          playwright install --with-deps chromium
+
+      - name: Ana ve Yardımcı Botları Çalıştır
+        run: python bot.py --once
+
+      - name: Değişiklik Varsa ilanlar.json Dosyasını Kaydet
+        run: |
+          git config user.name "GelecegeAdim-Bot"
+          git config user.email "bot@users.noreply.github.com"
+          git pull --rebase origin main || true
+          git add ilanlar.json
+          if git diff --staged --quiet; then
+            echo "Yeni ilan bulunamadı, commit atlandı."
+          else
+            git commit -m "Saatlik otomatik ilan ve detay güncellemesi"
+            git push
+          fi
