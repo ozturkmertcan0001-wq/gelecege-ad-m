@@ -1,22 +1,20 @@
 import json
 import os
-import random
 import re
+import sys
+import threading
+import time
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timedelta
+from http.server import HTTPServer, SimpleHTTPRequestHandler
 from urllib.parse import urljoin
 
-from playwright.sync_api import sync_playwright
+import schedule
+from bs4 import BeautifulSoup
 
-try:
-    from dotenv import load_dotenv
-    from google import genai
-    from google.genai import types
-    from pydantic import BaseModel, Field
+from helper_bot import GuvenliIstemci
 
-    load_dotenv()
-    GEMINI_AKTIF = bool(os.getenv("GEMINI_API_KEY"))
-except ImportError:
-    GEMINI_AKTIF = False
+JSON_DOSYASI = "ilanlar.json"
 
 PORTALLAR = [
     ("kamuilan.sbb.gov.tr", "https://kamuilan.sbb.gov.tr"),
@@ -67,84 +65,157 @@ HARIC_TUTULACAKLAR = [
     "ihale", "zeyilname", "sonuç ilanı", "sonuç duyurusu", "sonuçları",
     "giriş belgesi", "sınav takvimi", "etik ilkeleri", "daire başkanlığı",
     "rehberleri", "taslakları", "yer değiştirme", "mazerete bağlı",
-    "görevde yükselme", "unvan değişikliği", "cübbe", "2023", "2024", "2025",
-    "kazanan", "yedek liste", "atama sonuç", "mülakat sonuç"
+    "görevde yükselme", "unvan değişikliği", "cübbe", "2021", "2022", "2023",
 ]
 
 SEHIRLER = [
     "Ankara", "İstanbul", "İzmir", "Antalya", "Bursa", "Adana", "Konya",
     "Gaziantep", "Samsun", "Trabzon", "Şanlıurfa", "Batman", "Diyarbakır",
     "Mersin", "Kayseri", "Eskişehir", "Kocaeli", "Sakarya", "Manisa", "Van",
-    "Erzurum", "Malatya", "Hatay", "Balıkesir", "Tekirdağ", "Muğla", "Aydın"
+    "Tekirdağ", "Balıkesir", "Muğla", "Aydın", "Denizli", "Malatya", "Erzurum",
+    "Elazığ", "Sivas", "Hatay", "Kahramanmaraş", "Ordu", "Çanakkale", "Edirne",
 ]
 
-KADRO_SOZLUGU = [
-    ("büro yöneticisi", "Büro Yöneticisi"),
-    ("büro yönetimi", "Büro Yöneticisi / Büro Personeli"),
-    ("büro personeli", "Büro Personeli"),
-    ("düz memur", "Düz Memur"),
-    ("zabıt katibi", "Zabıt Katibi"),
-    ("zabıt kâtibi", "Zabıt Katibi"),
-    ("mübaşir", "Mübaşir"),
-    ("icra katibi", "İcra Katibi"),
-    ("infaz ve koruma memuru", "İnfaz ve Koruma Memuru"),
-    ("gişe", "Gişe / Servis Görevlisi"),
-    ("servis görevlisi", "Servis Görevlisi"),
-    ("veznedar", "Veznedar"),
-    ("veri hazırlama", "VHKİ (Veri Hazırlama)"),
-    ("çağrı merkezi", "Çağrı Merkezi Personeli"),
-    ("sekreter", "Sekreter"),
-    ("avukat", "Avukat"),
+MESLEK_SOZLUGU = [
+    # Sağlık & Sosyal Hizmetler
     ("psikolog", "Psikolog"),
     ("sosyal çalışmacı", "Sosyal Çalışmacı"),
-    ("çocuk gelişimci", "Çocuk Gelişimcisi"),
     ("sosyolog", "Sosyolog"),
+    ("çocuk gelişimcisi", "Çocuk Gelişimcisi"),
+    ("çocuk gelişimi", "Çocuk Gelişimcisi"),
     ("hemşire", "Hemşire"),
     ("ebe", "Ebe"),
     ("paramedik", "Paramedik (İlk ve Acil Yardım)"),
     ("ilk ve acil yardım", "Paramedik (İlk ve Acil Yardım)"),
     ("acil tıp teknisyeni", "Acil Tıp Teknisyeni (ATT)"),
     ("tıbbi sekreter", "Tıbbi Sekreter"),
-    ("sağlık teknikeri", "Sağlık Teknikeri"),
     ("fizyoterapist", "Fizyoterapist"),
     ("diyetisyen", "Diyetisyen"),
+    ("odyolog", "Odyolog"),
+    ("ergoterapist", "Ergoterapist"),
+    ("dil ve konuşma terapisti", "Dil ve Konuşma Terapisti"),
+    ("perfüzyonist", "Perfüzyonist"),
     ("eczacı", "Eczacı"),
+    ("diş tabibi", "Diş Tabibi"),
+    ("diş hekimi", "Diş Tabibi"),
     ("tabip", "Tabip / Doktor"),
     ("doktor", "Tabip / Doktor"),
     ("veteriner", "Veteriner Hekim"),
+    ("biyolog", "Biyolog"),
+    ("kimyager", "Kimyager"),
     ("laborant", "Laborant"),
-    ("röntgen", "Röntgen Teknisyeni"),
+    ("tıbbi görüntüleme", "Tıbbi Görüntüleme (Röntgen)"),
+    ("röntgen", "Tıbbi Görüntüleme (Röntgen)"),
+    ("anestezi", "Anestezi Teknikeri"),
+    ("diyaliz", "Diyaliz Teknikeri"),
+    ("ameliyathane", "Ameliyathane Teknikeri"),
+    ("ağız ve diş sağlığı", "Ağız ve Diş Sağlığı Teknikeri"),
+    ("optisyen", "Optisyen"),
+    ("sağlık teknikeri", "Sağlık Teknikeri"),
     ("sağlık personeli", "Sağlık Personeli"),
+
+    # Mühendislik, Mimarlık & Fen Bilimleri
+    ("makine mühendisi", "Makine Mühendisi"),
+    ("makina mühendisi", "Makine Mühendisi"),
+    ("inşaat mühendisi", "İnşaat Mühendisi"),
+    ("elektrik-elektronik mühendisi", "Elektrik-Elektronik Mühendisi"),
+    ("elektrik elektronik mühendisi", "Elektrik-Elektronik Mühendisi"),
+    ("elektrik mühendisi", "Elektrik Mühendisi"),
+    ("elektronik mühendisi", "Elektronik Mühendisi"),
+    ("bilgisayar mühendisi", "Bilgisayar Mühendisi"),
+    ("yazılım mühendisi", "Yazılım Mühendisi"),
+    ("endüstri mühendisi", "Endüstri Mühendisi"),
+    ("çevre mühendisi", "Çevre Mühendisi"),
+    ("gıda mühendisi", "Gıda Mühendisi"),
+    ("ziraat mühendisi", "Ziraat Mühendisi"),
+    ("orman mühendisi", "Orman Mühendisi"),
+    ("harita mühendisi", "Harita Mühendisi"),
+    ("jeoloji mühendisi", "Jeoloji Mühendisi"),
+    ("jeofizik mühendisi", "Jeofizik Mühendisi"),
+    ("maden mühendisi", "Maden Mühendisi"),
+    ("metalurji ve malzeme mühendisi", "Metalurji ve Malzeme Mühendisi"),
+    ("kimya mühendisi", "Kimya Mühendisi"),
+    ("mekatronik mühendisi", "Mekatronik Mühendisi"),
+    ("uçak mühendisi", "Uçak / Havacılık Mühendisi"),
+    ("havacılık mühendisi", "Uçak / Havacılık Mühendisi"),
+    ("otomotiv mühendisi", "Otomotiv Mühendisi"),
+    ("biyomedikal mühendisi", "Biyomedikal Mühendisi"),
+    ("enerji sistemleri mühendisi", "Enerji Sistemleri Mühendisi"),
+    ("mühendis", "Mühendis"),
+    ("iç mimar", "İç Mimar"),
+    ("peyzaj mimarı", "Peyzaj Mimarı"),
+    ("mimar", "Mimar"),
+    ("şehir plancısı", "Şehir Plancısı"),
+    ("istatistikçi", "İstatistikçi"),
+    ("matematikçi", "Matematikçi"),
+    ("fizikçi", "Fizikçi"),
+
+    # Büro, Adalet, Finans & Kültür
+    ("büro personeli", "Büro Personeli"),
+    ("düz memur", "Düz Memur"),
+    ("veri hazırlama", "VHKİ (Veri Hazırlama)"),
+    ("zabıt katibi", "Zabıt Katibi"),
+    ("zabıt kâtibi", "Zabıt Katibi"),
+    ("mübaşir", "Mübaşir"),
+    ("icra katibi", "İcra Katibi"),
+    ("icra kâtibi", "İcra Katibi"),
+    ("infaz ve koruma memuru", "İnfaz ve Koruma Memuru"),
+    ("avukat", "Avukat"),
+    ("mütercim", "Mütercim-Tercüman"),
+    ("tercüman", "Mütercim-Tercüman"),
+    ("kütüphaneci", "Kütüphaneci"),
+    ("arkeolog", "Arkeolog"),
+    ("sanat tarihçisi", "Sanat Tarihçisi"),
+    ("müze araştırmacısı", "Müze Araştırmacısı"),
+    ("restoratör", "Restoratör"),
+    ("gişe", "Gişe / Servis Görevlisi"),
+    ("servis görevlisi", "Servis Görevlisi"),
+    ("veznedar", "Veznedar"),
+    ("çağrı merkezi", "Çağrı Merkezi Personeli"),
+    ("sekreter", "Sekreter"),
+    ("muhasebeci", "Muhasebeci"),
+
+    # Bilişim & Tekniker / Teknisyen
     ("bilişim personeli", "Sözleşmeli Bilişim Personeli"),
-    ("yazılım", "Yazılım Uzmanı / Mühendisi"),
+    ("yazılım uzmanı", "Yazılım Uzmanı"),
     ("siber güvenlik", "Siber Güvenlik Uzmanı"),
     ("sistem uzmanı", "Sistem / Ağ Uzmanı"),
     ("ağ uzmanı", "Sistem / Ağ Uzmanı"),
-    ("bilgisayar mühendisi", "Bilgisayar Mühendisi"),
-    ("elektrik-elektronik", "Elektrik-Elektronik Mühendisi"),
-    ("inşaat mühendisi", "İnşaat Mühendisi"),
-    ("makine mühendisi", "Makine Mühendisi"),
-    ("ziraat mühendisi", "Ziraat Mühendisi"),
-    ("gıda mühendisi", "Gıda Mühendisi"),
-    ("harita mühendisi", "Harita Mühendisi"),
-    ("mühendis", "Mühendis"),
-    ("mimar", "Mimar"),
+    ("veritabanı uzmanı", "Veritabanı Uzmanı"),
+    ("programcı", "Programcı"),
+    ("bilgisayar teknikeri", "Bilgisayar Teknikeri"),
+    ("elektrik teknikeri", "Elektrik Teknikeri"),
+    ("elektronik teknikeri", "Elektronik Teknikeri"),
+    ("makine teknikeri", "Makine Teknikeri"),
+    ("inşaat teknikeri", "İnşaat Teknikeri"),
+    ("harita teknikeri", "Harita Teknikeri"),
+    ("otomotiv teknikeri", "Otomotiv Teknikeri"),
+    ("iklimlendirme", "İklimlendirme Teknikeri"),
     ("tekniker", "Tekniker"),
     ("teknisyen", "Teknisyen"),
-    ("programcı", "Programcı"),
-    ("şoför", "Şoför"),
-    ("sürücü", "Şoför"),
+
+    # İşçi, Güvenlik & Destek Hizmetleri
     ("koruma ve güvenlik", "Koruma ve Güvenlik Görevlisi"),
     ("güvenlik görevlisi", "Koruma ve Güvenlik Görevlisi"),
     ("destek personeli", "Destek Personeli"),
     ("temizlik", "Temizlik Görevlisi"),
-    ("hizmetli", "Hizmetli / Destek Personeli"),
+    ("şoför", "Şoför"),
     ("aşçı", "Aşçı"),
     ("bahçıvan", "Bahçıvan"),
+    ("kaloriferci", "Kaloriferci"),
+    ("elektrikçi", "Elektrikçi"),
+    ("sıhhi tesisat", "Sıhhi Tesisatçı"),
+    ("marangoz", "Marangoz"),
+    ("kaynakçı", "Kaynakçı"),
+    ("boyacı", "Boyacı"),
     ("operatör", "İş Makinesi Operatörü"),
     ("bakım", "Bakım-Onarım Personeli"),
     ("sürekli işçi", "Sürekli İşçi"),
     ("işçi alım", "Kamu İşçisi"),
+
+    # Uzman, Denetim & Akademik
+    ("gelir uzman yardımcısı", "Gelir Uzman Yardımcısı"),
+    ("vergi müfettiş yardımcısı", "Vergi Müfettiş Yardımcısı"),
     ("uzman yardımcısı", "Uzman Yardımcısı"),
     ("müfettiş yardımcısı", "Müfettiş Yardımcısı"),
     ("denetmen yardımcısı", "Denetmen Yardımcısı"),
@@ -155,173 +226,193 @@ KADRO_SOZLUGU = [
     ("öğretmen", "Öğretmen"),
 ]
 
-BOLUM_SOZLUGU = [
-    ("büro yönetimi ve yönetici asistanlığı", "Büro Yönetimi ve Yönetici Asistanlığı"),
-    ("büro yönetimi", "Büro Yönetimi / Büro Yöneticiliği"),
-    ("psikoloji", "Psikoloji"),
-    ("ilk ve acil yardım", "İlk ve Acil Yardım (Paramedik)"),
-    ("bilgisayar programcılığı", "Bilgisayar Programcılığı"),
-    ("bilgisayar teknolojisi", "Bilgisayar Teknolojisi"),
-    ("bilişim güvenliği", "Bilişim Güvenliği Teknolojisi"),
-    ("hemşirelik", "Hemşirelik"),
-    ("ebelik", "Ebelik"),
-    ("tıbbi dokümantasyon", "Tıbbi Dokümantasyon ve Sekreterlik"),
-    ("anestezi", "Anestezi"),
-    ("tıbbi görüntüleme", "Tıbbi Görüntüleme Teknikleri"),
-    ("tıbbi laboratuvar", "Tıbbi Laboratuvar Teknikleri"),
-    ("fizyoterapi", "Fizyoterapi ve Rehabilitasyon"),
-    ("beslenme ve diyetetik", "Beslenme ve Diyetetik"),
-    ("eczacılık", "Eczacılık"),
-    ("adalet", "Adalet"),
-    ("hukuk", "Hukuk"),
-    ("işletme", "İşletme"),
-    ("iktisat", "İktisat"),
-    ("kamu yönetimi", "Kamu Yönetimi / Siyaset Bilimi"),
-    ("maliye", "Maliye"),
-    ("uluslararası ilişkiler", "Uluslararası İlişkiler"),
-    ("çalışma ekonomisi", "Çalışma Ekonomisi ve Endüstri İlişkileri"),
-    ("muhasebe", "Muhasebe ve Vergi Uygulamaları"),
-    ("bankacılık ve sigortacılık", "Bankacılık ve Sigortacılık"),
-    ("sosyal hizmet", "Sosyal Hizmet"),
-    ("çocuk gelişimi", "Çocuk Gelişimi"),
-    ("bilgisayar mühendisliği", "Bilgisayar Mühendisliği"),
-    ("yazılım mühendisliği", "Yazılım Mühendisliği"),
-    ("elektrik-elektronik mühendisliği", "Elektrik-Elektronik Mühendisliği"),
-    ("endüstri mühendisliği", "Endüstri Mühendisliği"),
-    ("inşaat mühendisliği", "İnşaat Mühendisliği"),
-    ("makine mühendisliği", "Makine Mühendisliği"),
-    ("harita mühendisliği", "Harita Mühendisliği"),
-    ("ziraat mühendisliği", "Ziraat Mühendisliği"),
-    ("gıda mühendisliği", "Gıda Mühendisliği"),
-    ("mimarlık", "Mimarlık"),
-    ("özel güvenlik ve koruma", "Özel Güvenlik ve Koruma"),
-    ("4001", "Herhangi Bir Lisans Programı (4001)"),
-    ("3001", "Herhangi Bir Önlisans Programı (3001)"),
-    ("2001", "Herhangi Bir Ortaöğretim / Lise Alanı (2001)"),
-]
-
-OZEL_SART_KELIMELERI = [
-    "mezun", "ehliyet", "sürücü belgesi", "src", "psikoteknik",
-    "sertifika", "güvenlik kimlik", "kpss", "puan", "yaşını doldurmamış",
-    "deneyim", "tecrübe", "lisans", "önlisans", "ortaöğretim", "lise"
-]
+AYLAR_TR = {
+    "ocak": 1, "şubat": 2, "mart": 3, "nisan": 4, "mayıs": 5, "haziran": 6,
+    "temmuz": 7, "ağustos": 8, "eylül": 9, "ekim": 10, "kasım": 11, "aralık": 12,
+}
 
 
 def tr_kucuk(metin: str) -> str:
-    return metin.replace("İ", "i").replace("I", "ı").lower()
-
-
-def kadrolari_cikar(metin: str, kategori: str = "") -> list[str]:
-    b = tr_kucuk(metin)
-    bulunanlar = []
-    for anahtar, unvan in KADRO_SOZLUGU:
-        if anahtar in b and unvan not in bulunanlar:
-            if unvan == "Mühendis" and any("Mühendisi" in u for u in bulunanlar):
-                continue
-            bulunanlar.append(unvan)
-        if len(bulunanlar) >= 12:
-            break
-
-    if not bulunanlar:
-        if "sözleşmeli personel" in b:
-            bulunanlar.append("Sözleşmeli Personel (Çeşitli Unvanlar)")
-        elif "memur alım" in b:
-            bulunanlar.append("Memur (Genel İdare / Meslek)")
-        elif kategori == "Sağlık Personeli":
-            bulunanlar.append("Sağlık Personeli")
-        elif kategori == "Bilişim & Teknik":
-            bulunanlar.append("Teknik / Bilişim Personeli")
-        elif kategori == "İşçi & Hizmetli":
-            bulunanlar.append("Sürekli İşçi / Destek Personeli")
-        elif kategori == "Uzman & Akademik":
-            bulunanlar.append("Uzman / Akademik Personel")
-        else:
-            bulunanlar.append("Büro / İdari Personel")
-    return bulunanlar
-
-
-def bolumleri_cikar(metin: str) -> list[str]:
-    b = tr_kucuk(metin)
-    bolumler = []
-    for anahtar, bolum_adi in BOLUM_SOZLUGU:
-        if anahtar in b and bolum_adi not in bolumler:
-            bolumler.append(bolum_adi)
-        if len(bolumler) >= 12:
-            break
-
-    if not bolumler:
-        if "herhangi bir lisans" in b:
-            bolumler.append("Herhangi Bir Lisans Programı (4001)")
-        elif "herhangi bir önlisans" in b or "herhangi bir ön lisans" in b:
-            bolumler.append("Herhangi Bir Önlisans Programı (3001)")
-        elif "ortaöğretim" in b or "lise" in b:
-            bolumler.append("Ortaöğretim / Lise Mezunu")
-    return bolumler
-
-
-def kadro_ve_sart_eslestir(satirlar: list[str]) -> list[str]:
-    """İlan metnindeki her bir kadronun (Şoför, Psikolog, Büro Yöneticisi vb.)
-    yanında veya hemen alt satırında yazan mezuniyet/ehliyet/sertifika şartını eşleştirir."""
-    eslesen_sartlar = []
-    kullanilan_unvanlar = set()
-
-    for idx, satir in enumerate(satirlar):
-        s_kucuk = tr_kucuk(satir)
-        if len(satir) > 320:
-            continue
-
-        for anahtar, unvan in KADRO_SOZLUGU:
-            if anahtar in s_kucuk and unvan not in kullanilan_unvanlar:
-                # Kadro satırı çok kısaysa (tablo başlığı gibiyse) hemen altındaki 1-2 satırı da şart olarak ekle
-                baglam = satir
-                if len(satir) < 55 and idx + 1 < len(satirlar):
-                    sonraki = satirlar[idx + 1]
-                    if len(sonraki) < 260 and any(k in tr_kucuk(sonraki) for k in OZEL_SART_KELIMELERI):
-                        baglam = f"{satir} — {sonraki}"
-                        if len(sonraki) < 60 and idx + 2 < len(satirlar):
-                            ucuncu = satirlar[idx + 2]
-                            if len(ucuncu) < 220 and any(k in tr_kucuk(ucuncu) for k in OZEL_SART_KELIMELERI):
-                                baglam = f"{baglam} ({ucuncu})"
-
-                # Eğer satırda veya devamında gerçek bir şart/açıklama varsa listeye ekle
-                if any(k in tr_kucuk(baglam) for k in OZEL_SART_KELIMELERI) or len(baglam) > len(anahtar) + 12:
-                    temiz_baglam = re.sub(r"\s+", " ", baglam).strip()
-                    eslesen_sartlar.append(f"{unvan}: {temiz_baglam}")
-                    kullanilan_unvanlar.add(unvan)
-                break
-
-        if len(eslesen_sartlar) >= 10:
-            break
-
-    return eslesen_sartlar
+    return (metin or "").replace("İ", "i").replace("I", "ı").lower()
 
 
 def gercek_ilan_mi(baslik: str, url: str) -> bool:
     b = tr_kucuk(baslik)
-    u = url.lower()
-    if len(baslik) < 22 or len(baslik) > 260:
+    u = (url or "").lower()
+    if len(baslik) < 24 or len(baslik) > 260:
         return False
     if any(h in b for h in HARIC_TUTULACAKLAR):
         return False
     if u.endswith("#") or "javascript:" in u or "mailto:" in u:
         return False
-    return any(k in b for k in [
-        "personel alım", "memur alım", "işçi alım", "sözleşmeli personel",
-        "uzman yardımcısı", "müfettiş yardımcısı", "zabıt katibi", "mübaşir",
-        "bilişim personeli", "sağlık personeli", "hemşire", "paramedik",
-        "açık pozisyon", "işe alım", "kpss", "tercih kılavuzu", "kadrolarına",
-        "alımı yapılacaktır", "personel istihdam"
-    ])
+    return any(
+        k in b
+        for k in [
+            "personel alım", "memur alım", "işçi alım", "sözleşmeli personel",
+            "uzman yardımcısı", "müfettiş yardımcısı", "zabıt katibi", "zabıt kâtibi",
+            "mübaşir", "bilişim personeli", "sağlık personeli", "hemşire",
+            "paramedik", "psikolog", "mühendis", "açık pozisyon", "işe alım ilanı",
+            "kpss", "tercih kılavuzu", "kadrolarına", "personel istihdam",
+            "sürekli işçi", "koruma ve güvenlik", "destek personeli",
+        ]
+    )
 
 
-def detay_cikar(baslik: str, domain: str):
+def meslekleri_cikar(metin: str, kategori: str = "") -> tuple:
+    b = tr_kucuk(metin)
+    bulunanlar = []
+    detayli = []
+
+    for anahtar, unvan in MESLEK_SOZLUGU:
+        if len(anahtar) <= 5:
+            desen = r"\b" + re.escape(anahtar) + r"(?:i|ı|u|ü|ler|lar|leri|ları)?\b"
+            eslesme_var = re.search(desen, b) is not None
+        else:
+            eslesme_var = anahtar in b
+
+        if eslesme_var and unvan not in bulunanlar:
+            if unvan == "Mühendis" and any("Mühendisi" in u for u in bulunanlar):
+                continue
+            if unvan == "Mimar" and any(u in ("İç Mimar", "Peyzaj Mimarı") for u in bulunanlar):
+                continue
+            if unvan == "Tekniker" and any("Teknikeri" in u for u in bulunanlar):
+                continue
+
+            bulunanlar.append(unvan)
+
+            k_on = re.search(r"\b(\d{1,4})\s*(?:adet|kişi)?\s*" + re.escape(anahtar), b)
+            k_arka = re.search(
+                re.escape(anahtar) + r"(?:i|ı|u|ü|ler|lar|leri|ları)?\s*[\(\[\:\-\|]?\s*(\d{1,4})\s*(?:adet|kişi|kadro)?[\)\]]?",
+                b,
+            )
+            adet = None
+            for m in (k_on, k_arka):
+                if m:
+                    sayi = int(m.group(1))
+                    if 1 <= sayi <= 25000 and sayi not in (2001, 3001, 4001, 2024, 2025, 2026, 2027):
+                        adet = sayi
+                        break
+
+            detayli.append(f"{unvan} ({adet})" if adet else unvan)
+
+        if len(bulunanlar) >= 25:
+            break
+
+    if not bulunanlar:
+        if "sözleşmeli personel" in b:
+            fallback = "Sözleşmeli Personel (Çeşitli Unvanlar)"
+        elif "memur alım" in b:
+            fallback = "Memur (Genel İdare / Meslek)"
+        elif kategori == "Sağlık Personeli":
+            fallback = "Sağlık Personeli"
+        elif kategori == "Bilişim & Teknik":
+            fallback = "Teknik / Bilişim Personeli"
+        elif kategori == "İşçi & Hizmetli":
+            fallback = "Sürekli İşçi / Destek Personeli"
+        elif kategori == "Uzman & Akademik":
+            fallback = "Uzman / Akademik Personel"
+        else:
+            fallback = "Büro / İdari Personel"
+        bulunanlar.append(fallback)
+        detayli.append(fallback)
+
+    return bulunanlar, detayli
+
+
+def son_basvuru_tarihi_bul(metin: str) -> str:
+    b = tr_kucuk(metin)
+    bugun = datetime.now()
+    aday_tarihler = []
+
+    for m in re.finditer(r"(\d{1,2})[./](\d{1,2})[./](202[6-8])", b):
+        gun, ay, yil = int(m.group(1)), int(m.group(2)), int(m.group(3))
+        try:
+            dt = datetime(yil, ay, gun)
+            if bugun - timedelta(days=1) <= dt <= bugun + timedelta(days=120):
+                aday_tarihler.append(dt)
+        except ValueError:
+            continue
+
+    for m in re.finditer(
+        r"(\d{1,2})\s+(ocak|şubat|mart|nisan|mayıs|haziran|temmuz|ağustos|eylül|ekim|kasım|aralık)\s+(202[6-8])",
+        b,
+    ):
+        gun = int(m.group(1))
+        ay = AYLAR_TR.get(m.group(2), 0)
+        yil = int(m.group(3))
+        try:
+            dt = datetime(yil, ay, gun)
+            if bugun - timedelta(days=1) <= dt <= bugun + timedelta(days=120):
+                aday_tarihler.append(dt)
+        except ValueError:
+            continue
+
+    if aday_tarihler:
+        return max(aday_tarihler).strftime("%Y-%m-%d")
+    return (bugun + timedelta(days=10)).strftime("%Y-%m-%d")
+
+
+def sartlari_cikar(govde: str) -> list:
+    ham_parcalar = re.split(r"(?<=[.!?])\s+|\n+|\s*•\s*|\s*-\s+(?=[A-ZÇĞİÖŞÜ])", govde[:18000])
+    sart_anahtarlari = [
+        "kpss", "puan", "p3", "p93", "p94", "mezun", "lisans", "önlisans", "ortaöğretim",
+        "lise", "2001", "3001", "4001", "yaşını doldurmamış", "yaş şartı", "657 sayılı",
+        "4/b", "askerlik", "sertifika", "sürücü belgesi", "ehliyet", "ikamet",
+        "başvuru tarih", "nitelik", "şart", "belge", "sözlü sınav", "uygulamalı sınav",
+    ]
+    secilenler = []
+    gorulen_oz = set()
+
+    for parca in ham_parcalar:
+        temiz = " ".join(parca.split()).strip(" -•:;·")
+        if not (32 <= len(temiz) <= 260):
+            continue
+        kucuk = tr_kucuk(temiz)
+        if any(g in kucuk for g in ["çerez", "cookie", "tüm hakları saklıdır", "ana sayfa", "iletişim", "menü"]):
+            continue
+        if any(k in kucuk for k in sart_anahtarlari):
+            oz = kucuk[:45]
+            if oz not in gorulen_oz:
+                gorulen_oz.add(oz)
+                secilenler.append(temiz)
+        if len(secilenler) >= 6:
+            break
+
+    if not secilenler:
+        secilenler.append("İlgili kurumun resmi duyuru sayfasındaki genel ve özel başvuru şartlarını inceleyiniz.")
+    return secilenler
+
+
+def belgeleri_cikar(govde: str) -> list:
+    b = tr_kucuk(govde[:12000])
+    belgeler = ["e-Devlet Mezuniyet Belgesi", "KPSS Sonuç Belgesi"]
+    aday_belgeler = [
+        ("adli sicil", "Adli Sicil Kaydı (e-Devlet)"),
+        ("askerlik", "Askerlik Durum Belgesi"),
+        ("sağlık kurulu", "Tam Teşekküllü Sağlık Kurulu Raporu"),
+        ("sürücü belgesi", "Sürücü Belgesi (Ehliyet) Fotokopisi"),
+        ("ehliyet", "Sürücü Belgesi (Ehliyet) Fotokopisi"),
+        ("sertifika", "Mesleki Yeterlilik / Kurs Sertifikası"),
+        ("özgeçmiş", "Detaylı Özgeçmiş (CV)"),
+        ("ikamet", "Yerleşim Yeri (İkametgah) Belgesi"),
+        ("fotoğraf", "Biyometrik / Vesikalık Fotoğraf"),
+    ]
+    for anahtar, etiket in aday_belgeler:
+        if anahtar in b and etiket not in belgeler:
+            belgeler.append(etiket)
+        if len(belgeler) >= 6:
+            break
+    return belgeler
+
+
+def temel_analiz(baslik: str, domain: str):
     b = tr_kucuk(baslik)
 
-    if any(k in b for k in ["hemşire", "sağlık", "paramedik", "ebe", "doktor", "tıbbi", "eczacı", "psikolog"]):
+    if any(k in b for k in ["hemşire", "sağlık", "paramedik", "ebe", "doktor", "tıbbi", "eczacı", "psikolog", "fizyoterapist", "diyetisyen"]):
         kategori = "Sağlık Personeli"
-    elif any(k in b for k in ["bilişim", "mühendis", "tekniker", "programcı", "yazılım", "siber"]):
+    elif any(k in b for k in ["bilişim", "mühendis", "mimar", "tekniker", "teknisyen", "programcı", "yazılım", "siber"]):
         kategori = "Bilişim & Teknik"
-    elif any(k in b for k in ["işçi", "temizlik", "şoför", "güvenlik", "hizmetli", "operatör", "koruma"]):
+    elif any(k in b for k in ["işçi", "temizlik", "şoför", "güvenlik", "hizmetli", "operatör", "koruma", "aşçı", "kaloriferci"]):
         kategori = "İşçi & Hizmetli"
     elif any(k in b for k in ["uzman", "müfettiş", "öğretim", "araştırma", "akademik", "denetmen"]):
         kategori = "Uzman & Akademik"
@@ -340,11 +431,14 @@ def detay_cikar(baslik: str, domain: str):
     if any(k in domain for k in ["ibb.istanbul", "ankara.bel.tr", "thy.com", "aselsan", "tusas", "roketsan", "bank", "vizyonergenc"]):
         kpss = "KPSS Şartsız"
 
-    duz_mu = any(k in b for k in [
-        "4001", "3001", "2001", "bölüm şartsız", "herhangi bir lisans",
-        "herhangi bir önlisans", "düz memur", "büro personeli",
-        "zabıt katibi", "mübaşir", "gişe", "servis görevlisi", "destek personeli"
-    ])
+    duz_mu = any(
+        k in b
+        for k in [
+            "4001", "3001", "2001", "bölüm şartsız", "herhangi bir lisans",
+            "herhangi bir önlisans", "düz memur", "büro personeli",
+            "zabıt katibi", "zabıt kâtibi", "mübaşir", "gişe", "servis görevlisi", "destek personeli",
+        ]
+    )
 
     sehir = "Türkiye Geneli"
     if "ibb.istanbul" in domain:
@@ -359,7 +453,7 @@ def detay_cikar(baslik: str, domain: str):
                 sehir = s
                 break
 
-    eslesme = re.search(r"\b(\d{1,5})\s*(?:sözleşmeli|sürekli|memur|personel|işçi|uzman|kadro|kişilik|adet)", b)
+    eslesme = re.search(r"\b(\d{1,5})\s*(?:sözleşmeli|sürekli|memur|personel|işçi|uzman|kadro|kişilik)", b)
     kontenjan = int(eslesme.group(1)) if eslesme else 1
 
     if "2001" in b:
@@ -371,236 +465,240 @@ def detay_cikar(baslik: str, domain: str):
     else:
         nitelik = "Özel Nitelik"
 
-    kadrolar = kadrolari_cikar(baslik, kategori)
-    return kategori, egitim, kpss, duz_mu, sehir, kontenjan, nitelik, kadrolar
+    meslekler, detayli_meslekler = meslekleri_cikar(baslik, kategori)
+    return kategori, egitim, kpss, duz_mu, sehir, kontenjan, nitelik, meslekler, detayli_meslekler
 
 
-def ai_ile_zenginlestir(ham_metin: str) -> dict | None:
-    if not GEMINI_AKTIF:
-        return None
-
-    class AiIlanAnaliz(BaseModel):
-        positions: list[str] = Field(description="İlanda geçen tüm unvanlar (Örn: Şoför, Psikolog, Büro Yöneticisi)")
-        departments: list[str] = Field(description="Aranan mezuniyet bölümleri veya nitelik kodları")
-        quota: int = Field(description="Toplam kontenjan sayısı")
-        kpss: str = Field(description="KPSS puan türü ve taban puan şartı")
-        endDate: str = Field(description="YYYY-MM-DD formatında son başvuru tarihi")
-        requirements: list[str] = Field(description="Her kadro için aranan bölümü, ehliyeti, sertifikayı ve özel şartı 'Kadro Adı: Şartlar' şeklinde yaz")
-
+def ilan_detay_analiz_et(istemci: GuvenliIstemci, ilan: dict) -> dict:
     try:
-        client = genai.Client()
-        prompt = f"""
-        Aşağıdaki resmi ilan metnini analiz et.
-        Özellikle ilanın içinde geçen her pozisyon (örneğin Şoför, Psikolog, Büro Yöneticisi vb.) için hangi mezuniyet bölümünün, ehliyetin, sertifikanın veya KPSS puanının arandığını tek tek çıkar.
+        yanit = istemci.sayfa_getir(ilan["url"], timeout=12, js_destegi=True)
+        if not yanit.get("ok"):
+            return ilan
 
-        İlan Metni:
-        {ham_metin[:14000]}
-        """
-        resp = client.models.generate_content(
-            model="gemini-2.5-flash",
-            contents=prompt,
-            config=types.GenerateContentConfig(
-                response_mime_type="application/json",
-                response_schema=AiIlanAnaliz,
-                temperature=0.1,
-            ),
-        )
-        return json.loads(resp.text)
-    except Exception:
-        return None
+        kadro_satirlari = []
+        govde = ""
 
+        if yanit.get("pdf_text"):
+            govde = yanit["pdf_text"]
+        elif yanit.get("html"):
+            soup = BeautifulSoup(yanit["html"], "html.parser")
+            for tag in soup(["script", "style", "nav", "header", "footer", "aside"]):
+                tag.decompose()
 
-def ilan_sayfasi_zenginlestir(page, url: str, mevcut_baslik: str, kategori: str, mevcut_kontenjan: int, mevcut_kpss: str):
-    if url.lower().endswith((".pdf", ".doc", ".docx", ".xls", ".xlsx", ".zip", ".rar")):
-        return None
+            govde = soup.get_text("\n")
 
-    try:
-        page.goto(url, timeout=18000, wait_until="domcontentloaded")
-        page.wait_for_timeout(1600)
+            for tr in soup.find_all("tr"):
+                hucreler = [" ".join(td.get_text().split()) for td in tr.find_all(["td", "th"]) if td.get_text(strip=True)]
+                if 2 <= len(hucreler) <= 8:
+                    satir = " — ".join(hucreler[:4])
+                    if 8 <= len(satir) <= 150 and any(
+                        k in tr_kucuk(satir)
+                        for k in [
+                            "mühendis", "psikolog", "hemşire", "paramedik", "tekniker", "teknisyen",
+                            "büro", "memur", "işçi", "şoför", "güvenlik", "uzman", "avukat", "tabip",
+                            "ebe", "diyetisyen", "fizyoterapist", "katibi", "kâtibi", "mübaşir", "unvan", "kadro",
+                        ]
+                    ):
+                        if satir not in kadro_satirlari:
+                            kadro_satirlari.append(satir)
+                if len(kadro_satirlari) >= 15:
+                    break
 
-        ham_govde = page.inner_text("body")
-        satirlar = [s.strip() for s in ham_govde.splitlines() if len(s.strip()) > 2]
-        govde = " ".join(satirlar)
-        if len(govde) < 100:
-            return None
+        temiz_govde = " ".join(govde.split())
+        if len(temiz_govde) < 80:
+            return ilan
 
-        ai_sonuc = ai_ile_zenginlestir(f"Başlık: {mevcut_baslik}\n\n{ham_govde}")
-        if ai_sonuc and ai_sonuc.get("requirements"):
-            return ai_sonuc
+        birlesik_metin = f"{ilan['title']} {temiz_govde[:25000]}"
+        meslekler, detayli_meslekler = meslekleri_cikar(birlesik_metin, ilan["category"])
+        sartlar = sartlari_cikar(govde)
+        belgeler = belgeleri_cikar(temiz_govde)
+        son_tarih = son_basvuru_tarihi_bul(temiz_govde[:8000])
 
-        birlesik_metin = f"{mevcut_baslik} {govde[:10000]}"
-        b_kucuk = tr_kucuk(birlesik_metin)
+        kucuk_icerik = tr_kucuk(temiz_govde[:12000])
+        if re.search(r"\b(2001|3001|4001)\b", kucuk_icerik) or "bölüm şartsız" in kucuk_icerik:
+            ilan["isDuzMemurluk"] = True
+            if "2001" in kucuk_icerik and "3001" in kucuk_icerik and "4001" in kucuk_icerik:
+                ilan["qualCode"] = "2001 / 3001 / 4001 (Bölüm Şartsız)"
+            elif "3001" in kucuk_icerik:
+                ilan["qualCode"] = "3001 (Önlisans - Bölüm Şartsız)"
+            elif "2001" in kucuk_icerik:
+                ilan["qualCode"] = "2001 (Lise - Bölüm Şartsız)"
+            else:
+                ilan["qualCode"] = "4001 (Lisans - Bölüm Şartsız)"
 
-        zengin_kadrolar = kadrolari_cikar(birlesik_metin, kategori)
-        aranan_bolumler = bolumleri_cikar(birlesik_metin)
-        kadro_sart_listesi = kadro_ve_sart_eslestir(satirlar)
-
-        yeni_kontenjan = mevcut_kontenjan
-        if mevcut_kontenjan <= 1:
-            m = re.search(r"\b(\d{1,5})\s*(?:adet|kişi|kadro|pozisyon|sözleşmeli\s+personel|sürekli\s+işçi|memur)\b", b_kucuk)
+        if ilan["quota"] <= 1:
+            m = re.search(
+                r"\b(\d{1,5})\s*(?:adet|kişi|kadro|sözleşmeli personel|sürekli işçi|memur|personel)\b",
+                kucuk_icerik[:6000],
+            )
             if m:
                 sayi = int(m.group(1))
                 if 1 <= sayi <= 50000:
-                    yeni_kontenjan = sayi
+                    ilan["quota"] = sayi
 
-        guncel_kpss = mevcut_kpss
-        kpss_puan = re.search(r"kpss[^\d]{0,30}(\d{2})\s*(?:ve\s+üzeri|puan)", b_kucuk)
-        if kpss_puan:
-            guncel_kpss = f"{mevcut_kpss} - En Az {kpss_puan.group(1)} Puan"
-
-        son_tarih = ""
-        tarih_eslesme = re.search(r"son\s+başvuru\s*(?:tarihi)?[:\s-]*(\d{1,2})[./-](\d{1,2})[./-](202\d)", b_kucuk)
-        if tarih_eslesme:
-            gun, ay, yil = tarih_eslesme.groups()
-            son_tarih = f"{yil}-{int(ay):02d}-{int(gun):02d}"
-
-        detay_maddeleri = []
-        if kadro_sart_listesi:
-            detay_maddeleri.extend(kadro_sart_listesi)
-        if aranan_bolumler:
-            detay_maddeleri.append(f"Aranan Bölümler / Alanlar: {', '.join(aranan_bolumler)}")
-        if zengin_kadrolar and not kadro_sart_listesi:
-            detay_maddeleri.append(f"Alım Yapılacak Kadrolar: {', '.join(zengin_kadrolar)}")
-        detay_maddeleri.append(f"Sınav / Puan Şartı: {guncel_kpss}")
-
-        # Özel şart içeren (ehliyet, sertifika, yaş, mezuniyet) ek satırları da yakala
-        for satir in satirlar:
-            if 35 <= len(satir) <= 240 and any(k in tr_kucuk(satir) for k in ["ehliyet", "sürücü belgesi", "src", "sertifika", "yaşını doldurmamış", "mezun olmak"]):
-                if satir not in detay_maddeleri and not any(satir in d for d in detay_maddeleri):
-                    detay_maddeleri.append(satir)
-                if len(detay_maddeleri) >= 12:
-                    break
-
-        return {
-            "positions": zengin_kadrolar,
-            "departments": aranan_bolumler,
-            "quota": yeni_kontenjan,
-            "kpss": guncel_kpss,
-            "endDate": son_tarih,
-            "requirements": detay_maddeleri,
-        }
+        ilan["positions"] = meslekler
+        ilan["positionDetails"] = detayli_meslekler
+        ilan["kadroRows"] = kadro_satirlari
+        ilan["requirements"] = sartlar
+        ilan["documents"] = belgeler
+        ilan["endDate"] = son_tarih
+        return ilan
     except Exception:
-        return None
+        return ilan
+
+
+def mevcut_ilanlari_yukle() -> list:
+    if not os.path.exists(JSON_DOSYASI):
+        return []
+    try:
+        with open(JSON_DOSYASI, "r", encoding="utf-8") as f:
+            veri = json.load(f)
+            return veri if isinstance(veri, list) else []
+    except Exception:
+        return []
+
+
+def tek_portal_tara(istemci: GuvenliIstemci, idx: int, domain: str, base_url: str) -> list:
+    bulunan_adaylar = []
+    try:
+        yanit = istemci.sayfa_getir(base_url, timeout=15, js_destegi=True)
+        if not yanit.get("ok") or not yanit.get("html"):
+            print(f"Bilgi ({domain}): Portal yanıt vermedi veya korumalı, atlandı.")
+            return []
+
+        soup = BeautifulSoup(yanit["html"], "html.parser")
+        yerel_url = set()
+
+        for a_idx, link in enumerate(soup.find_all("a", href=True)):
+            metin = " ".join(link.get_text().split()).strip()
+            tam_url = urljoin(base_url, link["href"].strip())
+
+            if tam_url in yerel_url or not gercek_ilan_mi(metin, tam_url):
+                continue
+
+            yerel_url.add(tam_url)
+            kategori, egitim, kpss, duz_mu, sehir, kontenjan, nitelik, meslekler, detayli = temel_analiz(metin, domain)
+
+            bulunan_adaylar.append(
+                {
+                    "id": f"ga-{idx}-{a_idx}",
+                    "sourceDomain": domain,
+                    "category": kategori,
+                    "institution": domain.upper(),
+                    "title": metin[:200],
+                    "positions": meslekler,
+                    "positionDetails": detayli,
+                    "kadroRows": [],
+                    "city": sehir,
+                    "education": egitim,
+                    "kpss": kpss,
+                    "quota": kontenjan,
+                    "publishDate": datetime.now().strftime("%Y-%m-%d"),
+                    "endDate": (datetime.now() + timedelta(days=10)).strftime("%Y-%m-%d"),
+                    "refNo": f"GA-{idx + 1}-{a_idx + 100}",
+                    "qualCode": nitelik,
+                    "isDuzMemurluk": duz_mu,
+                    "url": tam_url,
+                    "requirements": ["İlgili kurumun resmi duyuru metnindeki başvuru şartlarını inceleyiniz."],
+                    "documents": ["e-Devlet Mezuniyet Belgesi", "KPSS Sonuç Belgesi"],
+                }
+            )
+            if len(bulunan_adaylar) >= 8:
+                break
+    except Exception as hata:
+        print(f"Uyarı ({domain}): {hata}")
+    return bulunan_adaylar
 
 
 def portallari_tara():
-    print(f"[{datetime.now().strftime('%H:%M:%S')}] 42 resmi kurum taranıyor...")
-    tum_ilanlar = []
+    baslangic = time.time()
+    print(f"[{datetime.now().strftime('%H:%M:%S')}] 42 resmi portal taranıyor...")
+
+    istemci = GuvenliIstemci()
+    mevcut_liste = mevcut_ilanlari_yukle()
+    mevcut_harita = {item.get("url"): item for item in mevcut_liste if item.get("url")}
+
+    aday_ilanlar = []
     gorulen_url = set()
 
-    with sync_playwright() as p:
-        browser = p.chromium.launch(
-            headless=True,
-            args=[
-                "--disable-blink-features=AutomationControlled",
-                "--no-sandbox",
-                "--disable-dev-shm-usage",
-            ],
+    with ThreadPoolExecutor(max_workers=8) as havuz:
+        gelecekler = [
+            havuz.submit(tek_portal_tara, istemci, idx, domain, url)
+            for idx, (domain, url) in enumerate(PORTALLAR)
+        ]
+        for f in as_completed(gelecekler):
+            for ilan in f.result():
+                if ilan["url"] not in gorulen_url:
+                    gorulen_url.add(ilan["url"])
+                    if ilan["url"] in mevcut_harita:
+                        eski = mevcut_harita[ilan["url"]]
+                        ilan["publishDate"] = eski.get("publishDate", ilan["publishDate"])
+                        ilan["id"] = eski.get("id", ilan["id"])
+                    aday_ilanlar.append(ilan)
+
+    zengin_ilanlar = []
+    if aday_ilanlar:
+        print(f"[{datetime.now().strftime('%H:%M:%S')}] {len(aday_ilanlar)} ilanın detay sayfası tek tek inceleniyor...")
+        with ThreadPoolExecutor(max_workers=6) as detay_havuzu:
+            detay_isler = [detay_havuzu.submit(ilan_detay_analiz_et, istemci, ilan) for ilan in aday_ilanlar]
+            for f in as_completed(detay_isler):
+                zengin_ilanlar.append(f.result())
+
+    bugun_str = datetime.now().strftime("%Y-%m-%d")
+    sonuc_haritasi = {}
+
+    for eski in mevcut_liste:
+        u = eski.get("url")
+        if u and eski.get("endDate", "2099-12-31") >= bugun_str:
+            sonuc_haritasi[u] = eski
+
+    yeni_eklenen_sayisi = 0
+    for yeni in zengin_ilanlar:
+        if yeni["url"] not in sonuc_haritasi:
+            yeni_eklenen_sayisi += 1
+        sonuc_haritasi[yeni["url"]] = yeni
+
+    nihai_liste = list(sonuc_haritasi.values())
+    nihai_liste.sort(key=lambda x: (x.get("publishDate", ""), x.get("id", "")), reverse=True)
+
+    sure = round(time.time() - baslangic, 1)
+
+    if yeni_eklenen_sayisi == 0 and len(nihai_liste) == len(mevcut_liste):
+        print(f"[{datetime.now().strftime('%H:%M:%S')}] Yeni ilan yok, mevcut {len(nihai_liste)} ilan korundu ({sure} sn).")
+        return
+
+    try:
+        with open(JSON_DOSYASI, "w", encoding="utf-8") as f:
+            json.dump(nihai_liste, f, ensure_ascii=False, indent=2)
+        print(
+            f"[{datetime.now().strftime('%H:%M:%S')}] Tamamlandı ({sure} sn): "
+            f"+{yeni_eklenen_sayisi} yeni ilan, toplam {len(nihai_liste)} aktif ilan kaydedildi."
         )
-        context = browser.new_context(
-            user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
-            viewport={"width": 1366, "height": 768},
-            locale="tr-TR",
-            ignore_https_errors=True,
-        )
+    except Exception as hata:
+        print(f"Uyarı: Dosya yazma hatası ({hata}), sistem çalışmaya devam ediyor.")
 
-        context.route(
-            "**/*",
-            lambda route: route.abort()
-            if route.request.resource_type in ["image", "media", "font"]
-            else route.continue_(),
-        )
 
-        liste_sayfasi = context.new_page()
-        detay_sayfasi = context.new_page()
-
-        for idx, (domain, base_url) in enumerate(PORTALLAR):
-            try:
-                liste_sayfasi.goto(base_url, timeout=22000, wait_until="domcontentloaded")
-                liste_sayfasi.wait_for_timeout(1800)
-
-                ham_linkler = liste_sayfasi.eval_on_selector_all(
-                    "a[href]",
-                    """els => els.map(e => ({
-                        text: (e.innerText || e.title || e.getAttribute('aria-label') || '').replace(/\\s+/g, ' ').trim(),
-                        href: e.getAttribute('href') || ''
-                    }))""",
-                )
-
-                portal_sayac = 0
-                for a_idx, item in enumerate(ham_linkler):
-                    metin = item["text"]
-                    tam_url = urljoin(base_url, item["href"].strip())
-
-                    if tam_url in gorulen_url or not gercek_ilan_mi(metin, tam_url):
-                        continue
-
-                    gorulen_url.add(tam_url)
-                    kategori, egitim, kpss, duz_mu, sehir, kontenjan, nitelik, kadrolar = detay_cikar(metin, domain)
-                    bolumler = bolumleri_cikar(metin)
-                    bitis_tarihi = (datetime.now() + timedelta(days=10)).strftime("%Y-%m-%d")
-                    sartlar = ["İlgili kurumun resmi duyuru metnindeki başvuru şartlarını inceleyiniz."]
-
-                    if portal_sayac < 6:
-                        zengin = ilan_sayfasi_zenginlestir(
-                            detay_sayfasi, tam_url, metin, kategori, kontenjan, kpss
-                        )
-                        if zengin:
-                            if zengin.get("positions"):
-                                kadrolar = zengin["positions"]
-                            if zengin.get("departments"):
-                                bolumler = zengin["departments"]
-                            if zengin.get("quota"):
-                                kontenjan = zengin["quota"]
-                            if zengin.get("kpss"):
-                                kpss = zengin["kpss"]
-                            if zengin.get("endDate"):
-                                bitis_tarihi = zengin["endDate"]
-                            if zengin.get("requirements"):
-                                sartlar = zengin["requirements"]
-
-                        time.sleep(random.uniform(0.3, 0.7))
-
-                    tum_ilanlar.append({
-                        "id": f"ga-{idx}-{a_idx}",
-                        "sourceDomain": domain,
-                        "category": kategori,
-                        "institution": domain.upper(),
-                        "title": metin[:200],
-                        "positions": kadrolar,
-                        "departments": bolumler,
-                        "city": sehir,
-                        "education": egitim,
-                        "kpss": kpss,
-                        "quota": kontenjan,
-                        "publishDate": datetime.now().strftime("%Y-%m-%d"),
-                        "endDate": bitis_tarihi,
-                        "refNo": f"GA-{idx+1}-{a_idx+100}",
-                        "qualCode": nitelik,
-                        "isDuzMemurluk": duz_mu,
-                        "url": tam_url,
-                        "requirements": sartlar,
-                        "documents": ["e-Devlet Mezuniyet Belgesi", "KPSS Sonuç Belgesi"],
-                    })
-                    portal_sayac += 1
-                    if portal_sayac >= 10:
-                        break
-
-                print(f"[TAMAM] {domain}: {portal_sayac} ilan eklendi.")
-            except Exception as hata:
-                print(f"[UYARI] {domain} atlandı: {str(hata)[:90]}")
-
-        browser.close()
-
-    if tum_ilanlar:
-        gecici_dosya = "ilanlar.tmp.json"
-        with open(gecici_dosya, "w", encoding="utf-8") as f:
-            json.dump(tum_ilanlar, f, ensure_ascii=False, indent=2)
-        os.replace(gecici_dosya, "ilanlar.json")
-        print(f"[BITTI] Toplam {len(tum_ilanlar)} detaylı ilan 'ilanlar.json' dosyasına yazıldı.")
-    else:
-        print("[UYARI] Yeni ilan çekilemedi, mevcut 'ilanlar.json' korundu.")
+class CORSHandler(SimpleHTTPRequestHandler):
+    def end_headers(self):
+        self.send_header("Access-Control-Allow-Origin", "*")
+        self.send_header("Cache-Control", "no-store, no-cache, must-revalidate")
+        super().end_headers()
 
 
 if __name__ == "__main__":
     portallari_tara()
+    if "--once" in sys.argv:
+        sys.exit(0)
+
+    schedule.every().hour.at(":00").do(portallari_tara)
+    threading.Thread(
+        target=lambda: HTTPServer(("0.0.0.0", 8000), CORSHandler).serve_forever(),
+        daemon=True,
+    ).start()
+    print("Canlı JSON sunucusu aktif: http://localhost:8000/ilanlar.json")
+    while True:
+        try:
+            schedule.run_pending()
+        except Exception as e:
+            print(f"Zamanlayıcı uyarısı (kurtarıldı): {e}")
+        time.sleep(15)
