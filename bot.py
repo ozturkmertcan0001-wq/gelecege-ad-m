@@ -1,4 +1,4 @@
-import json
+iimport json
 import os
 import re
 import sys
@@ -62,7 +62,9 @@ PORTALLAR = [
 ]
 
 HARIC_TUTULACAKLAR = [
-    "ihale", "zeyilname", "sonuç ilanı", "sonuç duyurusu", "sonuçları",
+    "ihale", "hizmet alımı", "hizmet alım", "mal alımı", "mal alım",
+    "yapım işi", "doğrudan temin", "kiralama ihalesi", "satış ihalesi", "ekap",
+    "zeyilname", "sonuç ilanı", "sonuç duyurusu", "sonuçları",
     "sonuçlarının açıklanması", "yerleştirme sonuç", "mülakat sonuç",
     "nihai başarı", "kazanan aday", "yedek aday", "evrak teslim",
     "branş bazında", "sıralama", "cevap kağıt", "cevap kâğıt",
@@ -71,7 +73,8 @@ HARIC_TUTULACAKLAR = [
     "sınav merkezi", "sınav yeri", "sınav yerleri",
     "giriş belgesi", "sınav takvimi", "etik ilkeleri", "daire başkanlığı",
     "rehberleri", "taslakları", "yer değiştirme", "mazerete bağlı",
-    "görevde yükselme", "unvan değişikliği", "cübbe", "2021", "2022", "2023",
+    "görevde yükselme", "unvan değişikliği", "cübbe",
+    "2024 yılı", "2025 yılı", "2024/", "2025/",
 ]
 
 SEHIRLER = [
@@ -249,12 +252,14 @@ def gercek_ilan_mi(baslik: str, url: str) -> bool:
         return False
     if any(h in b for h in HARIC_TUTULACAKLAR):
         return False
+    # 2021-2025 yılına ait eski ilanları engelle (2024 KPSS puanı atıflarına izin ver)
+    if re.search(r"\b202[1-5]\b(?!\s*[\-\/]?\s*kpss)", b):
+        return False
     if not u.startswith(("http://", "https://")):
         return False
     if u.endswith("#") or "javascript:" in u or "mailto:" in u:
         return False
 
-    # ÖSYM duyurularında yalnızca personel yerleştirme / tercih kılavuzlarını kabul et
     if "osym.gov.tr" in u:
         return any(
             k in b
@@ -279,6 +284,48 @@ def gercek_ilan_mi(baslik: str, url: str) -> bool:
             "sürekli işçi", "koruma ve güvenlik", "destek personeli",
         ]
     )
+
+
+def duz_memurluk_tespit(metin: str, mevcut_egitim: str = "") -> tuple:
+    k = tr_kucuk(metin)
+    kodlar = []
+    if re.search(r"\b2001\b", k) or "herhangi bir ortaöğretim" in k or "herhangi bir lise" in k:
+        kodlar.append("2001 (Lise)")
+    if re.search(r"\b3001\b", k) or "herhangi bir önlisans" in k or "herhangi bir ön lisans" in k:
+        kodlar.append("3001 (Önlisans)")
+    if re.search(r"\b4001\b", k) or "herhangi bir lisans" in k:
+        kodlar.append("4001 (Lisans)")
+
+    genel_duz_ifadeler = [
+        "bölüm şartsız", "düz memur", "büro personeli", "destek personeli",
+        "zabıt katibi", "zabıt kâtibi", "mübaşir", "gişe", "servis görevlisi",
+    ]
+    duz_mu = len(kodlar) > 0 or any(g in k for g in genel_duz_ifadeler)
+    if not duz_mu:
+        return False, "Özel Nitelik"
+    if kodlar:
+        return True, " / ".join(kodlar) + " — Bölüm Şartsız"
+    return True, f"Bölüm Şartsız ({mevcut_egitim or 'Genel'})"
+
+
+def kpss_tespit(metin: str, egitim: str = "") -> str:
+    b = tr_kucuk(metin)
+    kpss_sartsiz_ifadeler = [
+        "kpss şartı aranmaksızın", "kpss şartsız", "kpss'siz", "kpss’siz",
+        "kpss puanı aranmadan", "kpss şartı bulunmamaktadır", "kpss şartı yok",
+        "kpss puan şartı aranmaksızın", "kpss şartı aranmadan",
+    ]
+    if any(k in b for k in kpss_sartsiz_ifadeler):
+        return "KPSS Şartsız"
+    if "p94" in b or ("kpss" in b and (egitim == "Ortaöğretim" or "2001" in b)):
+        return "KPSS P94 (Ortaöğretim)"
+    if "p93" in b or ("kpss" in b and (egitim == "Önlisans" or "3001" in b)):
+        return "KPSS P93 (Önlisans)"
+    if "p3" in b or ("kpss" in b and (egitim == "Lisans" or "4001" in b)):
+        return "KPSS P3 (Lisans)"
+    if "kpss" in b:
+        return "KPSS Puanı Gerekli"
+    return "Resmi İlanda Belirtilmiş"
 
 
 def meslekleri_cikar(metin: str, kategori: str = "") -> tuple:
@@ -344,35 +391,37 @@ def meslekleri_cikar(metin: str, kategori: str = "") -> tuple:
 
 def son_basvuru_tarihi_bul(metin: str) -> str:
     b = tr_kucuk(metin)
-    bugun = datetime.now()
-    aday_tarihler = []
+    bugun = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)
+    tum_tarihler = []
 
-    for m in re.finditer(r"(\d{1,2})[./](\d{1,2})[./](202[6-8])", b):
+    for m in re.finditer(r"(\d{1,2})[./](\d{1,2})[./](202[4-8])", b):
         gun, ay, yil = int(m.group(1)), int(m.group(2)), int(m.group(3))
         try:
-            dt = datetime(yil, ay, gun)
-            if bugun - timedelta(days=1) <= dt <= bugun + timedelta(days=120):
-                aday_tarihler.append(dt)
+            tum_tarihler.append(datetime(yil, ay, gun))
         except ValueError:
             continue
 
     for m in re.finditer(
-        r"(\d{1,2})\s+(ocak|şubat|mart|nisan|mayıs|haziran|temmuz|ağustos|eylül|ekim|kasım|aralık)\s+(202[6-8])",
+        r"(\d{1,2})\s+(ocak|şubat|mart|nisan|mayıs|haziran|temmuz|ağustos|eylül|ekim|kasım|aralık)\s+(202[4-8])",
         b,
     ):
         gun = int(m.group(1))
         ay = AYLAR_TR.get(m.group(2), 0)
         yil = int(m.group(3))
         try:
-            dt = datetime(yil, ay, gun)
-            if bugun - timedelta(days=1) <= dt <= bugun + timedelta(days=120):
-                aday_tarihler.append(dt)
+            tum_tarihler.append(datetime(yil, ay, gun))
         except ValueError:
             continue
 
-    if aday_tarihler:
-        return max(aday_tarihler).strftime("%Y-%m-%d")
-    return (bugun + timedelta(days=10)).strftime("%Y-%m-%d")
+    if not tum_tarihler:
+        return "Resmi İlanda Belirtilmiş"
+
+    en_son_tarih = max(tum_tarihler)
+    if en_son_tarih < bugun - timedelta(days=1):
+        return "SURESI_DOLMUS"
+    if en_son_tarih > bugun + timedelta(days=180):
+        return "Resmi İlanda Belirtilmiş"
+    return en_son_tarih.strftime("%Y-%m-%d")
 
 
 def sartlari_cikar(govde: str) -> list:
@@ -408,7 +457,10 @@ def sartlari_cikar(govde: str) -> list:
 
 def belgeleri_cikar(govde: str) -> list:
     b = tr_kucuk(govde[:12000])
-    belgeler = ["e-Devlet Mezuniyet Belgesi", "KPSS Sonuç Belgesi"]
+    belgeler = ["e-Devlet Mezuniyet Belgesi", "Kimlik Belgesi Fotokopisi"]
+    if "kpss" in b and "kpss şartsız" not in b and "kpss şartı aranmaksızın" not in b:
+        belgeler.append("KPSS Sonuç Belgesi")
+
     aday_belgeler = [
         ("adli sicil", "Adli Sicil Kaydı (e-Devlet)"),
         ("askerlik", "Askerlik Durum Belgesi"),
@@ -443,25 +495,16 @@ def temel_analiz(baslik: str, domain: str):
         kategori = "Büro & İdari"
 
     if any(k in b for k in ["2001", "ortaöğretim", "lise"]):
-        egitim, kpss = "Ortaöğretim", "KPSS P94 (Ortaöğretim)"
+        egitim = "Ortaöğretim"
     elif any(k in b for k in ["3001", "önlisans", "ön lisans", "tekniker", "paramedik"]):
-        egitim, kpss = "Önlisans", "KPSS P93 (Önlisans)"
+        egitim = "Önlisans"
     elif any(k in b for k in ["ilköğretim", "sürekli işçi", "işçi alım"]):
-        egitim, kpss = "İlköğretim", "KPSS Şartsız"
+        egitim = "İlköğretim"
     else:
-        egitim, kpss = "Lisans", "KPSS P3 (Lisans)"
+        egitim = "Lisans"
 
-    if any(k in domain for k in ["ibb.istanbul", "ankara.bel.tr", "thy.com", "aselsan", "tusas", "roketsan", "bank", "vizyonergenc"]):
-        kpss = "KPSS Şartsız"
-
-    duz_mu = any(
-        k in b
-        for k in [
-            "4001", "3001", "2001", "bölüm şartsız", "herhangi bir lisans",
-            "herhangi bir önlisans", "düz memur", "büro personeli",
-            "zabıt katibi", "zabıt kâtibi", "mübaşir", "gişe", "servis görevlisi", "destek personeli",
-        ]
-    )
+    kpss = kpss_tespit(baslik, egitim)
+    duz_mu, nitelik = duz_memurluk_tespit(baslik, egitim)
 
     sehir = "Türkiye Geneli"
     if "ibb.istanbul" in domain:
@@ -479,21 +522,12 @@ def temel_analiz(baslik: str, domain: str):
     eslesme = re.search(r"\b(\d{1,5})\s*(?:sözleşmeli|sürekli|memur|personel|işçi|uzman|kadro|kişilik)", b)
     kontenjan = int(eslesme.group(1)) if eslesme else 1
 
-    if "2001" in b:
-        nitelik = "2001 (Lise - Bölüm Şartsız)"
-    elif "3001" in b:
-        nitelik = "3001 (Önlisans - Bölüm Şartsız)"
-    elif "4001" in b or duz_mu:
-        nitelik = "4001 (Bölüm Şartsız)"
-    else:
-        nitelik = "Özel Nitelik"
-
     meslekler, detayli_meslekler = meslekleri_cikar(baslik, kategori)
     return kategori, egitim, kpss, duz_mu, sehir, kontenjan, nitelik, meslekler, detayli_meslekler
 
 
-def ilan_detay_analiz_et(istemci: GuvenliIstemci, ilan: dict) -> dict:
-    """Her bir ilanın kendi sayfasına girer; site engelli veya kapalıysa çökmek yerine mevcut veriyi döndürür."""
+def ilan_detay_analiz_et(istemci: GuvenliIstemci, ilan: dict):
+    """Her bir ilanın kendi sayfasına girer; süresi geçmiş ilansa None döndürür, hata varsa mevcut veriyi korur."""
     try:
         yanit = istemci.sayfa_getir(ilan["url"], timeout=12, js_destegi=True)
         if not yanit.get("ok"):
@@ -532,23 +566,22 @@ def ilan_detay_analiz_et(istemci: GuvenliIstemci, ilan: dict) -> dict:
         if len(temiz_govde) < 80:
             return ilan
 
+        son_tarih = son_basvuru_tarihi_bul(temiz_govde[:8000])
+        if son_tarih == "SURESI_DOLMUS":
+            return None
+
         birlesik_metin = f"{ilan['title']} {temiz_govde[:25000]}"
         meslekler, detayli_meslekler = meslekleri_cikar(birlesik_metin, ilan["category"])
         sartlar = sartlari_cikar(govde)
         belgeler = belgeleri_cikar(temiz_govde)
-        son_tarih = son_basvuru_tarihi_bul(temiz_govde[:8000])
 
-        kucuk_icerik = tr_kucuk(temiz_govde[:12000])
-        if re.search(r"\b(2001|3001|4001)\b", kucuk_icerik) or "bölüm şartsız" in kucuk_icerik:
+        kucuk_icerik = tr_kucuk(temiz_govde[:15000])
+        duz_mu, nitelik_etiketi = duz_memurluk_tespit(f"{ilan['title']} {temiz_govde[:15000]}", ilan["education"])
+        if duz_mu:
             ilan["isDuzMemurluk"] = True
-            if "2001" in kucuk_icerik and "3001" in kucuk_icerik and "4001" in kucuk_icerik:
-                ilan["qualCode"] = "2001 / 3001 / 4001 (Bölüm Şartsız)"
-            elif "3001" in kucuk_icerik:
-                ilan["qualCode"] = "3001 (Önlisans - Bölüm Şartsız)"
-            elif "2001" in kucuk_icerik:
-                ilan["qualCode"] = "2001 (Lise - Bölüm Şartsız)"
-            else:
-                ilan["qualCode"] = "4001 (Lisans - Bölüm Şartsız)"
+            ilan["qualCode"] = nitelik_etiketi
+
+        ilan["kpss"] = kpss_tespit(f"{ilan['title']} {temiz_govde[:15000]}", ilan["education"])
 
         if ilan["quota"] <= 1:
             m = re.search(
@@ -619,13 +652,13 @@ def tek_portal_tara(istemci: GuvenliIstemci, idx: int, domain: str, base_url: st
                     "kpss": kpss,
                     "quota": kontenjan,
                     "publishDate": datetime.now().strftime("%Y-%m-%d"),
-                    "endDate": (datetime.now() + timedelta(days=10)).strftime("%Y-%m-%d"),
+                    "endDate": "Resmi İlanda Belirtilmiş",
                     "refNo": f"GA-{idx + 1}-{a_idx + 100}",
                     "qualCode": nitelik,
                     "isDuzMemurluk": duz_mu,
                     "url": tam_url,
                     "requirements": ["İlgili kurumun resmi duyuru metnindeki başvuru şartlarını inceleyiniz."],
-                    "documents": ["e-Devlet Mezuniyet Belgesi", "KPSS Sonuç Belgesi"],
+                    "documents": ["e-Devlet Mezuniyet Belgesi", "Kimlik Belgesi Fotokopisi"],
                     "detailParsed": False,
                 }
             )
@@ -645,6 +678,15 @@ def portallari_tara():
         item for item in mevcut_ilanlari_yukle()
         if gercek_ilan_mi(item.get("title", ""), item.get("url", ""))
     ]
+
+    for eski in mevcut_liste:
+        birlesik = f"{eski.get('title', '')} {' '.join(eski.get('requirements', []))} {' '.join(eski.get('positions', []))}"
+        duz_mu, nitelik_etiketi = duz_memurluk_tespit(birlesik, eski.get("education", ""))
+        if duz_mu:
+            eski["isDuzMemurluk"] = True
+            eski["qualCode"] = nitelik_etiketi
+        eski["kpss"] = kpss_tespit(birlesik, eski.get("education", ""))
+
     mevcut_harita = {item.get("url"): item for item in mevcut_liste if item.get("url")}
 
     yeni_aday_ilanlar = []
@@ -682,13 +724,18 @@ def portallari_tara():
                 yeni_aday_ilanlar.append(ilan)
 
     zengin_ilanlar = []
+    suresi_dolan_urller = set()
     if yeni_aday_ilanlar:
         print(f"[{datetime.now().strftime('%H:%M:%S')}] {len(yeni_aday_ilanlar)} yeni/eksik ilanın detay sayfası inceleniyor...")
         with ThreadPoolExecutor(max_workers=6) as detay_havuzu:
-            detay_isler = [detay_havuzu.submit(ilan_detay_analiz_et, istemci, ilan) for ilan in yeni_aday_ilanlar]
+            detay_isler = {detay_havuzu.submit(ilan_detay_analiz_et, istemci, ilan): ilan["url"] for ilan in yeni_aday_ilanlar}
             for f in as_completed(detay_isler):
                 try:
-                    zengin_ilanlar.append(f.result())
+                    sonuc_ilan = f.result()
+                    if sonuc_ilan is None:
+                        suresi_dolan_urller.add(detay_isler[f])
+                    else:
+                        zengin_ilanlar.append(sonuc_ilan)
                 except Exception:
                     pass
 
@@ -697,7 +744,10 @@ def portallari_tara():
 
     for eski in mevcut_liste:
         u = eski.get("url")
-        if u and eski.get("endDate", "2099-12-31") >= bugun_str:
+        if not u or u in suresi_dolan_urller:
+            continue
+        bitis = eski.get("endDate", "Resmi İlanda Belirtilmiş")
+        if bitis == "Resmi İlanda Belirtilmiş" or bitis >= bugun_str:
             sonuc_haritasi[u] = eski
 
     yeni_eklenen_sayisi = 0
