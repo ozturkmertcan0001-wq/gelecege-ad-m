@@ -1,2114 +1,1315 @@
 <!DOCTYPE html>
-<html lang="tr" class="scroll-smooth">
+<html lang="tr" class="light">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Geleceğe Adım — Güncel Kamu, Belediye ve KPSS Personel İlanları</title>
-  <meta name="description" content="42 resmi kamu, bakanlık, belediye ve kurum portalındaki güncel memur, işçi, sağlık personeli ve bölüm şartsız (2001/3001/4001) alım ilanlarını tek ekranda takip edin." />
-  <meta name="keywords" content="kamu personel alımı, memur alımı, KPSS ilanları, belediye iş ilanları, bölüm şartsız memurluk, 2001, 3001, 4001, sözleşmeli personel" />
-  <meta name="robots" content="index, follow" />
-  <link rel="canonical" href="https://ozturkmertcan0001-wq.github.io/gelecege-ad-m/" />
-
-  <!-- Arama Sonucu ve Sekme Simgesi -->
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%234f46e5'/%3E%3Ccircle cx='32' cy='32' r='18' fill='none' stroke='%23ffffff' stroke-width='4'/%3E%3Ccircle cx='32' cy='32' r='6' fill='%2334d399'/%3E%3C/svg%3E" />
-
-  <!-- Sosyal Medya ve Mesajlaşma Paylaşım Kartı -->
+  <title>Geleceğe Adım — Kamu İlan | 42 Resmi Portal Merkezi Memur & Personel Alım Sistemi</title>
+  <meta name="description" content="Geleceğe Adım Kamu İlan: 42 resmi kamu kurumu, bakanlık ve belediye portalını saatlik tarayan; 2001, 3001, 4001 bölüm şartsız düz memurluk ve meslek bazlı ilan takip platformu." />
+  <meta name="keywords" content="geleceğe adım kamu ilan, kamu personel alımı, memur alımı 2026, 2001 3001 4001 düz memurluk, kpss ilanları, kariyer kapısı, resmi gazete ilanları" />
+  <meta property="og:title" content="Geleceğe Adım — Kamu İlan | Merkezi Kamu & Belediye İlan Takip Sistemi" />
+  <meta property="og:description" content="42 resmi portaldan saatlik otomatik güncellenen kamu, belediye ve kurum personel alım ilanları." />
   <meta property="og:type" content="website" />
-  <meta property="og:site_name" content="Geleceğe Adım" />
-  <meta property="og:title" content="Geleceğe Adım — Güncel Kamu, Belediye ve KPSS Personel İlanları" />
-  <meta property="og:description" content="42 resmi kamu ve kurum portalındaki güncel memur, işçi, sağlık personeli ve bölüm şartsız alım ilanlarını tek ekranda takip edin." />
-  <meta property="og:url" content="https://ozturkmertcan0001-wq.github.io/gelecege-ad-m/" />
-
-  <!-- Arama Motoru Site Adı Yapılandırması -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    "name": "Geleceğe Adım",
-    "alternateName": "Geleceğe Adım Kamu İlan Takip",
-    "url": "https://ozturkmertcan0001-wq.github.io/gelecege-ad-m/"
-  }
-  </script>
-
-  <!-- Yazı Tipi: Inter -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-
-  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
       darkMode: 'class',
       theme: {
         extend: {
-          fontFamily: {
-            sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+          colors: {
+            brand: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              200: '#bfdbfe',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8',
+              800: '#1e40af',
+              900: '#1e3a8a',
+            }
           }
         }
       }
     };
   </script>
-
-  <!-- Lucide Simgeleri -->
-  <script src="https://unpkg.com/lucide@latest"></script>
-
   <style>
-    body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+    .custom-scroll::-webkit-scrollbar { width: 6px; height: 6px; }
+    .custom-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 9999px; }
+    .dark .custom-scroll::-webkit-scrollbar-thumb { background: #475569; }
+    @keyframes fadeSlideUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
     }
-    .no-scrollbar::-webkit-scrollbar {
-      display: none;
-    }
-    .no-scrollbar {
-      -ms-overflow-style: none;
-      scrollbar-width: none;
-    }
-    @keyframes modalFadeIn {
-      from { opacity: 0; transform: translateY(8px) scale(0.98); }
-      to { opacity: 1; transform: translateY(0) scale(1); }
-    }
-    .animate-modal {
-      animation: modalFadeIn 0.18s ease-out forwards;
-    }
+    .animate-toast { animation: fadeSlideUp 0.25s ease-out forwards; }
   </style>
 </head>
-<body class="min-h-screen flex flex-col bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 antialiased selection:bg-indigo-600 selection:text-white transition-colors duration-200">
+<body class="bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-100 transition-colors duration-200 min-h-screen flex flex-col">
 
-  <!-- ===================================================================== -->
-  <!-- SADE ÜST ÇUBUK                                                        -->
-  <!-- ===================================================================== -->
-  <header class="bg-slate-900 dark:bg-slate-950 text-white border-b border-slate-800 sticky top-0 z-30 shadow-md">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex flex-wrap items-center justify-between gap-3">
-      <!-- Sol: Marka ve Canlı Durum -->
+  <!-- Üst Bilgilendirme Şeridi -->
+  <div class="bg-slate-900 text-slate-300 text-xs py-1.5 px-4 border-b border-slate-800">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
+      <div class="flex items-center gap-2">
+        <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+        <span><strong>Geleceğe Adım Kamu İlan</strong> • 42 Resmi Kurum, Bakanlık ve Belediye Portalı 7/24 Taranıyor</span>
+      </div>
       <div class="flex items-center gap-3">
-        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 via-blue-600 to-emerald-500 flex items-center justify-center shadow-md shrink-0">
-          <i data-lucide="radar" class="w-5 h-5 text-white"></i>
+        <span id="syncStatusText" class="text-slate-400">Saatlik otomatik senkronizasyon aktif</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ana Navigasyon -->
+  <header class="sticky top-0 z-30 bg-white/95 dark:bg-slate-900/95 backdrop-blur border-b border-slate-200 dark:border-slate-800 shadow-xs">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-3">
+      <a href="#" id="brandLogoReset" class="flex items-center gap-3 group">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-brand-600 to-indigo-700 text-white flex items-center justify-center font-extrabold text-base shadow-sm group-hover:scale-105 transition">
+          GA
         </div>
         <div>
-          <div class="flex flex-wrap items-center gap-2">
-            <h1 class="text-base sm:text-lg font-extrabold tracking-tight text-white leading-none">
+          <div class="flex items-center gap-2">
+            <span class="font-extrabold text-base sm:text-lg tracking-tight text-slate-900 dark:text-white">
               Geleceğe Adım
-            </h1>
-            <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-400/30">
-              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-              <span id="liveStatusText">Bağlanıyor...</span>
+            </span>
+            <span class="px-2 py-0.5 rounded-md text-[11px] font-bold bg-brand-50 text-brand-700 dark:bg-brand-900/50 dark:text-brand-300 border border-brand-200 dark:border-brand-800">
+              KAMU İLAN
             </span>
           </div>
-          <p class="text-[11px] text-slate-400 mt-1">
-            Kamu, Belediye &amp; Kurum İş İlanları • Son Kontrol: <span id="lastScanTimeText" class="font-mono text-slate-200">--:--</span>
+          <p class="text-[11px] text-slate-500 dark:text-slate-400 hidden sm:block">
+            Merkezi Kamu, Belediye & Kurum Personel Alım Portalı
           </p>
         </div>
-      </div>
+      </a>
 
-      <!-- Sağ: Temel Kontroller -->
-      <div class="flex items-center gap-2">
-        <button
-          type="button"
-          id="scanNowBtn"
-          class="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold shadow-xs transition cursor-pointer"
-        >
-          <i id="scanNowIcon" data-lucide="refresh-cw" class="w-3.5 h-3.5"></i>
-          <span id="scanNowLabel">Yenile</span>
+      <div class="flex items-center gap-1.5 sm:gap-2">
+        <button id="btnOpenGuideModal" type="button"
+          class="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-blue-50 hover:bg-blue-100 dark:bg-blue-950/60 dark:hover:bg-blue-900/60 text-brand-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800 transition">
+          📘 2001/3001/4001 Rehberi
         </button>
 
-        <button
-          type="button"
-          id="themeToggleBtn"
-          title="Gece / Gündüz Görünümü"
-          class="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition cursor-pointer"
-        >
-          <i id="themeToggleIcon" data-lucide="moon" class="w-4 h-4 text-amber-300"></i>
+        <button id="btnTogglePortalsDrawer" type="button"
+          class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition">
+          🏛️ <span class="hidden sm:inline">42 Portal</span>
         </button>
 
-        <button
-          type="button"
-          id="mobileFilterOpenBtn"
-          class="lg:hidden inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold transition cursor-pointer"
-        >
-          <i data-lucide="sliders-horizontal" class="w-3.5 h-3.5"></i>
-          <span>Filtrele</span>
+        <button id="btnManualRefresh" type="button" title="İlan Listesini Yenile"
+          class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition">
+          <svg id="refreshIcon" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+          </svg>
+          <span class="hidden lg:inline">Yenile</span>
         </button>
 
-        <button
-          type="button"
-          id="openJsonModalBtn"
-          title="Veri Kaynağı Ayarları"
-          class="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition cursor-pointer"
-        >
-          <i data-lucide="settings-2" class="w-4 h-4"></i>
+        <button id="btnToggleFavorites" type="button"
+          class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition">
+          <span>★</span>
+          <span class="hidden sm:inline">Favoriler</span>
+          <span id="favCountBadge" class="px-1.5 py-0.2 rounded-full bg-amber-500 text-white text-[11px] font-bold">0</span>
+        </button>
+
+        <button id="btnExportCsv" type="button" title="Filtrelenen İlanları Excel (CSV) İndir"
+          class="hidden sm:inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition">
+          📥 CSV
+        </button>
+
+        <button id="btnThemeToggle" type="button" title="Açık / Koyu Tema"
+          class="p-2 rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition">
+          <span id="themeIcon">🌙</span>
         </button>
       </div>
     </div>
   </header>
 
-  <!-- ===================================================================== -->
-  <!-- ANA İÇERİK                                                            -->
-  <!-- ===================================================================== -->
-  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-5 space-y-4">
-
-    <!-- 1. KOMPAKT 4'LÜ DURUM ÇUBUĞU -->
-    <section aria-label="Özet Bilgiler" class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
-      <div class="bg-white dark:bg-slate-900 rounded-2xl px-4 py-3 border border-slate-200/90 dark:border-slate-800 shadow-2xs flex items-center gap-3">
-        <div class="w-9 h-9 rounded-xl bg-indigo-50 dark:bg-indigo-950/70 text-indigo-600 dark:text-indigo-400 flex items-center justify-center shrink-0">
-          <i data-lucide="briefcase" class="w-4 h-4"></i>
+  <!-- Hero Arama & Vitrin Alanı -->
+  <section class="bg-gradient-to-br from-slate-900 via-brand-900 to-indigo-950 text-white border-b border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-7 sm:py-9 space-y-6">
+      <div class="max-w-3xl space-y-2">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/15 text-xs font-semibold text-blue-200">
+          <span>🚀 Doğrudan Resmi Kaynaklardan Saatlik Tarama</span>
         </div>
-        <div>
-          <p class="text-[11px] font-medium text-slate-500 dark:text-slate-400">Aktif İş İlanı</p>
-          <p id="statTotalJobCount" class="text-lg font-extrabold text-slate-900 dark:text-white leading-tight">0</p>
-        </div>
+        <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight leading-tight">
+          Tüm Kamu, Belediye ve Kurum İlanları Tek Merkezde
+        </h1>
+        <p class="text-xs sm:text-sm text-blue-100/90 leading-relaxed">
+          Botumuz 42 resmi portalı saat başı tarar, her ilanın içine girerek <strong>aranan meslek gruplarını</strong> ve <strong>başvuru şartlarını</strong> çıkarır; ihale ve geçmiş sonuç duyurularını otomatik eler.
+        </p>
       </div>
 
-      <button
-        type="button"
-        id="quickDuzMemurCardBtn"
-        class="text-left bg-white dark:bg-slate-900 hover:border-emerald-400 rounded-2xl px-4 py-3 border border-slate-200/90 dark:border-slate-800 shadow-2xs flex items-center gap-3 transition cursor-pointer"
-      >
-        <div class="w-9 h-9 rounded-xl bg-emerald-50 dark:bg-emerald-950/70 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0">
-          <i data-lucide="award" class="w-4 h-4"></i>
-        </div>
-        <div>
-          <p class="text-[11px] font-medium text-slate-500 dark:text-slate-400">Bölüm Şartsız (Düz)</p>
-          <p id="statDuzMemurCount" class="text-lg font-extrabold text-emerald-600 dark:text-emerald-400 leading-tight">0</p>
-        </div>
-      </button>
-
-      <button
-        type="button"
-        id="quickUrgentBtn"
-        class="text-left bg-white dark:bg-slate-900 hover:border-amber-400 rounded-2xl px-4 py-3 border border-slate-200/90 dark:border-slate-800 shadow-2xs flex items-center gap-3 transition cursor-pointer"
-      >
-        <div class="w-9 h-9 rounded-xl bg-amber-50 dark:bg-amber-950/70 text-amber-600 dark:text-amber-400 flex items-center justify-center shrink-0">
-          <i data-lucide="clock-alert" class="w-4 h-4"></i>
-        </div>
-        <div>
-          <p class="text-[11px] font-medium text-slate-500 dark:text-slate-400">Son 3 Gün</p>
-          <p id="statUrgentCount" class="text-lg font-extrabold text-amber-600 dark:text-amber-400 leading-tight">0</p>
-        </div>
-      </button>
-
-      <button
-        type="button"
-        id="quickBookmarkStatBtn"
-        class="text-left bg-white dark:bg-slate-900 hover:border-rose-400 rounded-2xl px-4 py-3 border border-slate-200/90 dark:border-slate-800 shadow-2xs flex items-center gap-3 transition cursor-pointer"
-      >
-        <div class="w-9 h-9 rounded-xl bg-rose-50 dark:bg-rose-950/70 text-rose-600 dark:text-rose-400 flex items-center justify-center shrink-0">
-          <i data-lucide="bookmark" class="w-4 h-4"></i>
-        </div>
-        <div>
-          <p class="text-[11px] font-medium text-slate-500 dark:text-slate-400">Kaydedilenler</p>
-          <p id="statBookmarkedCount" class="text-lg font-extrabold text-slate-900 dark:text-white leading-tight">0</p>
-        </div>
-      </button>
-    </section>
-
-    <!-- 2. KATEGORİ SEKMELERİ (ÖSYM / SINAV & TERCİHLER AYRI SEKME) -->
-    <section aria-label="Kategoriler" class="bg-white dark:bg-slate-900 rounded-2xl p-2 border border-slate-200/90 dark:border-slate-800 shadow-2xs">
-      <div id="categoryTabsContainer" class="flex items-center gap-1.5 overflow-x-auto no-scrollbar"></div>
-    </section>
-
-    <!-- 3. HIZLI ARAMA VE MESLEK / BÖLÜM FİLTRESİ -->
-    <section aria-label="Hızlı Arama" class="bg-white dark:bg-slate-900 rounded-2xl p-3.5 border border-slate-200/90 dark:border-slate-800 shadow-2xs space-y-3">
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-2.5">
-        <!-- Kelime / Bölüm / Meslek Arama -->
-        <div class="lg:col-span-4 relative">
-          <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none"></i>
-          <input
-            type="text"
-            id="keywordInput"
-            placeholder="Meslek, bölüm, kurum veya kod (3001, Şoför...)"
-            class="w-full pl-9 pr-8 py-2 text-xs sm:text-sm bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:border-indigo-500"
-          />
-          <button type="button" id="clearKeywordBtn" class="hidden absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 cursor-pointer">
-            <i data-lucide="x-circle" class="w-4 h-4"></i>
+      <!-- Hero Hızlı Arama Çubuğu -->
+      <div class="bg-white/10 backdrop-blur-md p-2 rounded-2xl border border-white/15 max-w-4xl">
+        <div class="flex flex-col sm:flex-row gap-2">
+          <div class="relative flex-1">
+            <span class="absolute inset-y-0 left-3.5 flex items-center text-slate-400">🔍</span>
+            <input id="heroSearchInput" type="text"
+              placeholder="Meslek, unvan, nitelik kodu veya kurum ara (Örn: Paramedik, Büro Personeli, 3001, 4001, İBB, DSİ...)"
+              class="w-full pl-10 pr-4 py-3 rounded-xl bg-white dark:bg-slate-900 text-slate-900 dark:text-white placeholder-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500" />
+          </div>
+          <button id="btnHeroSearchClear" type="button"
+            class="px-5 py-3 rounded-xl bg-brand-600 hover:bg-brand-500 text-white font-bold text-sm shadow-sm transition shrink-0">
+            İlanlarda Ara
           </button>
         </div>
 
-        <!-- Meslek / Kadro -->
-        <div class="lg:col-span-3">
-          <select
-            id="quickProfessionSelect"
-            aria-label="Meslek veya Kadro Seçimi"
-            class="w-full px-3 py-2 text-xs sm:text-sm font-semibold bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-800 dark:text-slate-100 focus:outline-none focus:border-indigo-500 cursor-pointer"
-          >
-            <option value="Tümü">Tüm Meslek / Kadrolar</option>
-          </select>
+        <!-- Tek Tıkla Hızlı Etiketler -->
+        <div class="flex flex-wrap items-center gap-1.5 mt-2.5 px-1">
+          <span class="text-[11px] font-semibold text-blue-200 mr-1">Hızlı Seçim:</span>
+          <button type="button" data-quick-tag="2001" class="quick-tag-btn px-2.5 py-0.5 rounded-md text-[11px] font-semibold bg-white/15 hover:bg-white/25 text-white transition">2001 (Lise Düz)</button>
+          <button type="button" data-quick-tag="3001" class="quick-tag-btn px-2.5 py-0.5 rounded-md text-[11px] font-semibold bg-white/15 hover:bg-white/25 text-white transition">3001 (Önlisans Düz)</button>
+          <button type="button" data-quick-tag="4001" class="quick-tag-btn px-2.5 py-0.5 rounded-md text-[11px] font-semibold bg-white/15 hover:bg-white/25 text-white transition">4001 (Lisans Düz)</button>
+          <button type="button" data-quick-tag="Büro Personeli" class="quick-tag-btn px-2.5 py-0.5 rounded-md text-[11px] font-semibold bg-white/15 hover:bg-white/25 text-white transition">Büro Personeli</button>
+          <button type="button" data-quick-tag="Paramedik" class="quick-tag-btn px-2.5 py-0.5 rounded-md text-[11px] font-semibold bg-white/15 hover:bg-white/25 text-white transition">Paramedik</button>
+          <button type="button" data-quick-tag="Hemşire" class="quick-tag-btn px-2.5 py-0.5 rounded-md text-[11px] font-semibold bg-white/15 hover:bg-white/25 text-white transition">Hemşire</button>
+          <button type="button" data-quick-tag="Mühendis" class="quick-tag-btn px-2.5 py-0.5 rounded-md text-[11px] font-semibold bg-white/15 hover:bg-white/25 text-white transition">Mühendis</button>
+          <button type="button" data-quick-tag="Koruma ve Güvenlik" class="quick-tag-btn px-2.5 py-0.5 rounded-md text-[11px] font-semibold bg-white/15 hover:bg-white/25 text-white transition">Güvenlik Görevlisi</button>
+        </div>
+      </div>
+
+      <!-- 4 KPI İstatistik Kartı -->
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 pt-1">
+        <div class="bg-white/10 backdrop-blur border border-white/15 rounded-2xl p-4">
+          <p class="text-xs font-medium text-blue-200">Aktif Doğrulanmış İlan</p>
+          <p id="statTotalListings" class="text-2xl sm:text-3xl font-extrabold mt-1 text-white">0</p>
+        </div>
+        <div class="bg-emerald-500/15 backdrop-blur border border-emerald-400/30 rounded-2xl p-4">
+          <p class="text-xs font-medium text-emerald-200">Bölüm Şartsız (2001/3001/4001)</p>
+          <p id="statDuzMemurluk" class="text-2xl sm:text-3xl font-extrabold mt-1 text-emerald-300">0</p>
+        </div>
+        <div class="bg-white/10 backdrop-blur border border-white/15 rounded-2xl p-4">
+          <p class="text-xs font-medium text-blue-200">Listelenen Toplam Kadro</p>
+          <p id="statTotalQuota" class="text-2xl sm:text-3xl font-extrabold mt-1 text-white">0</p>
+        </div>
+        <div class="bg-white/10 backdrop-blur border border-white/15 rounded-2xl p-4">
+          <p class="text-xs font-medium text-blue-200">Sonraki Saatlik Tarama</p>
+          <p id="statCountdown" class="text-2xl sm:text-3xl font-extrabold mt-1 text-amber-300">--:--</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 42 Resmi Portal Açılır Vitrini -->
+  <section id="portalsDirectorySection" class="hidden bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 space-y-4">
+      <div class="flex flex-wrap items-center justify-between gap-2">
+        <div>
+          <h2 class="text-sm sm:text-base font-bold text-slate-900 dark:text-white">
+            Entegre 42 Resmi Kamu, Belediye ve Kurum Portalı
+          </h2>
+          <p class="text-xs text-slate-500 dark:text-slate-400">
+            Herhangi bir kurumun üzerine tıklayarak sadece o portaldan çekilen ilanları süzebilirsiniz.
+          </p>
+        </div>
+        <div class="flex items-center gap-2">
+          <button id="btnClearPortalFilter" type="button" class="hidden px-3 py-1 rounded-lg text-xs font-semibold bg-rose-50 text-rose-700 dark:bg-rose-950 dark:text-rose-300">
+            Kurum Filtresini Kaldır ×
+          </button>
+          <button id="btnClosePortalsDrawer" type="button" class="px-3 py-1 rounded-lg text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
+            Kapat ✕
+          </button>
+        </div>
+      </div>
+      <div id="portalsGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2 max-h-72 overflow-y-auto custom-scroll pr-1"></div>
+    </div>
+  </section>
+
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6 flex-1 w-full">
+
+    <!-- Bölüm Şartsız Düz Memurluk Özel Vitrini -->
+    <section class="bg-gradient-to-r from-emerald-600 to-teal-700 rounded-2xl p-4 sm:p-5 text-white shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div class="space-y-1">
+        <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-white/15 text-xs font-bold">
+          2001 Lise • 3001 Önlisans • 4001 Lisans
+        </div>
+        <h2 class="text-base sm:text-lg font-extrabold">Bölüm Şartsız Düz Memurluk & Büro Kadroları Vitrini</h2>
+        <p class="text-xs sm:text-sm text-emerald-50">
+          Herhangi bir lise, önlisans veya lisans bölümünden mezun adayların başvurabileceği büro personeli, zabıt katipliği, mübaşirlik ve destek kadrolarını tek tıkla filtreleyin.
+        </p>
+      </div>
+      <button id="btnDuzMemurlukOnly" type="button"
+        class="shrink-0 px-4 py-2.5 rounded-xl bg-white text-emerald-800 hover:bg-emerald-50 font-bold text-xs sm:text-sm shadow-sm transition">
+        Sadece Bölüm Şartsızları Göster
+      </button>
+    </section>
+
+    <!-- Ana 2 Sütunlu Düzen: Sol Filtre Paneli + Sağ İlan Akışı -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+
+      <!-- Sol Filtre Paneli -->
+      <aside class="lg:col-span-4 xl:col-span-3 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 sm:p-5 space-y-4 shadow-sm lg:sticky lg:top-20">
+        <div class="flex items-center justify-between pb-2 border-b border-slate-100 dark:border-slate-800">
+          <h3 class="font-bold text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400">Detaylı Filtreleme</h3>
+          <button id="btnResetFilters" type="button" class="text-xs font-semibold text-brand-600 dark:text-brand-400 hover:underline">
+            Tümünü Sıfırla
+          </button>
         </div>
 
-        <!-- Mezuniyet -->
-        <div class="lg:col-span-2">
-          <select
-            id="quickEduSelect"
-            aria-label="Öğrenim Düzeyi Seçimi"
-            class="w-full px-3 py-2 text-xs sm:text-sm font-semibold bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-800 dark:text-slate-100 focus:outline-none focus:border-indigo-500 cursor-pointer"
-          >
-            <option value="Tümü">Tüm Mezuniyetler</option>
-            <option value="İlköğretim">İlköğretim</option>
-            <option value="Ortaöğretim">Ortaöğretim (Lise)</option>
-            <option value="Önlisans">Önlisans (2 Yıllık)</option>
-            <option value="Lisans">Lisans (4 Yıllık)</option>
+        <!-- İlanda Aranan Meslek / Kadro -->
+        <div>
+          <label for="professionSelect" class="block text-xs font-bold mb-1.5 text-slate-700 dark:text-slate-300">
+            İlanda Aranan Meslek / Kadro
+          </label>
+          <select id="professionSelect"
+            class="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500">
+            <option value="">Tüm Meslek Grupları</option>
           </select>
+          <div id="popularProfessionsPills" class="flex flex-wrap gap-1.5 mt-2"></div>
         </div>
 
         <!-- Şehir -->
-        <div class="lg:col-span-3">
-          <select
-            id="quickCitySelect"
-            aria-label="Şehir Seçimi"
-            class="w-full px-3 py-2 text-xs sm:text-sm font-semibold bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-800 dark:text-slate-100 focus:outline-none focus:border-indigo-500 cursor-pointer"
-          >
-            <option value="Tümü">Tüm Şehirler</option>
+        <div>
+          <label for="citySelect" class="block text-xs font-bold mb-1.5 text-slate-700 dark:text-slate-300">Şehir / Bölge</label>
+          <select id="citySelect"
+            class="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500">
+            <option value="">Tüm Şehirler</option>
           </select>
         </div>
-      </div>
 
-      <!-- Hızlı Tek Tık Etiketleri -->
-      <div class="flex items-center gap-1.5 overflow-x-auto no-scrollbar pt-0.5">
-        <button
-          type="button"
-          id="quickOnlyDuzBtn"
-          class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold border border-emerald-200 dark:border-emerald-800 bg-emerald-50/80 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-300 shrink-0 transition cursor-pointer"
-        >
-          <i data-lucide="award" class="w-3.5 h-3.5"></i>
-          <span>Bölüm Şartsız (2001/3001/4001)</span>
-        </button>
-
-        <button
-          type="button"
-          id="quickKpssFreeBtn"
-          class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-200 shrink-0 transition cursor-pointer"
-        >
-          <i data-lucide="shield-check" class="w-3.5 h-3.5 text-indigo-500"></i>
-          <span>KPSS Şartsız</span>
-        </button>
-
-        <span class="text-slate-300 dark:text-slate-700 px-1">|</span>
-        <div id="popularProfessionPills" class="flex items-center gap-1.5 shrink-0"></div>
-      </div>
-    </section>
-
-    <!-- 4. ANA LİSTELEME ALANI: SOL SADE FİLTRE + SAĞ İLAN KARTLARI -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
-
-      <div id="filterDrawerBackdrop" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-40 hidden lg:hidden"></div>
-
-      <!-- SOL SADE FİLTRE ÇUBUĞU -->
-      <aside
-        id="filterSidebar"
-        aria-label="Ek Filtreler"
-        class="fixed inset-y-0 left-0 z-50 w-72 max-w-[85vw] bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 p-4 overflow-y-auto transform -translate-x-full transition-transform duration-200 ease-out lg:static lg:translate-x-0 lg:col-span-3 lg:w-auto lg:max-w-none lg:rounded-2xl lg:border lg:shadow-2xs lg:sticky lg:top-20"
-      >
-        <div class="flex items-center justify-between pb-3 mb-3.5 border-b border-slate-100 dark:border-slate-800">
-          <span class="text-xs font-extrabold uppercase tracking-wider text-slate-700 dark:text-slate-200">Ek Seçenekler</span>
-          <div class="flex items-center gap-2">
-            <button type="button" id="resetFiltersBtn" class="text-xs font-semibold text-indigo-600 dark:text-indigo-400 hover:underline cursor-pointer">
-              Sıfırla
-            </button>
-            <button type="button" id="mobileFilterCloseBtn" class="lg:hidden p-1 rounded-lg text-slate-400 hover:text-slate-700">
-              <i data-lucide="x" class="w-4 h-4"></i>
-            </button>
-          </div>
+        <!-- Eğitim Düzeyi -->
+        <div>
+          <label for="educationSelect" class="block text-xs font-bold mb-1.5 text-slate-700 dark:text-slate-300">Eğitim Düzeyi</label>
+          <select id="educationSelect"
+            class="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500">
+            <option value="">Tüm Eğitim Düzeyleri</option>
+            <option value="İlköğretim">İlköğretim</option>
+            <option value="Ortaöğretim">Ortaöğretim (Lise)</option>
+            <option value="Önlisans">Önlisans</option>
+            <option value="Lisans">Lisans</option>
+          </select>
         </div>
 
-        <div class="space-y-4">
-          <!-- Anahtarlar -->
-          <div class="space-y-2">
-            <label class="flex items-center justify-between gap-2 p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200/80 dark:border-slate-700 cursor-pointer select-none">
-              <div>
-                <span class="text-xs font-bold text-slate-800 dark:text-slate-100 block">Gereksiz Duyuruları Gizle</span>
-                <span id="noiseHiddenHint" class="text-[10px] text-slate-500">İhale ve eski sonuçları eler</span>
-              </div>
-              <input type="checkbox" id="hideNoiseToggle" checked class="w-4 h-4 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500" />
-            </label>
+        <!-- KPSS Durumu -->
+        <div>
+          <label for="kpssSelect" class="block text-xs font-bold mb-1.5 text-slate-700 dark:text-slate-300">KPSS Puan Türü</label>
+          <select id="kpssSelect"
+            class="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500">
+            <option value="">Tümü (KPSS'li ve Şartsız)</option>
+            <option value="KPSS Şartsız">KPSS Şartsız</option>
+            <option value="KPSS P94">KPSS P94 (Ortaöğretim)</option>
+            <option value="KPSS P93">KPSS P93 (Önlisans)</option>
+            <option value="KPSS P3">KPSS P3 (Lisans)</option>
+          </select>
+        </div>
 
-            <label class="flex items-center justify-between gap-2 p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200/80 dark:border-slate-700 cursor-pointer select-none">
-              <span class="text-xs font-bold text-slate-800 dark:text-slate-100">Sadece Bölüm Şartsız</span>
-              <input type="checkbox" id="duzMemurlukOnlyToggle" class="w-4 h-4 rounded border-slate-300 text-emerald-600 focus:ring-emerald-500" />
-            </label>
+        <!-- Hizmet Grubu -->
+        <div>
+          <label for="categorySelect" class="block text-xs font-bold mb-1.5 text-slate-700 dark:text-slate-300">Hizmet Sınıfı</label>
+          <select id="categorySelect"
+            class="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500">
+            <option value="">Tüm Hizmet Sınıfları</option>
+            <option value="Büro & İdari">Büro & İdari</option>
+            <option value="Sağlık Personeli">Sağlık Personeli</option>
+            <option value="Bilişim & Teknik">Bilişim & Teknik</option>
+            <option value="İşçi & Hizmetli">İşçi & Hizmetli</option>
+            <option value="Uzman & Akademik">Uzman & Akademik</option>
+          </select>
+        </div>
 
-            <label class="flex items-center justify-between gap-2 p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200/80 dark:border-slate-700 cursor-pointer select-none">
-              <span class="text-xs font-bold text-slate-800 dark:text-slate-100">Sadece Kaydedilenler</span>
-              <input type="checkbox" id="bookmarkedOnlyToggle" class="w-4 h-4 rounded border-slate-300 text-rose-500 focus:ring-rose-500" />
-            </label>
-
-            <label class="flex items-center justify-between gap-2 p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200/80 dark:border-slate-700 cursor-pointer select-none">
-              <span class="text-xs font-medium text-slate-700 dark:text-slate-300">"Türkiye Geneli" dahil et</span>
-              <input type="checkbox" id="includeTurkiyeGeneliCheck" checked class="w-4 h-4 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500" />
-            </label>
-          </div>
-
-          <!-- KPSS Puan Türü -->
-          <div>
-            <label for="kpssSelect" class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1.5">
-              KPSS Puan Türü
-            </label>
-            <select
-              id="kpssSelect"
-              class="w-full px-3 py-2 text-xs bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-800 dark:text-slate-100 font-semibold focus:outline-none focus:border-indigo-500 cursor-pointer"
-            ></select>
-          </div>
-
-          <!-- Kaynak Kurum / Portal -->
-          <div>
-            <div class="flex items-center justify-between mb-1.5">
-              <span class="text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Kaynak Kurum</span>
-              <button type="button" id="toggleAllSourcesBtn" class="text-[11px] font-semibold text-indigo-600 dark:text-indigo-400 hover:underline cursor-pointer">
-                Tümü
-              </button>
-            </div>
-            <input
-              type="text"
-              id="portalSearchInput"
-              placeholder="Kurum ara..."
-              class="w-full mb-2 px-2.5 py-1.5 text-xs bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-slate-800 dark:text-slate-100 placeholder:text-slate-400 focus:outline-none focus:border-indigo-500"
-            />
-            <div id="sourceCheckboxesContainer" class="space-y-1 max-h-52 overflow-y-auto pr-1"></div>
-          </div>
-
-          <div class="pt-1 lg:hidden">
-            <button type="button" id="mobileApplyFiltersBtn" class="w-full py-2.5 px-4 rounded-xl bg-indigo-600 text-white text-xs font-bold">
-              Sonuçları Göster
-            </button>
-          </div>
+        <!-- Kaynak Portal -->
+        <div>
+          <label for="portalSelect" class="block text-xs font-bold mb-1.5 text-slate-700 dark:text-slate-300">Kaynak Resmi Portal</label>
+          <select id="portalSelect"
+            class="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500">
+            <option value="">Tüm Portallar (42 Kaynak)</option>
+          </select>
         </div>
       </aside>
 
-      <!-- SAĞ: İLAN LİSTESİ -->
-      <section aria-label="İlan Sonuçları" class="lg:col-span-9 space-y-3.5">
+      <!-- Sağ İlan Akışı -->
+      <section class="lg:col-span-8 xl:col-span-9 space-y-4">
 
-        <!-- Bilgi ve Sıralama Çubuğu -->
-        <div class="bg-white dark:bg-slate-900 rounded-2xl px-4 py-2.5 border border-slate-200/90 dark:border-slate-800 shadow-2xs flex flex-wrap items-center justify-between gap-2">
-          <div class="flex flex-wrap items-center gap-2 text-xs sm:text-sm text-slate-600 dark:text-slate-300">
-            <span id="resultsSummaryText" class="font-medium">İlanlar yükleniyor...</span>
+        <!-- Üst Sıralama & Aktif Filtre Çubuğu -->
+        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl px-4 py-3 shadow-sm space-y-2.5">
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <p id="resultSummaryText" class="text-sm font-semibold text-slate-700 dark:text-slate-200">
+              İlanlar yükleniyor...
+            </p>
+            <div class="flex items-center gap-2">
+              <label for="sortSelect" class="text-xs text-slate-500 dark:text-slate-400 hidden sm:inline">Sırala:</label>
+              <select id="sortSelect"
+                class="px-3 py-1.5 rounded-lg border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs font-semibold">
+                <option value="newest">En Yeni İlanlar</option>
+                <option value="deadline">Son Başvuru Yaklaşanlar</option>
+                <option value="quota">Kontenjan Sayısı (Yüksek → Düşük)</option>
+              </select>
+            </div>
           </div>
 
-          <select
-            id="sortSelect"
-            aria-label="Sıralama"
-            class="px-3 py-1.5 text-xs bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-800 dark:text-slate-100 font-bold focus:outline-none focus:border-indigo-500 cursor-pointer"
-          >
-            <option value="newest">En Yeni İlanlar</option>
-            <option value="deadline">Son Başvuru Yaklaşan</option>
-            <option value="quota">Kontenjan (Çoktan Aza)</option>
-          </select>
+          <!-- Seçili Filtre Etiketleri -->
+          <div id="activeFilterChips" class="hidden flex-wrap items-center gap-1.5 pt-2 border-t border-slate-100 dark:border-slate-800"></div>
         </div>
-
-        <!-- ÖSYM / Sınav & Tercihler Kategorisi Seçildiğinde Bilgilendirme Şeridi -->
-        <div id="osymCategoryBanner" class="hidden rounded-2xl p-3.5 bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800/70 text-xs text-amber-900 dark:text-amber-200 flex items-center justify-between gap-3">
-          <div class="flex items-center gap-2.5">
-            <i data-lucide="graduation-cap" class="w-5 h-5 text-amber-600 shrink-0"></i>
-            <span>
-              Şu an <strong>ÖSYM, Sınav Başvuruları ve Okul/Üniversite Tercihleri</strong> kategorisini görüntülüyorsunuz. İş ilanlarına dönmek için üstten <strong>Tümü</strong> sekmesini seçin.
-            </span>
-          </div>
-          <button type="button" id="backToJobsBtn" class="px-3 py-1.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-bold shrink-0 cursor-pointer">
-            İş İlanlarına Dön
-          </button>
-        </div>
-
-        <!-- Aktif Filtre Etiketleri -->
-        <div id="activeFilterChipsBar" class="hidden flex-wrap items-center gap-1.5"></div>
 
         <!-- İlan Kartları -->
-        <div id="announcementsGrid" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
-
-        <!-- Boş Sonuç Durumu -->
-        <div id="emptyStateContainer" class="hidden bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/90 dark:border-slate-800 p-10 text-center">
-          <div class="w-12 h-12 rounded-2xl bg-slate-100 dark:bg-slate-800 text-slate-400 flex items-center justify-center mx-auto mb-3">
-            <i data-lucide="search-x" class="w-6 h-6"></i>
-          </div>
-          <h3 class="text-sm font-bold text-slate-900 dark:text-white">Bu kriterlere uygun ilan bulunamadı</h3>
-          <p class="text-xs text-slate-500 dark:text-slate-400 max-w-md mx-auto mt-1">
-            Arama kelimesini değiştirebilir veya filtreleri sıfırlayarak tüm aktif iş ilanlarını görüntüleyebilirsiniz.
-          </p>
-          <button
-            type="button"
-            id="emptyResetFiltersBtn"
-            class="mt-4 inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold cursor-pointer"
-          >
-            <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
-            <span>Filtreleri Temizle</span>
-          </button>
-        </div>
-
+        <div id="listingsContainer" class="space-y-3.5"></div>
       </section>
     </div>
   </main>
 
-  <!-- ===================================================================== -->
-  <!-- ALT BİLGİ                                                             -->
-  <!-- ===================================================================== -->
-  <footer class="bg-white dark:bg-slate-900 border-t border-slate-200/90 dark:border-slate-800 mt-10">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-slate-500 dark:text-slate-400">
-      <span class="font-bold text-slate-700 dark:text-slate-200">Geleceğe Adım — Kamu, Belediye ve Kurum İlan Takip Platformu</span>
-      <span>Resmi kurum duyurularından otomatik derlenmektedir.</span>
+  <!-- Kurumsal Alt Bilgi (Footer) -->
+  <footer class="bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 mt-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-xs text-slate-600 dark:text-slate-400">
+        <div class="space-y-2">
+          <div class="flex items-center gap-2">
+            <span class="w-7 h-7 rounded-lg bg-brand-600 text-white font-bold flex items-center justify-center">GA</span>
+            <span class="font-bold text-sm text-slate-900 dark:text-white">Geleceğe Adım — Kamu İlan</span>
+          </div>
+          <p class="leading-relaxed">
+            Kamu kurumları, bakanlıklar, belediyeler ve kamu iktisadi teşebbüslerinin resmi duyurularını tek ekranda toplayan açık kaynaklı ilan takip sistemi.
+          </p>
+        </div>
+        <div class="space-y-1.5">
+          <p class="font-bold text-slate-900 dark:text-white">Hızlı Erişim</p>
+          <ul class="space-y-1">
+            <li><button type="button" id="footerBtnDuz" class="hover:text-brand-600 dark:hover:text-brand-400">• 2001 / 3001 / 4001 Bölüm Şartsız Kadrolar</button></li>
+            <li><button type="button" id="footerBtnGuide" class="hover:text-brand-600 dark:hover:text-brand-400">• KPSS Puan Türleri ve Nitelik Kodları Rehberi</button></li>
+            <li><button type="button" id="footerBtnPortals" class="hover:text-brand-600 dark:hover:text-brand-400">• Taranan 42 Resmi Portal Listesi</button></li>
+          </ul>
+        </div>
+        <div class="space-y-1.5">
+          <p class="font-bold text-slate-900 dark:text-white">Bilgilendirme</p>
+          <p class="leading-relaxed">
+            Tüm ilan kartları doğrudan ilgili kamu kurumunun resmi duyuru adresine yönlendirir. Başvuru öncesinde kurumun resmi kılavuzundaki son tarih ve şartları teyit ediniz.
+          </p>
+        </div>
+      </div>
+      <div class="mt-6 pt-4 border-t border-slate-100 dark:border-slate-800 flex flex-wrap items-center justify-between gap-2 text-[11px] text-slate-500">
+        <span>© 2026 Geleceğe Adım Kamu İlan • Tüm Hakları Saklıdır.</span>
+        <span>Saatlik Otomatik Veri Senkronizasyonu</span>
+      </div>
     </div>
   </footer>
 
-  <!-- ===================================================================== -->
-  <!-- PENCERE 1: İLAN TAM AYRINTI PENCERESİ                                 -->
-  <!-- ===================================================================== -->
-  <div
-    id="detailModal"
-    role="dialog"
-    aria-modal="true"
-    class="fixed inset-0 z-50 hidden items-center justify-center p-4 sm:p-6 bg-slate-900/70 backdrop-blur-sm overflow-y-auto"
-  >
-    <div class="bg-white dark:bg-slate-900 w-full max-w-2xl rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-800 overflow-hidden animate-modal my-auto">
-      <div class="px-5 py-3.5 bg-slate-900 text-white flex items-center justify-between gap-3">
-        <div class="flex items-center gap-2 min-w-0">
-          <span id="detailPortalBadge" class="px-2.5 py-0.5 rounded-lg text-xs font-bold bg-indigo-500/20 text-indigo-300 border border-indigo-400/30 truncate">Kurum</span>
-          <span id="detailRefNo" class="text-xs font-mono text-slate-400 truncate">REF</span>
+  <!-- İlan Detay Modalı (Meslek Grupları & Aranan Şartlar) -->
+  <div id="detailModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-950/65 backdrop-blur-sm p-4">
+    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl max-w-2xl w-full max-h-[90vh] flex flex-col shadow-2xl overflow-hidden">
+      <div class="px-6 py-4 border-b border-slate-200 dark:border-slate-800 flex items-start justify-between gap-4">
+        <div>
+          <div class="flex flex-wrap items-center gap-2 mb-1.5">
+            <span id="modalInstitution" class="px-2.5 py-0.5 rounded-md text-xs font-bold bg-brand-50 text-brand-700 dark:bg-brand-900/40 dark:text-brand-300"></span>
+            <span id="modalCategory" class="px-2.5 py-0.5 rounded-md text-xs font-medium bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300"></span>
+            <span id="modalDuzBadge" class="hidden px-2.5 py-0.5 rounded-md text-xs font-bold bg-emerald-100 text-emerald-800 dark:bg-emerald-900/40 dark:text-emerald-300">
+              Bölüm Şartsız
+            </span>
+          </div>
+          <h3 id="modalTitle" class="text-base sm:text-lg font-extrabold text-slate-900 dark:text-white leading-snug"></h3>
         </div>
-        <button type="button" id="closeDetailModalBtn" class="p-1.5 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800 transition cursor-pointer">
-          <i data-lucide="x" class="w-5 h-5"></i>
+        <button id="btnCloseModal" type="button" class="p-1.5 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100 dark:hover:bg-slate-800">
+          ✕
         </button>
       </div>
 
-      <div class="p-5 max-h-[76vh] overflow-y-auto space-y-4">
-        <div>
-          <p id="detailInstitution" class="text-xs font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400 mb-1">Kurum Adı</p>
-          <h2 id="detailModalTitle" class="text-base sm:text-lg font-extrabold text-slate-900 dark:text-white leading-snug">İlan Başlığı</h2>
-        </div>
-
-        <!-- İstenen Meslek Grubu, Aranan Bölümler ve Kadro Şartları -->
-        <div class="p-4 rounded-2xl bg-indigo-50/70 dark:bg-indigo-950/50 border border-indigo-200 dark:border-indigo-800 space-y-3">
-          <div class="flex flex-wrap items-center justify-between gap-2">
-            <div>
-              <h3 class="text-xs font-extrabold uppercase tracking-wider text-indigo-900 dark:text-indigo-200">
-                İstenen Meslek Grubu &amp; Aranan Bölümler
-              </h3>
-              <p id="detailProfessionGroupSubtitle" class="text-[11px] font-semibold text-indigo-600 dark:text-indigo-400 mt-0.5">-</p>
-            </div>
-            <span id="detailProfessionCountBadge" class="px-2.5 py-0.5 rounded-full text-[11px] font-extrabold bg-indigo-600 text-white">0 Kadro</span>
-          </div>
-
-          <!-- Meslekler -->
+      <div class="p-6 overflow-y-auto custom-scroll space-y-5 text-sm">
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 bg-slate-50 dark:bg-slate-800/60 p-3.5 rounded-xl border border-slate-200/80 dark:border-slate-700/80">
           <div>
-            <span class="text-[10px] font-extrabold uppercase tracking-wider text-slate-500 dark:text-slate-400 block mb-1">İstenen Meslek / Kadrolar</span>
-            <div id="detailPositionsBox" class="flex flex-wrap items-center gap-1.5"></div>
+            <span class="text-xs text-slate-500 dark:text-slate-400 block">Şehir / Bölge</span>
+            <span id="modalCity" class="font-bold"></span>
           </div>
-
-          <!-- Aranan Mezuniyet Bölümleri -->
-          <div id="detailDepartmentsWrap" class="pt-2 border-t border-indigo-200/70 dark:border-indigo-800/60">
-            <span class="text-[10px] font-extrabold uppercase tracking-wider text-emerald-700 dark:text-emerald-300 block mb-1">
-              Aranan Mezuniyet Bölümü / Alan Şartı
-            </span>
-            <div id="detailDepartmentsBox" class="flex flex-wrap gap-1.5"></div>
-          </div>
-
-          <!-- Kadro Bazında Şartlar -->
-          <div id="detailKadroTableWrap" class="hidden pt-2 border-t border-indigo-200/70 dark:border-indigo-800/60">
-            <span class="text-[10px] font-extrabold uppercase tracking-wider text-slate-600 dark:text-slate-300 block mb-1.5">
-              Kadroya Özel Başvuru Şartları
-            </span>
-            <ul id="detailKadroRowsList" class="space-y-1.5 text-xs text-slate-800 dark:text-slate-200"></ul>
-          </div>
-        </div>
-
-        <div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5 text-xs">
-          <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200/80 dark:border-slate-700">
-            <span class="text-[10px] font-semibold text-slate-400 uppercase block">Kategori</span>
-            <span id="detailCategory" class="font-bold text-slate-800 dark:text-slate-100 mt-0.5 block">-</span>
-          </div>
-          <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200/80 dark:border-slate-700">
-            <span class="text-[10px] font-semibold text-slate-400 uppercase block">Şehir / Yer</span>
-            <span id="detailCity" class="font-bold text-slate-800 dark:text-slate-100 mt-0.5 block">-</span>
-          </div>
-          <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200/80 dark:border-slate-700">
-            <span class="text-[10px] font-semibold text-slate-400 uppercase block">Kontenjan</span>
-            <span id="detailQuota" class="font-extrabold text-emerald-700 dark:text-emerald-400 mt-0.5 block">-</span>
-          </div>
-          <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200/80 dark:border-slate-700">
-            <span class="text-[10px] font-semibold text-slate-400 uppercase block">Öğrenim Düzeyi</span>
-            <span id="detailEducation" class="font-bold text-slate-800 dark:text-slate-100 mt-0.5 block">-</span>
-          </div>
-          <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200/80 dark:border-slate-700">
-            <span class="text-[10px] font-semibold text-slate-400 uppercase block">KPSS Şartı</span>
-            <span id="detailKpss" class="font-bold text-slate-800 dark:text-slate-100 mt-0.5 block">-</span>
-          </div>
-          <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200/80 dark:border-slate-700">
-            <span class="text-[10px] font-semibold text-slate-400 uppercase block">Nitelik Kodu</span>
-            <span id="detailQualCode" class="font-mono font-bold text-indigo-700 dark:text-indigo-300 mt-0.5 block">-</span>
-          </div>
-        </div>
-
-        <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200/80 dark:border-slate-700 flex flex-wrap items-center justify-between gap-2 text-xs">
           <div>
-            <span>Yayın: <strong id="detailPublishDate">-</strong></span>
-            <span class="mx-2 text-slate-300">|</span>
-            <span>Son Başvuru: <strong id="detailEndDate">-</strong></span>
+            <span class="text-xs text-slate-500 dark:text-slate-400 block">Eğitim Düzeyi</span>
+            <span id="modalEducation" class="font-bold"></span>
           </div>
-          <span id="detailCountdownBadge" class="px-2.5 py-0.5 rounded-lg font-bold">-</span>
+          <div>
+            <span class="text-xs text-slate-500 dark:text-slate-400 block">KPSS Şartı</span>
+            <span id="modalKpss" class="font-bold"></span>
+          </div>
+          <div>
+            <span class="text-xs text-slate-500 dark:text-slate-400 block">Nitelik Kodu</span>
+            <span id="modalQualCode" class="font-bold"></span>
+          </div>
+          <div>
+            <span class="text-xs text-slate-500 dark:text-slate-400 block">Kontenjan</span>
+            <span id="modalQuota" class="font-bold"></span>
+          </div>
+          <div>
+            <span class="text-xs text-slate-500 dark:text-slate-400 block">Son Başvuru</span>
+            <span id="modalEndDate" class="font-bold text-rose-600 dark:text-rose-400"></span>
+          </div>
         </div>
 
-        <div>
-          <h3 class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-2">Başvuru Şartları ve İlan Notları</h3>
-          <ul id="detailRequirementsList" class="space-y-1.5 text-xs sm:text-sm text-slate-700 dark:text-slate-300 bg-slate-50/70 dark:bg-slate-800/50 rounded-xl p-3.5 border border-slate-200/70 dark:border-slate-700"></ul>
+        <!-- İlanda Aranan Meslek Grupları -->
+        <div class="bg-blue-50/75 dark:bg-blue-950/35 border border-blue-200 dark:border-blue-900/60 rounded-xl p-4">
+          <div class="flex items-center justify-between mb-2.5">
+            <h4 class="font-extrabold text-sm text-brand-900 dark:text-blue-200">
+              İlanda Aranan Meslek Grupları & Kadrolar
+            </h4>
+            <span id="modalProfessionCount" class="text-xs font-bold px-2.5 py-0.5 rounded-full bg-brand-600 text-white"></span>
+          </div>
+          <div id="modalPositionsList" class="flex flex-wrap gap-2"></div>
+
+          <div id="modalKadroRowsWrap" class="hidden mt-3 pt-3 border-t border-blue-200/80 dark:border-blue-800/60">
+            <p class="text-xs font-bold text-slate-600 dark:text-slate-300 mb-1.5">İlan Metni / Tablosundan Çıkarılan Kadro Satırları:</p>
+            <ul id="modalKadroRowsList" class="space-y-1 text-xs text-slate-700 dark:text-slate-300 list-disc pl-4"></ul>
+          </div>
         </div>
 
+        <!-- Aranan Şartlar -->
         <div>
-          <h3 class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-2">İstenen Belgeler</h3>
-          <div id="detailDocumentsList" class="flex flex-wrap gap-1.5"></div>
+          <h4 class="font-extrabold text-sm text-slate-900 dark:text-white mb-2">
+            İlan İçeriğinden Çıkarılan Aranan Şartlar & Nitelikler
+          </h4>
+          <ul id="modalRequirementsList" class="space-y-2 text-slate-700 dark:text-slate-300 list-disc pl-5 leading-relaxed"></ul>
+        </div>
+
+        <!-- İstenen Belgeler -->
+        <div>
+          <h4 class="font-extrabold text-sm text-slate-900 dark:text-white mb-2">
+            Başvuruda İstenebilecek Belgeler
+          </h4>
+          <div id="modalDocumentsList" class="flex flex-wrap gap-2"></div>
         </div>
       </div>
 
-      <div class="px-5 py-3.5 bg-slate-50 dark:bg-slate-800/80 border-t border-slate-200 dark:border-slate-800 flex flex-wrap items-center justify-between gap-2">
+      <div class="px-6 py-3.5 border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 flex flex-wrap items-center justify-between gap-2">
         <div class="flex items-center gap-2">
-          <button type="button" id="detailBookmarkBtn" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl border text-xs font-bold cursor-pointer">
-            <i data-lucide="bookmark" class="w-4 h-4"></i>
-            <span id="detailBookmarkLabel">Kaydet</span>
+          <button id="modalBtnFav" type="button"
+            class="px-3.5 py-2 rounded-xl border border-slate-300 dark:border-slate-700 text-xs font-bold hover:bg-slate-100 dark:hover:bg-slate-800 transition">
+            ★ Favorilere Ekle
           </button>
-          <button type="button" id="detailShareBtn" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-xs font-bold cursor-pointer">
-            <i data-lucide="share-2" class="w-4 h-4"></i>
-            <span>Paylaş</span>
+          <button id="modalBtnCopyLink" type="button"
+            class="px-3.5 py-2 rounded-xl border border-slate-300 dark:border-slate-700 text-xs font-bold hover:bg-slate-100 dark:hover:bg-slate-800 transition">
+            🔗 Linki Kopyala
           </button>
         </div>
-
-        <a
-          id="detailExternalLink"
-          href="#"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs sm:text-sm font-bold shadow-xs transition"
-        >
-          <span>Resmi İlana Git</span>
-          <i data-lucide="external-link" class="w-4 h-4"></i>
+        <a id="modalOfficialLink" href="#" target="_blank" rel="noopener noreferrer"
+          class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white text-xs sm:text-sm font-bold shadow-sm transition">
+          Resmi Başvuru Sayfasına Git ↗
         </a>
       </div>
     </div>
   </div>
 
-  <!-- ===================================================================== -->
-  <!-- PENCERE 2: VERİ KAYNAĞI AYARLARI                                      -->
-  <!-- ===================================================================== -->
-  <div
-    id="jsonModal"
-    role="dialog"
-    aria-modal="true"
-    class="fixed inset-0 z-50 hidden items-center justify-center p-4 sm:p-6 bg-slate-900/70 backdrop-blur-sm overflow-y-auto"
-  >
-    <div class="bg-white dark:bg-slate-900 w-full max-w-lg rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-800 overflow-hidden animate-modal my-auto">
-      <div class="px-5 py-3.5 bg-slate-900 text-white flex items-center justify-between">
-        <h2 class="text-sm font-bold">Canlı Veri Kaynağı Ayarları</h2>
-        <button type="button" id="closeJsonModalBtn" class="p-1.5 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800 cursor-pointer">
-          <i data-lucide="x" class="w-5 h-5"></i>
-        </button>
+  <!-- 2001 / 3001 / 4001 Rehber Modalı -->
+  <div id="guideModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-950/65 backdrop-blur-sm p-4">
+    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl max-w-xl w-full p-6 shadow-2xl space-y-4">
+      <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3">
+        <h3 class="text-base font-extrabold text-slate-900 dark:text-white">Bölüm Şartsız Nitelik Kodları & KPSS Rehberi</h3>
+        <button id="btnCloseGuideModal" type="button" class="p-1.5 rounded-lg text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800">✕</button>
       </div>
-
-      <div class="p-5 space-y-4">
-        <div class="space-y-2">
-          <label for="liveJsonUrlInput" class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase">
-            Veri Dosyası Bağlantısı
-          </label>
-          <div class="flex flex-col sm:flex-row gap-2">
-            <input
-              type="url"
-              id="liveJsonUrlInput"
-              class="flex-1 px-3 py-2 text-xs bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-900 dark:text-white focus:outline-none focus:border-indigo-500"
-            />
-            <button type="button" id="saveAndTestLiveUrlBtn" class="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold cursor-pointer">
-              Kaydet ve Çek
-            </button>
-          </div>
-          <button type="button" id="useGithubDefaultUrlBtn" class="text-xs font-semibold text-indigo-600 dark:text-indigo-400 hover:underline cursor-pointer">
-            Varsayılan Canlı Depo Adresini Kullan
-          </button>
+      <div class="space-y-3 text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
+        <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+          <p class="font-bold text-brand-700 dark:text-blue-300">2001 Nitelik Kodu (Ortaöğretim / Lise)</p>
+          <p class="mt-0.5">Herhangi bir lise veya dengi okuldan mezun olan adayların <strong>KPSS P94</strong> puanıyla başvurabileceği bölüm şartsız kadrolardır.</p>
         </div>
-
-        <div class="border-t border-slate-200 dark:border-slate-800 pt-3">
-          <div id="jsonDropzone" class="border-2 border-dashed border-slate-300 dark:border-slate-700 hover:border-indigo-500 rounded-xl p-4 text-center cursor-pointer">
-            <input type="file" id="jsonFileInput" accept=".json,application/json" class="hidden" />
-            <p class="text-xs font-semibold text-slate-700 dark:text-slate-300">Bilgisayardan manuel <code>ilanlar.json</code> yüklemek için tıklayın</p>
-          </div>
+        <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+          <p class="font-bold text-brand-700 dark:text-blue-300">3001 Nitelik Kodu (Önlisans)</p>
+          <p class="mt-0.5">Herhangi bir 2 yıllık önlisans programından mezun olan adayların <strong>KPSS P93</strong> puanıyla başvurabileceği düz memurluk ve büro kadrolarıdır.</p>
         </div>
-      </div>
-
-      <div class="px-5 py-3 bg-slate-50 dark:bg-slate-800/80 border-t border-slate-200 dark:border-slate-800 flex justify-end">
-        <button type="button" id="closeJsonModalFooterBtn" class="px-4 py-1.5 rounded-xl bg-slate-800 text-white text-xs font-semibold cursor-pointer">
-          Kapat
-        </button>
+        <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+          <p class="font-bold text-brand-700 dark:text-blue-300">4001 Nitelik Kodu (Lisans)</p>
+          <p class="mt-0.5">Herhangi bir 4 yıllık lisans fakültesinden mezun olan adayların <strong>KPSS P3</strong> puanıyla başvurabileceği bölüm şartsız genel idare kadrolarıdır.</p>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- BİLDİRİM KUTUSU -->
-  <div id="toastContainer" aria-live="polite" class="fixed bottom-4 right-4 z-50 flex flex-col gap-2 max-w-sm w-full pointer-events-none px-4 sm:px-0"></div>
+  <!-- Bildirim (Toast) Alanı -->
+  <div id="toastContainer" class="fixed bottom-4 right-4 z-50 space-y-2 pointer-events-none"></div>
 
-  <!-- ===================================================================== -->
-  <!-- JAVASCRIPT MOTORU                                                     -->
-  <!-- ===================================================================== -->
   <script>
-    function detectDefaultJsonUrls() {
-      const loc = window.location;
-      const isHttp = loc.protocol === 'http:' || loc.protocol === 'https:';
-      const relativeUrl = isHttp ? new URL('ilanlar.json', loc.href).href : 'http://localhost:8000/ilanlar.json';
-      let githubRawUrl = 'https://raw.githubusercontent.com/ozturkmertcan0001-wq/gelecege-ad-m/main/ilanlar.json';
-      if (loc.hostname.endsWith('.github.io')) {
-        const user = loc.hostname.split('.')[0];
-        const parts = loc.pathname.split('/').filter(Boolean);
-        const repo = parts[0] || 'gelecege-ad-m';
-        githubRawUrl = `https://raw.githubusercontent.com/${user}/${repo}/main/ilanlar.json`;
-      }
-      return { relativeUrl, githubRawUrl };
-    }
-    const DETECTED_URLS = detectDefaultJsonUrls();
-    const GITHUB_RAW_JSON_URL = DETECTED_URLS.githubRawUrl;
-
-    const PORTALS = [
-      { domain: 'kamuilan.sbb.gov.tr', shortName: 'SBB Kamu İlan', badgeClass: 'bg-blue-50 text-blue-700 border-blue-200 dark:bg-blue-950/60 dark:text-blue-300 dark:border-blue-800' },
-      { domain: 'kariyerkapisi.gov.tr', shortName: 'Kariyer Kapısı', badgeClass: 'bg-indigo-50 text-indigo-700 border-indigo-200 dark:bg-indigo-950/60 dark:text-indigo-300 dark:border-indigo-800' },
-      { domain: 'isealimkariyerkapisi.cbiko.gov.tr', shortName: 'CBİKO İlan', badgeClass: 'bg-violet-50 text-violet-700 border-violet-200 dark:bg-violet-950/60 dark:text-violet-300 dark:border-violet-800' },
-      { domain: 'osym.gov.tr', shortName: 'ÖSYM', badgeClass: 'bg-sky-50 text-sky-700 border-sky-200 dark:bg-sky-950/60 dark:text-sky-300 dark:border-sky-800' },
-      { domain: 'iskur.gov.tr', shortName: 'İŞKUR Kamu', badgeClass: 'bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-950/60 dark:text-emerald-300 dark:border-emerald-800' },
-      { domain: 'resmigazete.gov.tr', shortName: 'Resmî Gazete', badgeClass: 'bg-rose-50 text-rose-700 border-rose-200 dark:bg-rose-950/60 dark:text-rose-300 dark:border-rose-800' },
-      { domain: 'ilan.gov.tr', shortName: 'Basın İlan', badgeClass: 'bg-amber-50 text-amber-800 border-amber-200 dark:bg-amber-950/60 dark:text-amber-300 dark:border-amber-800' },
-      { domain: 'yerelyonetimler.csb.gov.tr', shortName: 'Yerel Yönetimler', badgeClass: 'bg-teal-50 text-teal-700 border-teal-200 dark:bg-teal-950/60 dark:text-teal-300 dark:border-teal-800' },
-      { domain: 'kariyer.ibb.istanbul', shortName: 'İBB Kariyer', badgeClass: 'bg-blue-50 text-blue-800 border-blue-200 dark:bg-blue-950/60 dark:text-blue-300 dark:border-blue-800' },
-      { domain: 'kariyer.ankara.bel.tr', shortName: 'Ankara BB', badgeClass: 'bg-indigo-50 text-indigo-800 border-indigo-200 dark:bg-indigo-950/60 dark:text-indigo-300 dark:border-indigo-800' },
-      { domain: 'izmir.bel.tr', shortName: 'İzmir BB', badgeClass: 'bg-cyan-50 text-cyan-800 border-cyan-200 dark:bg-cyan-950/60 dark:text-cyan-300 dark:border-cyan-800' },
-      { domain: 'dsi.gov.tr', shortName: 'DSİ', badgeClass: 'bg-sky-50 text-sky-800 border-sky-200 dark:bg-sky-950/60 dark:text-sky-300 dark:border-sky-800' },
-      { domain: 'kgm.gov.tr', shortName: 'Karayolları', badgeClass: 'bg-amber-50 text-amber-800 border-amber-200 dark:bg-amber-950/60 dark:text-amber-300 dark:border-amber-800' },
-      { domain: 'botas.gov.tr', shortName: 'BOTAŞ', badgeClass: 'bg-teal-50 text-teal-800 border-teal-200 dark:bg-teal-950/60 dark:text-teal-300 dark:border-teal-800' },
-      { domain: 'tpao.gov.tr', shortName: 'TPAO', badgeClass: 'bg-emerald-50 text-emerald-800 border-emerald-200 dark:bg-emerald-950/60 dark:text-emerald-300 dark:border-emerald-800' },
-      { domain: 'dhmi.gov.tr', shortName: 'DHMİ', badgeClass: 'bg-blue-50 text-blue-700 border-blue-200 dark:bg-blue-950/60 dark:text-blue-300 dark:border-blue-800' },
-      { domain: 'kariyer.thy.com', shortName: 'THY Kariyer', badgeClass: 'bg-rose-50 text-rose-700 border-rose-200 dark:bg-rose-950/60 dark:text-rose-300 dark:border-rose-800' },
-      { domain: 'tcdd.gov.tr', shortName: 'TCDD', badgeClass: 'bg-sky-50 text-sky-800 border-sky-200 dark:bg-sky-950/60 dark:text-sky-300 dark:border-sky-800' },
-      { domain: 'teias.gov.tr', shortName: 'TEİAŞ', badgeClass: 'bg-amber-50 text-amber-800 border-amber-200 dark:bg-amber-950/60 dark:text-amber-300 dark:border-amber-800' },
-      { domain: 'ptt.gov.tr', shortName: 'PTT', badgeClass: 'bg-yellow-50 text-yellow-800 border-yellow-300 dark:bg-yellow-950/60 dark:text-yellow-300 dark:border-yellow-800' },
-      { domain: 'gib.gov.tr', shortName: 'Gelir İdaresi', badgeClass: 'bg-indigo-50 text-indigo-800 border-indigo-200 dark:bg-indigo-950/60 dark:text-indigo-300 dark:border-indigo-800' },
-      { domain: 'sgk.gov.tr', shortName: 'SGK', badgeClass: 'bg-blue-50 text-blue-800 border-blue-200 dark:bg-blue-950/60 dark:text-blue-300 dark:border-blue-800' },
-      { domain: 'aile.gov.tr', shortName: 'Aile Bakanlığı', badgeClass: 'bg-rose-50 text-rose-800 border-rose-200 dark:bg-rose-950/60 dark:text-rose-300 dark:border-rose-800' },
-      { domain: 'tarimorman.gov.tr', shortName: 'Tarım ve Orman', badgeClass: 'bg-emerald-50 text-emerald-800 border-emerald-200 dark:bg-emerald-950/60 dark:text-emerald-300 dark:border-emerald-800' },
-      { domain: 'yhgm.saglik.gov.tr', shortName: 'Sağlık Bakanlığı', badgeClass: 'bg-cyan-50 text-cyan-800 border-cyan-200 dark:bg-cyan-950/60 dark:text-cyan-300 dark:border-cyan-800' },
-      { domain: 'personel.meb.gov.tr', shortName: 'MEB Personel', badgeClass: 'bg-orange-50 text-orange-800 border-orange-200 dark:bg-orange-950/60 dark:text-orange-300 dark:border-orange-800' },
-      { domain: 'pgm.adalet.gov.tr', shortName: 'Adalet Bakanlığı', badgeClass: 'bg-red-50 text-red-800 border-red-200 dark:bg-red-950/60 dark:text-red-300 dark:border-red-800' },
-      { domain: 'personeltemin.msb.gov.tr', shortName: 'MSB Temin', badgeClass: 'bg-stone-100 text-stone-800 border-stone-300 dark:bg-stone-900 dark:text-stone-300 dark:border-stone-700' },
-      { domain: 'personeltemin.jandarma.gov.tr', shortName: 'Jandarma & SG', badgeClass: 'bg-slate-100 text-slate-800 border-slate-300 dark:bg-slate-800 dark:text-slate-300 dark:border-slate-700' },
-      { domain: 'pa.edu.tr', shortName: 'Polis Akademisi', badgeClass: 'bg-blue-50 text-blue-800 border-blue-200 dark:bg-blue-950/60 dark:text-blue-300 dark:border-blue-800' },
-      { domain: 'yok.gov.tr', shortName: 'YÖK', badgeClass: 'bg-purple-50 text-purple-800 border-purple-200 dark:bg-purple-950/60 dark:text-purple-300 dark:border-purple-800' },
-      { domain: 'kariyer.tubitak.gov.tr', shortName: 'TÜBİTAK', badgeClass: 'bg-fuchsia-50 text-fuchsia-800 border-fuchsia-200 dark:bg-fuchsia-950/60 dark:text-fuchsia-300 dark:border-fuchsia-800' },
-      { domain: 'vizyonergenc.com', shortName: 'Vizyoner Genç', badgeClass: 'bg-indigo-50 text-indigo-800 border-indigo-200 dark:bg-indigo-950/60 dark:text-indigo-300 dark:border-indigo-800' },
-      { domain: 'aselsan.com', shortName: 'ASELSAN', badgeClass: 'bg-sky-50 text-sky-800 border-sky-200 dark:bg-sky-950/60 dark:text-sky-300 dark:border-sky-800' },
-      { domain: 'tusas.com', shortName: 'TUSAŞ', badgeClass: 'bg-blue-50 text-blue-800 border-blue-200 dark:bg-blue-950/60 dark:text-blue-300 dark:border-blue-800' },
-      { domain: 'roketsan.com.tr', shortName: 'ROKETSAN', badgeClass: 'bg-emerald-50 text-emerald-800 border-emerald-200 dark:bg-emerald-950/60 dark:text-emerald-300 dark:border-emerald-800' },
-      { domain: 'kizilaykariyer.com', shortName: 'Türk Kızılay', badgeClass: 'bg-rose-50 text-rose-800 border-rose-200 dark:bg-rose-950/60 dark:text-rose-300 dark:border-rose-800' },
-      { domain: 'ziraatbank.com.tr', shortName: 'Ziraat Bankası', badgeClass: 'bg-red-50 text-red-800 border-red-200 dark:bg-red-950/60 dark:text-red-300 dark:border-red-800' },
-      { domain: 'halkbank.com.tr', shortName: 'Halkbank', badgeClass: 'bg-sky-50 text-sky-800 border-sky-200 dark:bg-sky-950/60 dark:text-sky-300 dark:border-sky-800' },
-      { domain: 'vakifbank.com.tr', shortName: 'VakıfBank', badgeClass: 'bg-amber-50 text-amber-800 border-amber-200 dark:bg-amber-950/60 dark:text-amber-300 dark:border-amber-800' },
-      { domain: 'tcmb.gov.tr', shortName: 'Merkez Bankası', badgeClass: 'bg-stone-100 text-stone-800 border-stone-300 dark:bg-stone-900 dark:text-stone-300 dark:border-stone-700' },
-      { domain: 'bddk.org.tr', shortName: 'BDDK', badgeClass: 'bg-indigo-50 text-indigo-800 border-indigo-200 dark:bg-indigo-950/60 dark:text-indigo-300 dark:border-indigo-800' }
+    const TUM_PORTALLAR = [
+      { domain: 'kamuilan.sbb.gov.tr', name: 'Cumhurbaşkanlığı Kamu İlan' },
+      { domain: 'kariyerkapisi.gov.tr', name: 'Kariyer Kapısı' },
+      { domain: 'isealimkariyerkapisi.cbiko.gov.tr', name: 'CBİKO İşe Alım' },
+      { domain: 'osym.gov.tr', name: 'ÖSYM Başkanlığı' },
+      { domain: 'iskur.gov.tr', name: 'İŞKUR Kamu İlanları' },
+      { domain: 'resmigazete.gov.tr', name: 'Resmî Gazete' },
+      { domain: 'ilan.gov.tr', name: 'Basın İlan Kurumu' },
+      { domain: 'yerelyonetimler.csb.gov.tr', name: 'Yerel Yönetimler (ÇŞB)' },
+      { domain: 'kariyer.ibb.istanbul', name: 'İstanbul BB Kariyer' },
+      { domain: 'kariyer.ankara.bel.tr', name: 'Ankara BB Kariyer' },
+      { domain: 'izmir.bel.tr', name: 'İzmir Büyükşehir Bel.' },
+      { domain: 'dsi.gov.tr', name: 'Devlet Su İşleri (DSİ)' },
+      { domain: 'kgm.gov.tr', name: 'Karayolları Genel Müd.' },
+      { domain: 'botas.gov.tr', name: 'BOTAŞ' },
+      { domain: 'tpao.gov.tr', name: 'Türkiye Petrolleri (TPAO)' },
+      { domain: 'dhmi.gov.tr', name: 'Devlet Hava Meydanları' },
+      { domain: 'kariyer.thy.com', name: 'Türk Hava Yolları' },
+      { domain: 'tcdd.gov.tr', name: 'TCDD' },
+      { domain: 'teias.gov.tr', name: 'TEİAŞ' },
+      { domain: 'ptt.gov.tr', name: 'PTT A.Ş.' },
+      { domain: 'gib.gov.tr', name: 'Gelir İdaresi (GİB)' },
+      { domain: 'sgk.gov.tr', name: 'Sosyal Güvenlik Kurumu' },
+      { domain: 'aile.gov.tr', name: 'Aile ve Sosyal Hizmetler' },
+      { domain: 'tarimorman.gov.tr', name: 'Tarım ve Orman Bakanlığı' },
+      { domain: 'yhgm.saglik.gov.tr', name: 'Sağlık Bakanlığı YHGM' },
+      { domain: 'personel.meb.gov.tr', name: 'Milli Eğitim Bakanlığı' },
+      { domain: 'pgm.adalet.gov.tr', name: 'Adalet Bakanlığı PGM' },
+      { domain: 'personeltemin.msb.gov.tr', name: 'Milli Savunma Bakanlığı' },
+      { domain: 'personeltemin.jandarma.gov.tr', name: 'Jandarma Personel Temin' },
+      { domain: 'pa.edu.tr', name: 'Polis Akademisi' },
+      { domain: 'yok.gov.tr', name: 'YÖK Akademik İlanlar' },
+      { domain: 'kariyer.tubitak.gov.tr', name: 'TÜBİTAK Kariyer' },
+      { domain: 'vizyonergenc.com', name: 'Vizyoner Genç (SSB)' },
+      { domain: 'aselsan.com', name: 'ASELSAN' },
+      { domain: 'tusas.com', name: 'TUSAŞ' },
+      { domain: 'roketsan.com.tr', name: 'ROKETSAN' },
+      { domain: 'kizilaykariyer.com', name: 'Türk Kızılay Kariyer' },
+      { domain: 'ziraatbank.com.tr', name: 'Ziraat Bankası' },
+      { domain: 'halkbank.com.tr', name: 'Halkbank' },
+      { domain: 'vakifbank.com.tr', name: 'VakıfBank' },
+      { domain: 'tcmb.gov.tr', name: 'Merkez Bankası (TCMB)' },
+      { domain: 'bddk.org.tr', name: 'BDDK' }
     ];
 
-    const EXAM_CATEGORY_ID = 'ÖSYM / Sınav & Tercih';
-
-    const CATEGORIES = [
-      { id: 'Tümü', label: 'Tümü (İş İlanları)', icon: 'briefcase' },
-      { id: 'Sağlık Personeli', label: 'Sağlık Personeli', icon: 'heart-pulse' },
-      { id: 'Büro & İdari', label: 'Büro & İdari', icon: 'building-2' },
-      { id: 'Bilişim & Teknik', label: 'Bilişim & Teknik', icon: 'cpu' },
-      { id: 'İşçi & Hizmetli', label: 'İşçi & Hizmetli', icon: 'hard-hat' },
-      { id: 'Uzman & Akademik', label: 'Uzman & Akademik', icon: 'graduation-cap' },
-      { id: EXAM_CATEGORY_ID, label: 'ÖSYM / Sınav & Tercih', icon: 'book-open' }
-    ];
-
-    const EDUCATION_LEVELS = ['Tümü', 'İlköğretim', 'Ortaöğretim', 'Önlisans', 'Lisans'];
-    const KPSS_TYPES = ['Tümü', 'KPSS P3 (Lisans)', 'KPSS P93 (Önlisans)', 'KPSS P94 (Ortaöğretim)', 'KPSS Şartsız'];
-    const CITIES = ['Tümü', 'Türkiye Geneli', 'İstanbul', 'Ankara', 'İzmir', 'Antalya', 'Bursa', 'Adana', 'Konya', 'Gaziantep', 'Samsun', 'Trabzon', 'Şanlıurfa', 'Batman', 'Diyarbakır', 'Kocaeli'];
-
-    const STORAGE_BOOKMARKS_KEY = 'ga_v3_bookmarks';
-    const STORAGE_LIVE_URL_KEY = 'ga_v3_live_url';
-    const STORAGE_THEME_KEY = 'ga_v3_theme';
-
-    const state = {
-      announcements: [],
-      liveJsonUrl: GITHUB_RAW_JSON_URL,
-      bookmarks: new Set(),
-      isScanningNow: false,
-      portalSearchQuery: '',
-      expandedCardIds: new Set(),
-      scheduler: {
-        intervalSeconds: 300,
-        nextScanTimestamp: Date.now() + 300 * 1000,
-        lastScanTimeStr: '--:--'
-      },
-      filters: {
-        category: 'Tümü',
-        profession: 'Tümü',
-        keyword: '',
-        sources: new Set(PORTALS.map(p => p.domain)),
-        education: 'Tümü',
-        kpss: 'Tümü',
-        city: 'Tümü',
-        includeTurkiyeGeneli: true,
-        hideNoise: true,
-        bookmarkedOnly: false,
-        duzMemurlukOnly: false,
-        urgentOnly: false,
-        sortBy: 'newest'
-      },
-      activeModalAnnouncementId: null
+    const STATE = {
+      allListings: [],
+      filteredListings: [],
+      favorites: new Set(JSON.parse(localStorage.getItem('ga_favorites') || '[]')),
+      onlyFavorites: false,
+      onlyDuzMemurluk: false,
+      lastFingerprint: '',
+      activeModalId: null,
+      expandedCards: new Set()
     };
 
-    /* Metin ve Türkçe Yardımcıları */
-    function repairTurkishMojibake(str) {
-      if (!str) return '';
-      return String(str)
-        .replace(/Ã‡/g, 'Ç').replace(/Ã§/g, 'ç')
-        .replace(/Äž/g, 'Ğ').replace(/ÄŸ/g, 'ğ')
-        .replace(/Ä°/g, 'İ').replace(/Ä±/g, 'ı')
-        .replace(/Ã–/g, 'Ö').replace(/Ã¶/g, 'ö')
-        .replace(/Åž/g, 'Ş').replace(/ÅŸ/g, 'ş')
-        .replace(/Ãœ/g, 'Ü').replace(/Ã¼/g, 'ü')
-        .replace(/â€“/g, '–').replace(/â€™/g, '’');
-    }
+    const YAZIM_DUZELTME = {
+      'piskolok': 'psikolog',
+      'piskolog': 'psikolog',
+      'makina': 'makine',
+      'zabıt katıp': 'zabıt katibi',
+      'zabit katibi': 'zabıt katibi',
+      'hemsire': 'hemşire',
+      'sofor': 'şoför',
+      'guvenlik': 'güvenlik',
+      'muhendis': 'mühendis',
+      'ogretmen': 'öğretmen',
+      'onlisans': 'önlisans',
+      'duz memur': 'düz memur'
+    };
 
     function trLower(str) {
-      return String(str || '').replace(/İ/g, 'i').replace(/I/g, 'ı').toLowerCase();
+      return (str || '').replace(/İ/g, 'i').replace(/I/g, 'ı').toLowerCase();
     }
 
-    function normalizeSearchTr(str) {
-      return trLower(str)
-        .replace(/piskolok|piskolog|psikolok/g, 'psikolog')
-        .replace(/biro\s*yonet\w*|buro\s*yonet\w*/g, 'büro yöneticisi')
-        .replace(/makina/g, 'makine')
-        .replace(/muhendis/g, 'mühendis')
-        .replace(/hemsire/g, 'hemşire')
-        .replace(/sofor|söför/g, 'şoför')
-        .replace(/guvenlik/g, 'güvenlik')
-        .replace(/kâtip|katip/g, 'katip')
-        .replace(/ogretmen/g, 'öğretmen')
-        .replace(/isci/g, 'işçi');
+    function normalizeSearch(raw) {
+      let s = trLower(raw).trim();
+      Object.entries(YAZIM_DUZELTME).forEach(([yanlis, dogru]) => {
+        s = s.replace(new RegExp(yanlis, 'g'), dogru);
+      });
+      return s;
     }
 
-    function normalizeDomain(rawDomain) {
-      return String(rawDomain || 'kamuilan.sbb.gov.tr')
-        .trim().toLowerCase()
-        .replace(/^https?:\/\//, '')
-        .replace(/^www\./, '')
-        .split('/')[0];
+    function escapeHtml(str) {
+      return String(str || '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
     }
 
-    function escapeHtml(value) {
-      return String(value ?? '')
-        .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+    function showToast(msg) {
+      const container = document.getElementById('toastContainer');
+      const el = document.createElement('div');
+      el.className = 'animate-toast bg-slate-900 dark:bg-slate-800 text-white text-xs font-semibold px-4 py-2.5 rounded-xl shadow-lg border border-slate-700';
+      el.textContent = msg;
+      container.appendChild(el);
+      setTimeout(() => {
+        el.style.opacity = '0';
+        el.style.transition = 'opacity 0.25s';
+        setTimeout(() => el.remove(), 260);
+      }, 2500);
     }
 
-    function formatTurkishDate(isoDateStr) {
-      if (!isoDateStr) return '-';
-      const parts = String(isoDateStr).split('-');
-      if (parts.length !== 3) return isoDateStr;
-      const months = ['Oca', 'Şub', 'Mar', 'Nis', 'May', 'Haz', 'Tem', 'Ağu', 'Eyl', 'Eki', 'Kas', 'Ara'];
-      return `${parseInt(parts[2], 10)} ${months[parseInt(parts[1], 10) - 1] || parts[1]} ${parts[0]}`;
-    }
-
-    function getRelativeIsoDate(offsetDays) {
-      const d = new Date();
-      d.setHours(12, 0, 0, 0);
-      d.setDate(d.getDate() + offsetDays);
-      return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
-    }
-
-    function getDaysRemaining(endDateStr) {
+    function getRemainingDaysBadge(endDateStr) {
       const today = new Date();
       today.setHours(0, 0, 0, 0);
-      const end = new Date(`${endDateStr}T23:59:59`);
-      return Math.ceil((end.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
+      const end = new Date(endDateStr + 'T00:00:00');
+      if (isNaN(end.getTime())) return '';
+      const diff = Math.round((end - today) / 86400000);
+      if (diff < 0) return '<span class="px-2 py-0.5 rounded text-[11px] font-bold bg-slate-200 text-slate-600">Süresi Doldu</span>';
+      if (diff === 0) return '<span class="px-2 py-0.5 rounded text-[11px] font-bold bg-rose-100 text-rose-700 dark:bg-rose-950 dark:text-rose-300">Bugün Son Gün!</span>';
+      if (diff <= 3) return `<span class="px-2 py-0.5 rounded text-[11px] font-bold bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300">Son ${diff} gün</span>`;
+      return `<span class="px-2 py-0.5 rounded text-[11px] font-medium bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-300">${diff} gün kaldı</span>`;
     }
 
-    function getDeadlineBadgeInfo(endDateStr) {
-      const days = getDaysRemaining(endDateStr);
-      if (days < 0) return { text: 'Süresi Doldu', badgeClass: 'bg-slate-100 text-slate-500 border-slate-200 dark:bg-slate-800 dark:text-slate-400 dark:border-slate-700' };
-      if (days === 0) return { text: 'Bugün Son Gün!', badgeClass: 'bg-rose-50 text-rose-700 border-rose-200 dark:bg-rose-950/60 dark:text-rose-300 dark:border-rose-800' };
-      if (days <= 3) return { text: `Son ${days} Gün`, badgeClass: 'bg-amber-50 text-amber-800 border-amber-200 dark:bg-amber-950/60 dark:text-amber-300 dark:border-amber-800' };
-      return { text: `${days} gün kaldı`, badgeClass: 'bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-950/60 dark:text-emerald-300 dark:border-emerald-800' };
-    }
+    function normalizeListing(item, idx) {
+      const positions = Array.isArray(item.positions) && item.positions.length
+        ? item.positions
+        : ['Büro / İdari Personel'];
+      const positionDetails = Array.isArray(item.positionDetails) && item.positionDetails.length
+        ? item.positionDetails
+        : positions;
+      const kadroRows = Array.isArray(item.kadroRows) ? item.kadroRows : [];
+      const requirements = Array.isArray(item.requirements) && item.requirements.length
+        ? item.requirements
+        : ['İlgili kurumun resmi duyuru metnindeki başvuru şartlarını inceleyiniz.'];
+      const documents = Array.isArray(item.documents) && item.documents.length
+        ? item.documents
+        : ['e-Devlet Mezuniyet Belgesi', 'KPSS Sonuç Belgesi'];
 
-    /* ÖSYM Sınav Başvurusu / Okul & Üniversite Tercihleri Ayrıştırıcısı */
-    function isExamOrSchoolPreferenceAnnouncement(title, domain = '') {
-      const b = trLower(title);
-      const cleanDom = normalizeDomain(domain);
-
-      // Doğrudan personel / memur / işçi alımı veya kamu kadro yerleştirmesi ise İŞ İLANIDIR:
-      const explicitJobPatterns = [
-        'personel alım', 'memur alım', 'işçi alım', 'sözleşmeli personel',
-        'sürekli işçi', 'istihdam edilmek üzere', 'akademik personel',
-        'öğretim üyesi', 'öğretim görevlisi', 'araştırma görevlisi',
-        'uzman yardımcısı', 'müfettiş yardımcısı', 'denetmen yardımcısı',
-        'subay', 'astsubay', 'bekçi alım', 'polis alım', 'zabıt katibi',
-        'infaz ve koruma', 'güvenlik görevlisi alım', 'şoför alım',
-        'kadro ve pozisyonlarına'
-      ];
-      if (explicitJobPatterns.some(k => b.includes(k))) {
-        return false;
-      }
-
-      // Sınav başvurusu, okul/üniversite tercihi, sınav sonuç ve kılavuz duyuruları:
-      const examAndSchoolPatterns = [
-        'yks', 'tyt', 'ayt', 'ydt', 'dgs', 'ales', 'yds', 'e-yds', 'yökdil',
-        'msü', 'tus', 'dus', 'eus', 'ags',
-        'kpss ön lisans başvuru', 'kpss önlisans başvuru', 'kpss lisans başvuru',
-        'kpss ortaöğretim başvuru', 'kpss başvuru', 'ekpss başvuru',
-        'sınav başvurusu', 'başvurularının alınması', 'sınav takvimi',
-        'sınav giriş belgesi', 'sınav sonuçları', 'sınav sonucu',
-        'tercih kılavuzu', 'tercih işlemleri', 'tercihlerin alınması',
-        'okul tercih', 'üniversite tercih', 'lise tercih', 'ek yerleştirme',
-        'yatay geçiş', 'dikey geçiş', 'yüksek lisans', 'doktora başvuru',
-        'lisansüstü', 'üniversite kayıt', 'öğrenci alımı', 'kursiyer alımı',
-        'burs başvuru', 'kyk', 'ehliyet sınav', 'açık öğretim', 'aöf'
-      ];
-      if (examAndSchoolPatterns.some(k => b.includes(k))) {
-        return true;
-      }
-
-      // ÖSYM veya YÖK sitesinden gelip içinde iş/personel/kadro geçmeyen duyurular:
-      if ((cleanDom === 'osym.gov.tr' || cleanDom === 'yok.gov.tr') && !b.includes('personel') && !b.includes('memur') && !b.includes('işçi') && !b.includes('kadro')) {
-        return true;
-      }
-
-      return false;
-    }
-
-    function isLikelyNoiseAnnouncement(item) {
-      if (item.category === EXAM_CATEGORY_ID) return false;
-      const b = trLower(item.title);
-      const noiseKeywords = [
-        'ihale', 'zeyilname', 'etik ilkeleri', 'daire başkanlığı', 'rehberleri',
-        'taslakları', 'mazerete bağlı', 'yer değiştirme', 'görevde yükselme',
-        'unvan değişikliği', 'cübbe', '10 kasım 2025', '14 kasım 2025', '2024'
-      ];
-      return noiseKeywords.some(k => b.includes(k));
-    }
-
-    function isDuzMemurlukAnnouncement(item) {
-      if (!item || item.category === EXAM_CATEGORY_ID) return false;
-      if (item.isDuzMemurluk === true) return true;
-      const combined = trLower([item.qualCode, item.title].filter(Boolean).join(' '));
-      return /(^|\D)(2001|3001|4001)(\D|$)|bölüm\s*şartsız|herhangi\s*bir\s*(lisans|önlisans|ortaöğretim|lise)|düz\s*memur|büro\s*personeli|zabıt\s*katibi|mübaşir|destek\s*personeli/.test(combined);
-    }
-
-    const POSITION_DICTIONARY = [
-      ['psikolog', 'Psikolog'],
-      ['sosyal çalışmacı', 'Sosyal Çalışmacı'],
-      ['sosyolog', 'Sosyolog'],
-      ['çocuk gelişimcisi', 'Çocuk Gelişimcisi'],
-      ['çocuk gelişimi', 'Çocuk Gelişimcisi'],
-      ['hemşire', 'Hemşire'],
-      ['ebe', 'Ebe'],
-      ['paramedik', 'Paramedik (İlk ve Acil Yardım)'],
-      ['ilk ve acil yardım', 'Paramedik (İlk ve Acil Yardım)'],
-      ['acil tıp teknisyeni', 'Acil Tıp Teknisyeni (ATT)'],
-      ['tıbbi sekreter', 'Tıbbi Sekreter'],
-      ['fizyoterapist', 'Fizyoterapist'],
-      ['diyetisyen', 'Diyetisyen'],
-      ['odyolog', 'Odyolog'],
-      ['ergoterapist', 'Ergoterapist'],
-      ['dil ve konuşma terapisti', 'Dil ve Konuşma Terapisti'],
-      ['eczacı', 'Eczacı'],
-      ['diş tabibi', 'Diş Tabibi'],
-      ['diş hekimi', 'Diş Tabibi'],
-      ['tabip', 'Tabip / Doktor'],
-      ['doktor', 'Tabip / Doktor'],
-      ['veteriner', 'Veteriner Hekim'],
-      ['biyolog', 'Biyolog'],
-      ['kimyager', 'Kimyager'],
-      ['laborant', 'Laborant'],
-      ['tıbbi görüntüleme', 'Tıbbi Görüntüleme (Röntgen)'],
-      ['röntgen', 'Tıbbi Görüntüleme (Röntgen)'],
-      ['anestezi', 'Anestezi Teknikeri'],
-      ['diyaliz', 'Diyaliz Teknikeri'],
-      ['ameliyathane', 'Ameliyathane Teknikeri'],
-      ['ağız ve diş sağlığı', 'Ağız ve Diş Sağlığı Teknikeri'],
-      ['optisyen', 'Optisyen'],
-      ['sağlık teknikeri', 'Sağlık Teknikeri'],
-      ['sağlık personeli', 'Sağlık Personeli'],
-
-      ['makine mühendisi', 'Makine Mühendisi'],
-      ['makina mühendisi', 'Makine Mühendisi'],
-      ['inşaat mühendisi', 'İnşaat Mühendisi'],
-      ['elektrik-elektronik mühendisi', 'Elektrik-Elektronik Mühendisi'],
-      ['elektrik elektronik mühendisi', 'Elektrik-Elektronik Mühendisi'],
-      ['elektrik mühendisi', 'Elektrik Mühendisi'],
-      ['elektronik mühendisi', 'Elektronik Mühendisi'],
-      ['bilgisayar mühendisi', 'Bilgisayar Mühendisi'],
-      ['yazılım mühendisi', 'Yazılım Mühendisi'],
-      ['endüstri mühendisi', 'Endüstri Mühendisi'],
-      ['çevre mühendisi', 'Çevre Mühendisi'],
-      ['gıda mühendisi', 'Gıda Mühendisi'],
-      ['ziraat mühendisi', 'Ziraat Mühendisi'],
-      ['orman mühendisi', 'Orman Mühendisi'],
-      ['harita mühendisi', 'Harita Mühendisi'],
-      ['jeoloji mühendisi', 'Jeoloji Mühendisi'],
-      ['maden mühendisi', 'Maden Mühendisi'],
-      ['kimya mühendisi', 'Kimya Mühendisi'],
-      ['mekatronik mühendisi', 'Mekatronik Mühendisi'],
-      ['mühendis', 'Mühendis'],
-      ['iç mimar', 'İç Mimar'],
-      ['peyzaj mimarı', 'Peyzaj Mimarı'],
-      ['mimar', 'Mimar'],
-      ['şehir plancısı', 'Şehir Plancısı'],
-      ['istatistikçi', 'İstatistikçi'],
-
-      ['büro yöneticisi', 'Büro Yöneticisi'],
-      ['büro yönetimi', 'Büro Yöneticisi / Büro Personeli'],
-      ['büro personeli', 'Büro Personeli'],
-      ['düz memur', 'Düz Memur'],
-      ['veri hazırlama', 'VHKİ (Veri Hazırlama)'],
-      ['zabıt katibi', 'Zabıt Katibi'],
-      ['zabıt kâtibi', 'Zabıt Katibi'],
-      ['mübaşir', 'Mübaşir'],
-      ['icra katibi', 'İcra Katibi'],
-      ['infaz ve koruma memuru', 'İnfaz ve Koruma Memuru'],
-      ['avukat', 'Avukat'],
-      ['mütercim', 'Mütercim-Tercüman'],
-      ['kütüphaneci', 'Kütüphaneci'],
-      ['arkeolog', 'Arkeolog'],
-      ['gişe', 'Gişe / Servis Görevlisi'],
-      ['servis görevlisi', 'Servis Görevlisi'],
-      ['veznedar', 'Veznedar'],
-      ['sekreter', 'Sekreter'],
-      ['muhasebeci', 'Muhasebeci'],
-
-      ['bilişim personeli', 'Sözleşmeli Bilişim Personeli'],
-      ['yazılım uzmanı', 'Yazılım Uzmanı'],
-      ['siber güvenlik', 'Siber Güvenlik Uzmanı'],
-      ['sistem uzmanı', 'Sistem / Ağ Uzmanı'],
-      ['programcı', 'Programcı'],
-      ['bilgisayar teknikeri', 'Bilgisayar Teknikeri'],
-      ['elektrik teknikeri', 'Elektrik Teknikeri'],
-      ['makine teknikeri', 'Makine Teknikeri'],
-      ['inşaat teknikeri', 'İnşaat Teknikeri'],
-      ['tekniker', 'Tekniker'],
-      ['teknisyen', 'Teknisyen'],
-
-      ['koruma ve güvenlik', 'Koruma ve Güvenlik Görevlisi'],
-      ['güvenlik görevlisi', 'Koruma ve Güvenlik Görevlisi'],
-      ['destek personeli', 'Destek Personeli'],
-      ['temizlik', 'Temizlik Görevlisi'],
-      ['şoför', 'Şoför'],
-      ['sürücü', 'Şoför'],
-      ['aşçı', 'Aşçı'],
-      ['bahçıvan', 'Bahçıvan'],
-      ['kaloriferci', 'Kaloriferci'],
-      ['elektrikçi', 'Elektrikçi'],
-      ['sıhhi tesisat', 'Sıhhi Tesisatçı'],
-      ['operatör', 'İş Makinesi Operatörü'],
-      ['sürekli işçi', 'Sürekli İşçi'],
-      ['işçi alım', 'Kamu İşçisi'],
-
-      ['uzman yardımcısı', 'Uzman Yardımcısı'],
-      ['müfettiş yardımcısı', 'Müfettiş Yardımcısı'],
-      ['denetmen yardımcısı', 'Denetmen Yardımcısı'],
-      ['öğretim görevlisi', 'Öğretim Görevlisi'],
-      ['araştırma görevlisi', 'Araştırma Görevlisi'],
-      ['öğretim üyesi', 'Öğretim Üyesi'],
-      ['öğretmen', 'Öğretmen']
-    ];
-
-    const DEPARTMENT_DICTIONARY = [
-      ['ilk ve acil yardım', 'İlk ve Acil Yardım'],
-      ['hemşirelik', 'Hemşirelik'],
-      ['ebelik', 'Ebelik'],
-      ['psikoloji', 'Psikoloji'],
-      ['sosyal hizmet', 'Sosyal Hizmet'],
-      ['sosyoloji', 'Sosyoloji'],
-      ['çocuk gelişimi', 'Çocuk Gelişimi'],
-      ['büro yönetimi', 'Büro Yönetimi ve Yönetici Asistanlığı'],
-      ['tıbbi dokümantasyon', 'Tıbbi Dokümantasyon ve Sekreterlik'],
-      ['adalet', 'Adalet'],
-      ['hukuk', 'Hukuk'],
-      ['bilgisayar mühendisliği', 'Bilgisayar Mühendisliği'],
-      ['yazılım mühendisliği', 'Yazılım Mühendisliği'],
-      ['bilgisayar programcılığı', 'Bilgisayar Programcılığı'],
-      ['elektrik-elektronik', 'Elektrik-Elektronik'],
-      ['makine mühendisliği', 'Makine Mühendisliği'],
-      ['inşaat mühendisliği', 'İnşaat Mühendisliği'],
-      ['iktisat', 'İktisat'],
-      ['işletme', 'İşletme'],
-      ['maliye', 'Maliye'],
-      ['kamu yönetimi', 'Kamu Yönetimi'],
-      ['uluslararası ilişkiler', 'Uluslararası İlişkiler'],
-      ['fizyoterapi', 'Fizyoterapi ve Rehabilitasyon'],
-      ['beslenme ve diyetetik', 'Beslenme ve Diyetetik'],
-      ['anestezi', 'Anestezi'],
-      ['tıbbi görüntüleme', 'Tıbbi Görüntüleme Teknikleri'],
-      ['tıbbi laboratuvar', 'Tıbbi Laboratuvar Teknikleri'],
-      ['ağız ve diş sağlığı', 'Ağız ve Diş Sağlığı'],
-      ['ilahiyat', 'İlahiyat'],
-      ['bilgi ve belge yönetimi', 'Bilgi ve Belge Yönetimi']
-    ];
-
-    const POPULAR_PROFESSIONS = [
-      'Psikolog',
-      'Büro Yöneticisi',
-      'Şoför',
-      'Paramedik (İlk ve Acil Yardım)',
-      'Hemşire',
-      'Büro Personeli',
-      'Zabıt Katibi',
-      'Koruma ve Güvenlik Görevlisi'
-    ];
-
-    function extractPositionsFromText(text, category = '') {
-      if (category === EXAM_CATEGORY_ID) {
-        return { positions: ['Sınav Başvurusu / Okul Tercih Duyurusu'], positionDetails: ['Sınav Başvurusu / Okul Tercih Duyurusu'] };
-      }
-      const b = trLower(text);
-      const found = [];
-      const details = [];
-      for (const [key, label] of POSITION_DICTIONARY) {
-        let matched = false;
-        if (key.length <= 5) {
-          const rx = new RegExp(`\\b${key.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}(?:i|ı|u|ü|ler|lar|leri|ları)?\\b`);
-          matched = rx.test(b);
-        } else {
-          matched = b.includes(key);
-        }
-
-        if (matched && !found.includes(label)) {
-          if (label === 'Mühendis' && found.some(u => u.includes('Mühendisi'))) continue;
-          if (label === 'Mimar' && found.some(u => u === 'İç Mimar' || u === 'Peyzaj Mimarı')) continue;
-          if (label === 'Tekniker' && found.some(u => u.includes('Teknikeri'))) continue;
-          found.push(label);
-
-          const escapedKey = key.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-          const mBefore = b.match(new RegExp(`\\b(\\d{1,4})\\s*(?:adet|kişi)?\\s*${escapedKey}`));
-          const mAfter = b.match(new RegExp(`${escapedKey}(?:i|ı|u|ü|ler|lar|leri|ları)?\\s*[\\(\\[\\:\\-\\|]?\\s*(\\d{1,4})\\s*(?:adet|kişi|kadro)?[\\)\\]]?`));
-          let count = null;
-          const rawNum = mBefore ? parseInt(mBefore[1], 10) : (mAfter ? parseInt(mAfter[1], 10) : null);
-          if (rawNum && rawNum >= 1 && rawNum <= 25000 && ![2001, 3001, 4001, 2024, 2025, 2026].includes(rawNum)) {
-            count = rawNum;
-          }
-          details.push(count ? `${label} (${count})` : label);
-        }
-        if (found.length >= 20) break;
-      }
-      if (found.length === 0) {
-        let fallback = 'Genel İdari / Sözleşmeli Personel';
-        if (category === 'Sağlık Personeli') fallback = 'Sağlık Personeli';
-        else if (category === 'Bilişim & Teknik') fallback = 'Teknik / Bilişim Personeli';
-        else if (category === 'İşçi & Hizmetli') fallback = 'Sürekli İşçi / Destek Personeli';
-        else if (category === 'Uzman & Akademik') fallback = 'Uzman / Akademik Personel';
-        found.push(fallback);
-        details.push(fallback);
-      }
-      return { positions: found, positionDetails: details };
-    }
-
-    function extractDepartmentsFromText(text, education, isDuz, positions, category) {
-      if (category === EXAM_CATEGORY_ID) {
-        return ['Öğrenci / Sınav Adayı Başvuru ve Tercih İşlemleri'];
-      }
-      const b = trLower(text);
-      const found = [];
-      for (const [key, label] of DEPARTMENT_DICTIONARY) {
-        if (b.includes(key) && !found.includes(label)) {
-          found.push(label);
-        }
-        if (found.length >= 12) break;
-      }
-
-      if (found.length > 0) {
-        if (isDuz) found.unshift('Herhangi Bir Bölüm (Bölüm Şartsız Kadrolar Mevcut)');
-        return found;
-      }
-
-      if (isDuz) {
-        if (b.includes('4001') || education === 'Lisans') return ['Herhangi Bir Lisans Bölümü (4001 - Bölüm Şartsız)'];
-        if (b.includes('3001') || education === 'Önlisans') return ['Herhangi Bir Önlisans Bölümü (3001 - Bölüm Şartsız)'];
-        if (b.includes('2001') || education === 'Ortaöğretim') return ['Herhangi Bir Lise / Ortaöğretim Bölümü (2001 - Bölüm Şartsız)'];
-        return ['Özel Bölüm Şartı Aranmıyor (Bölüm Şartsız)'];
-      }
-
-      if (positions.includes('Şoför')) return [`${education} Mezunu + İlgili Sınıf Sürücü Belgesi`];
-      if (positions.includes('Koruma ve Güvenlik Görevlisi')) return [`${education} Mezunu + Özel Güvenlik Kimlik Kartı`];
-      return [`${education} Düzeyi • İlgili Meslek Bölümleri`];
-    }
-
-    function normalizeAnnouncementItem(raw, idx = 0) {
-      const domain = normalizeDomain(raw.sourceDomain);
-      const title = repairTurkishMojibake(String(raw.title || 'Kamu Personeli Alım İlanı').trim());
-      const institution = repairTurkishMojibake(String(raw.institution || domain.toUpperCase()).trim());
-      const qualCode = repairTurkishMojibake(String(raw.qualCode || 'Genel Şartlar').trim());
-
-      const isExamOrSchool = isExamOrSchoolPreferenceAnnouncement(title, domain);
-      const resolvedCategory = isExamOrSchool
-        ? EXAM_CATEGORY_ID
-        : (CATEGORIES.some(c => c.id === raw.category && c.id !== 'Tümü') ? raw.category : 'Büro & İdari');
-
-      const lowerTitle = trLower(title);
-      let detectedEdu = raw.education;
-      if (lowerTitle.includes('2001') || lowerTitle.includes('ortaöğretim') || lowerTitle.includes('lise')) detectedEdu = 'Ortaöğretim';
-      else if (lowerTitle.includes('3001') || lowerTitle.includes('önlisans') || lowerTitle.includes('ön lisans') || lowerTitle.includes('tekniker') || lowerTitle.includes('paramedik')) detectedEdu = 'Önlisans';
-      else if (lowerTitle.includes('sürekli işçi') || lowerTitle.includes('işçi alım')) detectedEdu = 'İlköğretim';
-
-      let detectedCity = raw.city || 'Türkiye Geneli';
-      if (detectedCity === 'Türkiye Geneli') {
-        for (const c of CITIES) {
-          if (c !== 'Tümü' && c !== 'Türkiye Geneli' && lowerTitle.includes(trLower(c))) {
-            detectedCity = c;
-            break;
-          }
-        }
-      }
-
-      const requirementsList = Array.isArray(raw.requirements) && raw.requirements.length > 0
-        ? raw.requirements.map(r => repairTurkishMojibake(String(r)))
-        : ['İlgili kurumun resmi duyurusundaki başvuru şartlarını inceleyiniz.'];
-
-      const normalized = {
-        id: String(raw.id || `ga-${idx}-${Date.now()}`),
-        sourceDomain: domain,
-        category: resolvedCategory,
-        institution,
-        title,
-        city: detectedCity,
-        education: EDUCATION_LEVELS.includes(detectedEdu) && detectedEdu !== 'Tümü' ? detectedEdu : 'Lisans',
-        kpss: isExamOrSchool ? 'Sınav / Tercih Duyurusu' : (raw.kpss || 'KPSS Şartını İnceleyin'),
-        quota: Math.max(1, parseInt(raw.quota, 10) || 1),
-        publishDate: raw.publishDate || getRelativeIsoDate(0),
-        endDate: raw.endDate || getRelativeIsoDate(7),
-        refNo: String(raw.refNo || `GA-${new Date().getFullYear()}/${100 + idx}`).trim(),
-        qualCode,
-        isDuzMemurluk: false,
-        url: String(raw.url || `https://${domain}`).trim(),
-        requirements: requirementsList,
-        documents: Array.isArray(raw.documents) && raw.documents.length > 0
-          ? raw.documents.map(d => repairTurkishMojibake(String(d)))
-          : ['e-Devlet Mezuniyet Belgesi', 'Kimlik Belgesi']
+      return {
+        id: item.id || `ga-${idx}`,
+        sourceDomain: item.sourceDomain || 'resmi-portal',
+        category: item.category || 'Büro & İdari',
+        institution: item.institution || 'KAMU KURUMU',
+        title: item.title || 'Kamu Personel Alım İlanı',
+        positions,
+        positionDetails,
+        kadroRows,
+        city: item.city || 'Türkiye Geneli',
+        education: item.education || 'Lisans',
+        kpss: item.kpss || 'KPSS Şartsız',
+        quota: Number(item.quota) || 1,
+        publishDate: item.publishDate || new Date().toISOString().slice(0, 10),
+        endDate: item.endDate || new Date(Date.now() + 10 * 86400000).toISOString().slice(0, 10),
+        qualCode: item.qualCode || 'Özel Nitelik',
+        isDuzMemurluk: Boolean(item.isDuzMemurluk),
+        url: item.url || '#',
+        requirements,
+        documents
       };
-
-      normalized.isDuzMemurluk = isDuzMemurlukAnnouncement(normalized);
-
-      const fullText = `${normalized.title} ${normalized.requirements.join(' ')} ${normalized.qualCode}`;
-      const extractedPos = extractPositionsFromText(fullText, normalized.category);
-      const rawPositions = Array.isArray(raw.positions) && raw.positions.length > 0
-        ? raw.positions.map(p => repairTurkishMojibake(String(p).trim())).filter(Boolean)
-        : [];
-      const rawPositionDetails = Array.isArray(raw.positionDetails) && raw.positionDetails.length > 0
-        ? raw.positionDetails.map(p => repairTurkishMojibake(String(p).trim())).filter(Boolean)
-        : [];
-
-      normalized.positions = normalized.category === EXAM_CATEGORY_ID
-        ? extractedPos.positions
-        : [...new Set([...rawPositions, ...extractedPos.positions])];
-
-      normalized.positionDetails = normalized.category === EXAM_CATEGORY_ID
-        ? extractedPos.positionDetails
-        : (rawPositionDetails.length > 0 ? rawPositionDetails : (rawPositions.length > 0 ? normalized.positions : extractedPos.positionDetails));
-
-      const rawDepts = Array.isArray(raw.departments) && raw.departments.length > 0
-        ? raw.departments.map(d => repairTurkishMojibake(String(d).trim())).filter(Boolean)
-        : [];
-      normalized.departments = rawDepts.length > 0
-        ? rawDepts
-        : extractDepartmentsFromText(fullText, normalized.education, normalized.isDuzMemurluk, normalized.positions, normalized.category);
-
-      const explicitRows = Array.isArray(raw.kadroRows)
-        ? raw.kadroRows.map(r => repairTurkishMojibake(String(r).trim())).filter(Boolean)
-        : [];
-      const extractedConditionRows = normalized.requirements.filter(req => {
-        const low = trLower(req);
-        if (low.startsWith('aranan bölümler') || low.startsWith('alım yapılacak kadrolar') || low.startsWith('sınav / puan şartı')) return false;
-        return req.includes(':') || ['ehliyet', 'sürücü', 'src', 'mezun', 'sertifika', 'psikolog', 'şoför', 'büro yönet'].some(k => low.includes(k));
-      });
-      normalized.kadroRows = [...new Set([...explicitRows, ...extractedConditionRows])];
-
-      return normalized;
     }
 
-    function showToast(message, type = 'info') {
-      const container = document.getElementById('toastContainer');
-      if (!container) return;
-      const styles = {
-        success: 'bg-slate-900 text-white border-emerald-500/60',
-        error: 'bg-rose-950 text-white border-rose-500/60',
-        info: 'bg-slate-900 text-white border-indigo-500/50'
-      };
-      const toast = document.createElement('div');
-      toast.className = `pointer-events-auto flex items-center gap-2 px-4 py-2.5 rounded-xl border shadow-xl text-xs font-semibold animate-modal ${styles[type] || styles.info}`;
-      toast.textContent = message;
-      container.appendChild(toast);
-      setTimeout(() => { toast.remove(); }, 3000);
+    function buildFingerprint(list) {
+      return list.map(x => `${x.url}|${x.title}|${x.positions.length}`).join(';;');
     }
 
-    async function fetchJsonWithFallback(primaryUrl) {
-      const candidates = [primaryUrl];
-      if (primaryUrl !== DETECTED_URLS.githubRawUrl) candidates.push(DETECTED_URLS.githubRawUrl);
-      if (primaryUrl !== DETECTED_URLS.relativeUrl) candidates.push(DETECTED_URLS.relativeUrl);
-
-      let lastErr = null;
-      for (const baseUrl of candidates) {
-        try {
-          const sep = baseUrl.includes('?') ? '&' : '?';
-          const resp = await fetch(`${baseUrl}${sep}t=${Date.now()}`, { cache: 'no-store' });
-          if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
-          const data = await resp.json();
-          if (Array.isArray(data)) {
-            state.liveJsonUrl = baseUrl;
-            return data;
-          }
-        } catch (err) {
-          lastErr = err;
-        }
-      }
-      throw lastErr || new Error('Veri alınamadı');
-    }
-
-    async function fetchLiveAnnouncements(silent = false) {
-      if (state.isScanningNow) return;
-      state.isScanningNow = true;
-
-      const scanIcon = document.getElementById('scanNowIcon');
-      const scanLabel = document.getElementById('scanNowLabel');
-      const statusText = document.getElementById('liveStatusText');
-      if (scanIcon) scanIcon.classList.add('animate-spin');
-      if (scanLabel) scanLabel.textContent = 'Yenileniyor...';
+    async function fetchListings(silent = false) {
+      const statusEl = document.getElementById('syncStatusText');
+      const refreshIcon = document.getElementById('refreshIcon');
+      if (!silent) refreshIcon.classList.add('animate-spin');
 
       try {
-        const rawList = await fetchJsonWithFallback(state.liveJsonUrl);
-        state.announcements = rawList.map((item, idx) => normalizeAnnouncementItem(item, idx));
+        const res = await fetch(`./ilanlar.json?t=${Date.now()}`, { cache: 'no-store' });
+        if (!res.ok) throw new Error('JSON okunamadı');
+        const rawData = await res.json();
+        const normalized = (Array.isArray(rawData) ? rawData : []).map(normalizeListing);
 
-        const now = new Date();
-        state.scheduler.lastScanTimeStr = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
-        state.scheduler.nextScanTimestamp = Date.now() + state.scheduler.intervalSeconds * 1000;
+        const nowTime = new Date().toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' });
+        const newFp = buildFingerprint(normalized);
 
-        const jobCount = state.announcements.filter(a => a.category !== EXAM_CATEGORY_ID && (!state.filters.hideNoise || !isLikelyNoiseAnnouncement(a))).length;
-        if (statusText) {
-          statusText.textContent = jobCount > 0 ? `Canlı Bağlı • ${jobCount} İş İlanı` : 'Canlı Bağlı';
+        if (STATE.allListings.length > 0 && newFp === STATE.lastFingerprint) {
+          statusEl.textContent = `Son kontrol: ${nowTime} • Yeni ilan yok, mevcut liste güncel`;
+          if (!silent) showToast('Liste kontrol edildi: Yeni ilan yok, mevcut ilanlar güncel.');
+          return;
         }
-        if (!silent) showToast('İlan listesi güncellendi!', 'success');
-      } catch (err) {
-        if (statusText) statusText.textContent = 'Veri Bekleniyor';
-        if (!silent) showToast('İlan verisi henüz oluşmamış veya bağlantı kurulamadı.', 'error');
-      } finally {
-        state.isScanningNow = false;
-        if (scanIcon) scanIcon.classList.remove('animate-spin');
-        if (scanLabel) scanLabel.textContent = 'Yenile';
-        renderAll();
-      }
-    }
 
-    function getFilteredAnnouncements() {
-      const {
-        category, profession, keyword, sources, education, kpss, city,
-        includeTurkiyeGeneli, hideNoise, bookmarkedOnly,
-        duzMemurlukOnly, urgentOnly, sortBy
-      } = state.filters;
-
-      const q = normalizeSearchTr(keyword.trim());
-
-      return state.announcements.filter(item => {
-        // ÖSYM / Sınav & Tercihler yalnızca kendi sekmesi seçildiğinde görünür:
-        if (category === EXAM_CATEGORY_ID) {
-          if (item.category !== EXAM_CATEGORY_ID) return false;
+        if (normalized.length > 0 || STATE.allListings.length === 0) {
+          STATE.allListings = normalized;
+          STATE.lastFingerprint = newFp;
+          populateFilterOptions();
+          renderPortalsGrid();
+          applyFilters();
+          statusEl.textContent = `Son güncelleme: ${nowTime} • ${normalized.length} aktif ilan`;
+          if (!silent && normalized.length > 0) showToast(`${normalized.length} güncel ilan yüklendi.`);
         } else {
-          if (item.category === EXAM_CATEGORY_ID) return false;
-          if (hideNoise && isLikelyNoiseAnnouncement(item)) return false;
-          if (category !== 'Tümü' && item.category !== category) return false;
+          statusEl.textContent = `Son kontrol: ${nowTime} • Mevcut önbellek korundu`;
         }
+      } catch (err) {
+        const nowTime = new Date().toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' });
+        statusEl.textContent = `Son kontrol: ${nowTime} • Mevcut liste korunuyor`;
+      } finally {
+        refreshIcon.classList.remove('animate-spin');
+      }
+    }
 
-        if (profession && profession !== 'Tümü') {
-          const itemPositions = (item.positions || []).map(p => trLower(p));
-          if (!itemPositions.includes(trLower(profession))) return false;
-        }
+    function renderPortalsGrid() {
+      const grid = document.getElementById('portalsGrid');
+      const portalSelect = document.getElementById('portalSelect');
+      const activePortal = portalSelect.value;
 
-        const cleanDomain = normalizeDomain(item.sourceDomain);
-        if (sources.size > 0 && !sources.has(cleanDomain)) return false;
+      const domainCounts = {};
+      STATE.allListings.forEach(item => {
+        domainCounts[item.sourceDomain] = (domainCounts[item.sourceDomain] || 0) + 1;
+      });
 
-        if (education !== 'Tümü') {
-          const itemEdu = trLower(item.education);
-          const itemTitle = trLower(item.title);
-          const multiMatch =
-            (education === 'Lisans' && (itemEdu.includes('lisans') && !itemEdu.includes('önlisans') || itemTitle.includes('4001'))) ||
-            (education === 'Önlisans' && (itemEdu.includes('önlisans') || itemTitle.includes('3001'))) ||
-            (education === 'Ortaöğretim' && (itemEdu.includes('ortaöğretim') || itemTitle.includes('2001'))) ||
-            (education === 'İlköğretim' && itemEdu.includes('ilköğretim'));
-          if (!multiMatch) return false;
-        }
+      grid.innerHTML = TUM_PORTALLAR.map(p => {
+        const cnt = domainCounts[p.domain] || 0;
+        const isSelected = activePortal === p.domain;
+        return `
+          <button type="button" data-portal-domain="${escapeHtml(p.domain)}"
+            class="portal-card-btn text-left p-2.5 rounded-xl border text-xs transition flex flex-col justify-between gap-1 ${
+              isSelected
+                ? 'bg-brand-600 text-white border-brand-600 shadow-sm'
+                : 'bg-slate-50 dark:bg-slate-800/70 hover:border-brand-400 border-slate-200 dark:border-slate-700'
+            }">
+            <span class="font-bold truncate">${escapeHtml(p.name)}</span>
+            <div class="flex items-center justify-between text-[11px] ${isSelected ? 'text-blue-100' : 'text-slate-500 dark:text-slate-400'}">
+              <span class="truncate">${escapeHtml(p.domain)}</span>
+              <span class="font-extrabold ml-1 ${cnt > 0 && !isSelected ? 'text-emerald-600 dark:text-emerald-400' : ''}">${cnt}</span>
+            </div>
+          </button>
+        `;
+      }).join('');
 
-        if (kpss !== 'Tümü' && !trLower(item.kpss).includes(trLower(kpss))) return false;
-
-        if (city !== 'Tümü') {
-          const itemCity = trLower(item.city);
-          const targetCity = trLower(city);
-          const isMatch = itemCity.includes(targetCity) || (includeTurkiyeGeneli && itemCity === 'türkiye geneli');
-          if (!isMatch) return false;
-        }
-
-        if (duzMemurlukOnly && !isDuzMemurlukAnnouncement(item)) return false;
-        if (bookmarkedOnly && !state.bookmarks.has(item.id)) return false;
-
-        if (urgentOnly) {
-          const d = getDaysRemaining(item.endDate);
-          if (d < 0 || d > 3) return false;
-        }
-
-        if (q) {
-          const haystack = normalizeSearchTr([
-            item.title,
-            ...(item.positionDetails || item.positions || []),
-            ...(item.departments || []),
-            ...(item.kadroRows || []),
-            item.institution,
-            item.city,
-            item.qualCode,
-            item.category,
-            cleanDomain
-          ].join(' '));
-          if (!haystack.includes(q)) return false;
-        }
-
-        return true;
-      }).sort((a, b) => {
-        if (sortBy === 'deadline') return new Date(a.endDate) - new Date(b.endDate);
-        if (sortBy === 'quota') return (Number(b.quota) || 0) - (Number(a.quota) || 0);
-        return new Date(b.publishDate) - new Date(a.publishDate);
+      grid.querySelectorAll('.portal-card-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const dom = btn.getAttribute('data-portal-domain');
+          portalSelect.value = portalSelect.value === dom ? '' : dom;
+          document.getElementById('btnClearPortalFilter').classList.toggle('hidden', !portalSelect.value);
+          renderPortalsGrid();
+          applyFilters();
+        });
       });
     }
 
-    function getPortalMeta(domain) {
-      const clean = normalizeDomain(domain);
-      return PORTALS.find(p => p.domain === clean) || {
-        domain: clean,
-        shortName: clean,
-        badgeClass: 'bg-slate-100 text-slate-700 border-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:border-slate-700'
-      };
-    }
+    function populateFilterOptions() {
+      const profSelect = document.getElementById('professionSelect');
+      const citySelect = document.getElementById('citySelect');
+      const portalSelect = document.getElementById('portalSelect');
 
-    function renderAll() {
-      const filtered = getFilteredAnnouncements();
-      const jobAnnouncements = state.announcements.filter(a =>
-        a.category !== EXAM_CATEGORY_ID && (!state.filters.hideNoise || !isLikelyNoiseAnnouncement(a))
-      );
-      const examAnnouncements = state.announcements.filter(a => a.category === EXAM_CATEGORY_ID);
+      const prevProf = profSelect.value;
+      const prevCity = citySelect.value;
+      const prevPortal = portalSelect.value;
 
-      const noiseCount = state.announcements.filter(isLikelyNoiseAnnouncement).length;
-      const noiseHint = document.getElementById('noiseHiddenHint');
-      if (noiseHint) {
-        noiseHint.textContent = noiseCount > 0 ? `${noiseCount} ihale/eski duyuru elendi` : 'İhale ve eski sonuçları eler';
-      }
+      const profCounts = {};
+      const citySet = new Set();
+      const domainCounts = {};
 
-      const lastScanEl = document.getElementById('lastScanTimeText');
-      if (lastScanEl) lastScanEl.textContent = state.scheduler.lastScanTimeStr;
-
-      const duzAll = jobAnnouncements.filter(isDuzMemurlukAnnouncement);
-      const urgentCount = jobAnnouncements.filter(i => { const d = getDaysRemaining(i.endDate); return d >= 0 && d <= 3; }).length;
-
-      document.getElementById('statTotalJobCount').textContent = jobAnnouncements.length.toLocaleString('tr-TR');
-      document.getElementById('statDuzMemurCount').textContent = duzAll.length.toLocaleString('tr-TR');
-      document.getElementById('statUrgentCount').textContent = urgentCount.toLocaleString('tr-TR');
-      document.getElementById('statBookmarkedCount').textContent = state.bookmarks.size.toLocaleString('tr-TR');
-
-      // ÖSYM sekmesi uyarısı
-      const osymBanner = document.getElementById('osymCategoryBanner');
-      if (osymBanner) {
-        osymBanner.classList.toggle('hidden', state.filters.category !== EXAM_CATEGORY_ID);
-      }
-
-      // Meslek listesi
-      const profCountMap = new Map();
-      jobAnnouncements.forEach(a => {
-        (a.positions || []).forEach(p => {
-          profCountMap.set(p, (profCountMap.get(p) || 0) + 1);
+      STATE.allListings.forEach(item => {
+        citySet.add(item.city);
+        domainCounts[item.sourceDomain] = (domainCounts[item.sourceDomain] || 0) + 1;
+        item.positions.forEach(p => {
+          profCounts[p] = (profCounts[p] || 0) + 1;
         });
       });
-      const sortedProfs = [...profCountMap.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], 'tr'));
-      if (state.filters.profession !== 'Tümü' && !profCountMap.has(state.filters.profession)) {
-        sortedProfs.unshift([state.filters.profession, 0]);
-      }
-      const quickProfEl = document.getElementById('quickProfessionSelect');
-      if (quickProfEl) {
-        quickProfEl.innerHTML = `<option value="Tümü">Tüm Meslek / Kadrolar (${profCountMap.size})</option>` +
-          sortedProfs.map(([prof, cnt]) => `<option value="${escapeHtml(prof)}" ${state.filters.profession === prof ? 'selected' : ''}>${escapeHtml(prof)} (${cnt})</option>`).join('');
-      }
 
-      // Hızlı Meslek Etiketleri
-      const popPillsEl = document.getElementById('popularProfessionPills');
-      if (popPillsEl) {
-        const pillList = [...new Set([...POPULAR_PROFESSIONS, ...sortedProfs.slice(0, 5).map(x => x[0])])];
-        popPillsEl.innerHTML = pillList.map(prof => {
-          const cnt = profCountMap.get(prof) || 0;
-          const isAct = state.filters.profession === prof;
-          const shortLabel = prof === 'Paramedik (İlk ve Acil Yardım)' ? 'Paramedik'
-            : (prof === 'Koruma ve Güvenlik Görevlisi' ? 'Güvenlik Görevlisi' : prof);
-          return `
-            <button
-              type="button"
-              data-quick-prof="${escapeHtml(prof)}"
-              class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-xl text-xs font-bold border transition cursor-pointer ${
-                isAct
-                  ? 'bg-indigo-600 text-white border-indigo-600'
-                  : 'bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-200 border-slate-200 dark:border-slate-700 hover:border-indigo-400'
-              }"
-            >
-              <span>${escapeHtml(shortLabel)}</span>
-              ${cnt > 0 ? `<span class="text-[10px] opacity-80">(${cnt})</span>` : ''}
-            </button>
-          `;
+      const sortedProfs = Object.entries(profCounts).sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], 'tr'));
+      profSelect.innerHTML = '<option value="">Tüm Meslek Grupları</option>' +
+        sortedProfs.map(([name, cnt]) => `<option value="${escapeHtml(name)}">${escapeHtml(name)} (${cnt})</option>`).join('');
+      if (profCounts[prevProf]) profSelect.value = prevProf;
+
+      const sortedCities = Array.from(citySet).sort((a, b) => a.localeCompare(b, 'tr'));
+      citySelect.innerHTML = '<option value="">Tüm Şehirler</option>' +
+        sortedCities.map(c => `<option value="${escapeHtml(c)}">${escapeHtml(c)}</option>`).join('');
+      if (citySet.has(prevCity)) citySelect.value = prevCity;
+
+      portalSelect.innerHTML = '<option value="">Tüm Portallar (42 Kaynak)</option>' +
+        TUM_PORTALLAR.map(p => {
+          const cnt = domainCounts[p.domain] || 0;
+          return `<option value="${escapeHtml(p.domain)}">${escapeHtml(p.name)} (${cnt})</option>`;
         }).join('');
+      if (prevPortal) portalSelect.value = prevPortal;
 
-        popPillsEl.querySelectorAll('[data-quick-prof]').forEach(btn => {
-          btn.addEventListener('click', () => {
-            const p = btn.getAttribute('data-quick-prof');
-            state.filters.profession = state.filters.profession === p ? 'Tümü' : p;
-            if (state.filters.category === EXAM_CATEGORY_ID) state.filters.category = 'Tümü';
-            renderAll();
-          });
+      const pillsEl = document.getElementById('popularProfessionsPills');
+      const topProfs = sortedProfs.slice(0, 6);
+      pillsEl.innerHTML = topProfs.map(([name]) => {
+        const active = profSelect.value === name;
+        return `<button type="button" data-prof="${escapeHtml(name)}"
+          class="prof-pill px-2 py-0.5 rounded-md text-[11px] font-semibold border transition ${
+            active
+              ? 'bg-brand-600 text-white border-brand-600'
+              : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:border-brand-400'
+          }">${escapeHtml(name)}</button>`;
+      }).join('');
+
+      pillsEl.querySelectorAll('.prof-pill').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const val = btn.getAttribute('data-prof');
+          profSelect.value = profSelect.value === val ? '' : val;
+          populateFilterOptions();
+          applyFilters();
         });
-      }
-
-      // Şehir listesi
-      const quickCity = document.getElementById('quickCitySelect');
-      const allCities = new Set(CITIES);
-      jobAnnouncements.forEach(a => { if (a.city) allCities.add(a.city); });
-      if (quickCity) {
-        quickCity.innerHTML = [...allCities].map(c => `<option value="${escapeHtml(c)}" ${state.filters.city === c ? 'selected' : ''}>${escapeHtml(c)}</option>`).join('');
-      }
-
-      const quickEdu = document.getElementById('quickEduSelect');
-      if (quickEdu) quickEdu.value = state.filters.education;
-
-      // Düz Memurluk & KPSS Şartsız buton stilleri
-      const quickOnlyDuzBtn = document.getElementById('quickOnlyDuzBtn');
-      if (quickOnlyDuzBtn) {
-        quickOnlyDuzBtn.className = state.filters.duzMemurlukOnly
-          ? 'inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold border border-emerald-600 bg-emerald-600 text-white shrink-0 transition cursor-pointer'
-          : 'inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold border border-emerald-200 dark:border-emerald-800 bg-emerald-50/80 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-300 shrink-0 transition cursor-pointer';
-      }
-
-      const quickKpssFreeBtn = document.getElementById('quickKpssFreeBtn');
-      if (quickKpssFreeBtn) {
-        const isFree = state.filters.kpss === 'KPSS Şartsız';
-        quickKpssFreeBtn.className = isFree
-          ? 'inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold border border-indigo-600 bg-indigo-600 text-white shrink-0 transition cursor-pointer'
-          : 'inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-200 shrink-0 transition cursor-pointer';
-      }
-
-      // Kategori Sekmeleri
-      const catContainer = document.getElementById('categoryTabsContainer');
-      if (catContainer) {
-        catContainer.innerHTML = CATEGORIES.map(cat => {
-          const active = state.filters.category === cat.id;
-          const isExamTab = cat.id === EXAM_CATEGORY_ID;
-          const cnt = cat.id === 'Tümü'
-            ? jobAnnouncements.length
-            : (isExamTab ? examAnnouncements.length : jobAnnouncements.filter(a => a.category === cat.id).length);
-
-          let btnStyle = active
-            ? 'bg-indigo-600 text-white shadow-2xs'
-            : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800';
-          if (isExamTab) {
-            btnStyle = active
-              ? 'bg-amber-600 text-white shadow-2xs'
-              : 'bg-amber-50/80 dark:bg-amber-950/40 text-amber-800 dark:text-amber-300 border border-amber-200/80 dark:border-amber-800/60 hover:bg-amber-100';
-          }
-
-          return `
-            ${isExamTab ? '<span class="h-5 w-px bg-slate-200 dark:bg-slate-700 mx-1 shrink-0"></span>' : ''}
-            <button
-              type="button"
-              data-cat="${cat.id}"
-              class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition cursor-pointer ${btnStyle}"
-            >
-              <i data-lucide="${cat.icon}" class="w-3.5 h-3.5"></i>
-              <span>${cat.label}</span>
-              <span class="px-1.5 py-0.5 rounded-md text-[10px] font-extrabold ${active ? 'bg-black/20 text-white' : 'bg-slate-200/70 dark:bg-slate-800 text-slate-700 dark:text-slate-300'}">${cnt}</span>
-            </button>
-          `;
-        }).join('');
-
-        catContainer.querySelectorAll('[data-cat]').forEach(btn => {
-          btn.addEventListener('click', () => {
-            state.filters.category = btn.getAttribute('data-cat');
-            renderAll();
-          });
-        });
-      }
-
-      renderSidebar(jobAnnouncements);
-
-      const summaryEl = document.getElementById('resultsSummaryText');
-      if (summaryEl) {
-        const label = state.filters.category === EXAM_CATEGORY_ID ? 'sınav / tercih duyurusu' : 'aktif iş ilanı';
-        summaryEl.innerHTML = `<strong class="text-indigo-600 dark:text-indigo-400 font-extrabold">${filtered.length}</strong> ${label} listeleniyor`;
-      }
-
-      renderActiveChips();
-      renderAnnouncements(filtered);
-
-      if (window.lucide) lucide.createIcons();
-    }
-
-    function renderSidebar(jobAnnouncements) {
-      const kpssSelect = document.getElementById('kpssSelect');
-      if (kpssSelect) {
-        kpssSelect.innerHTML = KPSS_TYPES.map(t => `<option value="${t}" ${state.filters.kpss === t ? 'selected' : ''}>${t}</option>`).join('');
-      }
-
-      const sourceContainer = document.getElementById('sourceCheckboxesContainer');
-      const pQuery = trLower(state.portalSearchQuery.trim());
-      if (sourceContainer) {
-        const filteredPortals = PORTALS.filter(p => !pQuery || trLower(`${p.domain} ${p.shortName}`).includes(pQuery));
-        sourceContainer.innerHTML = filteredPortals.map(portal => {
-          const checked = state.filters.sources.has(portal.domain);
-          const count = jobAnnouncements.filter(a => normalizeDomain(a.sourceDomain) === portal.domain).length;
-          return `
-            <label class="flex items-center justify-between gap-2 px-2 py-1.5 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer select-none">
-              <div class="flex items-center gap-2 min-w-0">
-                <input type="checkbox" data-src-cb="${portal.domain}" ${checked ? 'checked' : ''} class="w-3.5 h-3.5 rounded border-slate-300 text-indigo-600" />
-                <span class="text-xs font-medium text-slate-700 dark:text-slate-300 truncate">${portal.shortName}</span>
-              </div>
-              <span class="text-[10px] font-bold text-slate-400">${count}</span>
-            </label>
-          `;
-        }).join('');
-
-        sourceContainer.querySelectorAll('[data-src-cb]').forEach(cb => {
-          cb.addEventListener('change', (e) => {
-            const d = e.target.getAttribute('data-src-cb');
-            if (e.target.checked) state.filters.sources.add(d);
-            else if (state.filters.sources.size > 1) state.filters.sources.delete(d);
-            else { e.target.checked = true; return; }
-            renderAll();
-          });
-        });
-      }
-
-      document.getElementById('hideNoiseToggle').checked = state.filters.hideNoise;
-      document.getElementById('duzMemurlukOnlyToggle').checked = state.filters.duzMemurlukOnly;
-      document.getElementById('bookmarkedOnlyToggle').checked = state.filters.bookmarkedOnly;
-      document.getElementById('includeTurkiyeGeneliCheck').checked = state.filters.includeTurkiyeGeneli;
-
-      const clearBtn = document.getElementById('clearKeywordBtn');
-      if (clearBtn) clearBtn.classList.toggle('hidden', !state.filters.keyword.trim());
+      });
     }
 
     function renderActiveChips() {
-      const bar = document.getElementById('activeFilterChipsBar');
-      if (!bar) return;
+      const wrap = document.getElementById('activeFilterChips');
       const chips = [];
-      if (state.filters.category !== 'Tümü') chips.push({ k: 'category', label: `Kategori: ${state.filters.category}` });
-      if (state.filters.profession !== 'Tümü') chips.push({ k: 'profession', label: `Meslek: ${state.filters.profession}` });
-      if (state.filters.keyword.trim()) chips.push({ k: 'keyword', label: `Arama: "${state.filters.keyword.trim()}"` });
-      if (state.filters.education !== 'Tümü') chips.push({ k: 'education', label: `Mezuniyet: ${state.filters.education}` });
-      if (state.filters.kpss !== 'Tümü') chips.push({ k: 'kpss', label: `KPSS: ${state.filters.kpss}` });
-      if (state.filters.city !== 'Tümü') chips.push({ k: 'city', label: `Şehir: ${state.filters.city}` });
-      if (state.filters.duzMemurlukOnly) chips.push({ k: 'duz', label: 'Bölüm Şartsız (Düz)' });
-      if (state.filters.bookmarkedOnly) chips.push({ k: 'bm', label: 'Kaydedilenler' });
-      if (state.filters.urgentOnly) chips.push({ k: 'urgent', label: 'Son 3 Gün' });
+
+      const q = document.getElementById('heroSearchInput').value.trim();
+      const prof = document.getElementById('professionSelect').value;
+      const city = document.getElementById('citySelect').value;
+      const edu = document.getElementById('educationSelect').value;
+      const kpss = document.getElementById('kpssSelect').value;
+      const cat = document.getElementById('categorySelect').value;
+      const portal = document.getElementById('portalSelect').value;
+
+      if (q) chips.push({ label: `Arama: "${q}"`, clear: () => { document.getElementById('heroSearchInput').value = ''; } });
+      if (STATE.onlyDuzMemurluk) chips.push({ label: 'Bölüm Şartsız Düz Memurluk', clear: () => { STATE.onlyDuzMemurluk = false; document.getElementById('btnDuzMemurlukOnly').textContent = 'Sadece Bölüm Şartsızları Göster'; } });
+      if (STATE.onlyFavorites) chips.push({ label: 'Sadece Favoriler', clear: () => { STATE.onlyFavorites = false; } });
+      if (prof) chips.push({ label: `Meslek: ${prof}`, clear: () => { document.getElementById('professionSelect').value = ''; } });
+      if (city) chips.push({ label: `Şehir: ${city}`, clear: () => { document.getElementById('citySelect').value = ''; } });
+      if (edu) chips.push({ label: `Eğitim: ${edu}`, clear: () => { document.getElementById('educationSelect').value = ''; } });
+      if (kpss) chips.push({ label: `KPSS: ${kpss}`, clear: () => { document.getElementById('kpssSelect').value = ''; } });
+      if (cat) chips.push({ label: `Sınıf: ${cat}`, clear: () => { document.getElementById('categorySelect').value = ''; } });
+      if (portal) chips.push({ label: `Portal: ${portal}`, clear: () => { document.getElementById('portalSelect').value = ''; } });
 
       if (chips.length === 0) {
-        bar.classList.add('hidden');
-        bar.classList.remove('flex');
+        wrap.classList.add('hidden');
+        wrap.classList.remove('flex');
+        wrap.innerHTML = '';
         return;
       }
-      bar.classList.remove('hidden');
-      bar.classList.add('flex');
-      bar.innerHTML = chips.map(c => `
-        <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold bg-indigo-50 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800">
-          <span>${escapeHtml(c.label)}</span>
-          <button type="button" data-rm-chip="${c.k}" class="hover:text-indigo-950 cursor-pointer"><i data-lucide="x" class="w-3 h-3"></i></button>
-        </span>
-      `).join('');
 
-      bar.querySelectorAll('[data-rm-chip]').forEach(btn => {
+      wrap.classList.remove('hidden');
+      wrap.classList.add('flex');
+      wrap.innerHTML = '<span class="text-[11px] text-slate-400 mr-1">Aktif Filtreler:</span>' +
+        chips.map((c, i) => `
+          <button type="button" data-chip-idx="${i}"
+            class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-brand-50 text-brand-700 dark:bg-brand-900/40 dark:text-brand-300 border border-brand-200 dark:border-brand-800 hover:bg-brand-100">
+            ${escapeHtml(c.label)} <span class="font-bold">×</span>
+          </button>
+        `).join('');
+
+      wrap.querySelectorAll('[data-chip-idx]').forEach(btn => {
         btn.addEventListener('click', () => {
-          const k = btn.getAttribute('data-rm-chip');
-          if (k === 'category') state.filters.category = 'Tümü';
-          if (k === 'profession') state.filters.profession = 'Tümü';
-          if (k === 'keyword') { state.filters.keyword = ''; document.getElementById('keywordInput').value = ''; }
-          if (k === 'education') state.filters.education = 'Tümü';
-          if (k === 'kpss') state.filters.kpss = 'Tümü';
-          if (k === 'city') state.filters.city = 'Tümü';
-          if (k === 'duz') state.filters.duzMemurlukOnly = false;
-          if (k === 'bm') state.filters.bookmarkedOnly = false;
-          if (k === 'urgent') state.filters.urgentOnly = false;
-          renderAll();
+          const idx = Number(btn.getAttribute('data-chip-idx'));
+          chips[idx].clear();
+          populateFilterOptions();
+          renderPortalsGrid();
+          applyFilters();
         });
       });
     }
 
-    function renderAnnouncements(items) {
-      const grid = document.getElementById('announcementsGrid');
-      const empty = document.getElementById('emptyStateContainer');
-      if (!grid || !empty) return;
+    function applyFilters() {
+      const q = normalizeSearch(document.getElementById('heroSearchInput').value);
+      const prof = document.getElementById('professionSelect').value;
+      const city = document.getElementById('citySelect').value;
+      const edu = document.getElementById('educationSelect').value;
+      const kpss = document.getElementById('kpssSelect').value;
+      const cat = document.getElementById('categorySelect').value;
+      const portal = document.getElementById('portalSelect').value;
+      const sort = document.getElementById('sortSelect').value;
 
-      if (items.length === 0) {
-        grid.classList.add('hidden');
-        empty.classList.remove('hidden');
+      let list = STATE.allListings.filter(item => {
+        if (STATE.onlyFavorites && !STATE.favorites.has(item.id)) return false;
+        if (STATE.onlyDuzMemurluk && !item.isDuzMemurluk) return false;
+        if (prof && !item.positions.includes(prof)) return false;
+        if (city && item.city !== city) return false;
+        if (edu && item.education !== edu) return false;
+        if (kpss && !item.kpss.includes(kpss)) return false;
+        if (cat && item.category !== cat) return false;
+        if (portal && item.sourceDomain !== portal) return false;
+
+        if (q) {
+          const blob = trLower([
+            item.title,
+            item.institution,
+            item.sourceDomain,
+            item.city,
+            item.qualCode,
+            item.positions.join(' '),
+            item.requirements.join(' ')
+          ].join(' '));
+          if (!blob.includes(q)) return false;
+        }
+        return true;
+      });
+
+      if (sort === 'deadline') {
+        list.sort((a, b) => a.endDate.localeCompare(b.endDate));
+      } else if (sort === 'quota') {
+        list.sort((a, b) => b.quota - a.quota);
+      } else {
+        list.sort((a, b) => b.publishDate.localeCompare(a.publishDate));
+      }
+
+      STATE.filteredListings = list;
+      updateStats();
+      renderActiveChips();
+      renderListings();
+    }
+
+    function updateStats() {
+      document.getElementById('statTotalListings').textContent = STATE.allListings.length;
+      document.getElementById('statDuzMemurluk').textContent = STATE.allListings.filter(x => x.isDuzMemurluk).length;
+      const totalQuota = STATE.filteredListings.reduce((acc, x) => acc + (x.quota || 1), 0);
+      document.getElementById('statTotalQuota').textContent = totalQuota.toLocaleString('tr-TR');
+      document.getElementById('favCountBadge').textContent = STATE.favorites.size;
+    }
+
+    function renderListings() {
+      const container = document.getElementById('listingsContainer');
+      const summary = document.getElementById('resultSummaryText');
+
+      summary.textContent = `${STATE.filteredListings.length} aktif ilan listeleniyor`;
+
+      if (STATE.allListings.length === 0) {
+        container.innerHTML = `
+          <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-10 text-center space-y-2">
+            <p class="text-base font-extrabold text-slate-800 dark:text-slate-100">Henüz Taranmış İlan Verisi Yok</p>
+            <p class="text-xs text-slate-500 dark:text-slate-400 max-w-md mx-auto leading-relaxed">
+              GitHub Actions üzerinde <strong>Saatlik Kamu İlan Tarayıcı</strong> ilk taramayı tamamladığında 42 resmi portaldan çekilen ilanlar burada otomatik görünecektir.
+            </p>
+          </div>`;
         return;
       }
 
-      empty.classList.add('hidden');
-      grid.classList.remove('hidden');
+      if (STATE.filteredListings.length === 0) {
+        container.innerHTML = `
+          <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-10 text-center space-y-2">
+            <p class="text-base font-extrabold text-slate-800 dark:text-slate-200">Seçtiğiniz kriterlere uygun ilan bulunamadı</p>
+            <p class="text-xs text-slate-500 dark:text-slate-400">
+              Arama kelimesini değiştirebilir veya sol paneldeki "Tümünü Sıfırla" butonunu kullanabilirsiniz.
+            </p>
+          </div>`;
+        return;
+      }
 
-      grid.innerHTML = items.map(item => {
-        const portal = getPortalMeta(item.sourceDomain);
-        const deadline = getDeadlineBadgeInfo(item.endDate);
-        const isBookmarked = state.bookmarks.has(item.id);
-        const isDuz = isDuzMemurlukAnnouncement(item);
-        const isCardExpanded = state.expandedCardIds.has(item.id);
-        const posList = item.positionDetails || item.positions || [];
-        const deptList = item.departments || [];
-        const previewCondition = (item.kadroRows && item.kadroRows[0]) || (item.requirements && item.requirements[0]) || '';
+      container.innerHTML = STATE.filteredListings.map(item => {
+        const isFav = STATE.favorites.has(item.id);
+        const isExpanded = STATE.expandedCards.has(item.id);
+        const visiblePositions = isExpanded ? item.positionDetails : item.positionDetails.slice(0, 5);
+        const hiddenCount = item.positionDetails.length - 5;
+        const primaryReq = item.requirements[0] || '';
 
         return `
-          <article class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/90 dark:border-slate-800 hover:border-indigo-400 shadow-2xs hover:shadow-md transition-all p-4 sm:p-5 flex flex-col justify-between">
-            <div>
-              <!-- Üst Rozetler -->
-              <div class="flex items-start justify-between gap-2 mb-2.5">
-                <div class="flex flex-wrap items-center gap-1.5">
-                  <span class="px-2.5 py-0.5 rounded-lg text-[11px] font-bold border ${portal.badgeClass}">
-                    ${escapeHtml(portal.shortName)}
-                  </span>
-                  <span class="px-2 py-0.5 rounded-lg text-[11px] font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">
-                    ${escapeHtml(item.category)}
-                  </span>
-                  ${isDuz ? '<span class="px-2 py-0.5 rounded-lg text-[10px] font-extrabold bg-emerald-50 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">Bölüm Şartsız</span>' : ''}
-                </div>
-
-                <button
-                  type="button"
-                  data-bm="${item.id}"
-                  title="${isBookmarked ? 'Kaydedilenlerden çıkar' : 'Kaydet'}"
-                  class="p-1.5 rounded-xl border transition cursor-pointer shrink-0 ${
-                    isBookmarked
-                      ? 'bg-rose-50 dark:bg-rose-950/60 border-rose-200 dark:border-rose-800 text-rose-600'
-                      : 'bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-400 hover:text-rose-600'
-                  }"
-                >
-                  <i data-lucide="bookmark" class="w-3.5 h-3.5 ${isBookmarked ? 'fill-rose-600' : ''}"></i>
-                </button>
+          <article class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-brand-400 dark:hover:border-brand-600 rounded-2xl p-4 sm:p-5 shadow-sm transition">
+            <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+              <div class="flex flex-wrap items-center gap-1.5">
+                <span class="px-2.5 py-0.5 rounded-md text-xs font-extrabold bg-brand-50 text-brand-700 dark:bg-brand-900/40 dark:text-brand-300">
+                  ${escapeHtml(item.institution)}
+                </span>
+                <span class="px-2.5 py-0.5 rounded-md text-xs font-semibold bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-300">
+                  ${escapeHtml(item.category)}
+                </span>
+                ${item.isDuzMemurluk ? `
+                  <span class="px-2.5 py-0.5 rounded-md text-xs font-bold bg-emerald-100 text-emerald-800 dark:bg-emerald-900/40 dark:text-emerald-300">
+                    ${escapeHtml(item.qualCode)}
+                  </span>` : ''}
               </div>
-
-              <!-- Kurum ve Başlık -->
-              <p class="text-[11px] font-bold text-indigo-600 dark:text-indigo-400 line-clamp-1 mb-0.5">
-                ${escapeHtml(item.institution)}
-              </p>
-              <a
-                href="${escapeHtml(item.url)}"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="block text-sm sm:text-base font-extrabold text-slate-900 dark:text-white hover:text-indigo-600 dark:hover:text-indigo-400 transition leading-snug line-clamp-2"
-              >
-                ${escapeHtml(item.title)}
-              </a>
-
-              <!-- İLANA GİTMEDEN DOĞRUDAN GÖRÜNEN BÖLÜM & MESLEK GRUBU ÖZETİ -->
-              <div class="mt-3 p-3 rounded-xl bg-slate-50 dark:bg-slate-800/75 border border-slate-200/80 dark:border-slate-700/80 space-y-2">
-                <!-- Aranan Bölüm / Mezuniyet -->
-                <div>
-                  <span class="text-[10px] font-extrabold uppercase tracking-wider text-emerald-700 dark:text-emerald-400 block">
-                    Aranan Bölüm / Mezuniyet Alanı
-                  </span>
-                  <p class="text-xs font-bold text-slate-800 dark:text-slate-100 mt-0.5 leading-snug">
-                    ${escapeHtml(deptList.slice(0, 3).join(' • '))}${deptList.length > 3 ? ` (+${deptList.length - 3} bölüm)` : ''}
-                  </p>
-                </div>
-
-                <!-- İstenen Meslek Grubu ve Kadrolar -->
-                <div class="pt-1.5 border-t border-slate-200/70 dark:border-slate-700/70">
-                  <span class="text-[10px] font-extrabold uppercase tracking-wider text-indigo-700 dark:text-indigo-300 block mb-1">
-                    İstenen Meslek Grubu &amp; Kadrolar (${posList.length})
-                  </span>
-                  <div class="flex flex-wrap gap-1">
-                    ${(isCardExpanded ? posList : posList.slice(0, 5)).map(pos => `
-                      <span class="inline-flex items-center px-2 py-0.5 rounded-md text-[11px] font-bold bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-100 border border-indigo-200/80 dark:border-slate-700">
-                        ${escapeHtml(pos)}
-                      </span>
-                    `).join('')}
-                    ${!isCardExpanded && posList.length > 5 ? `
-                      <span class="inline-flex items-center px-2 py-0.5 rounded-md text-[11px] font-extrabold bg-indigo-100 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300">
-                        +${posList.length - 5} meslek
-                      </span>
-                    ` : ''}
-                  </div>
-                </div>
-
-                <!-- Hızlı Şart Satırı -->
-                ${previewCondition ? `
-                  <div class="pt-1.5 border-t border-slate-200/70 dark:border-slate-700/70 text-[11px] text-slate-600 dark:text-slate-300">
-                    <span class="font-bold text-slate-700 dark:text-slate-200">Şart Özeti:</span>
-                    <span class="${isCardExpanded ? '' : 'line-clamp-2'}">${escapeHtml(previewCondition)}</span>
-                  </div>
-                ` : ''}
-
-                <!-- Kart İçi Genişletilmiş Bölüm & Şart Listesi (Sayfadan Ayrılmadan) -->
-                ${isCardExpanded ? `
-                  <div class="pt-2 border-t border-indigo-200/70 dark:border-slate-700 space-y-2 text-[11px] text-slate-700 dark:text-slate-300">
-                    ${deptList.length > 3 ? `
-                      <div>
-                        <strong class="text-emerald-700 dark:text-emerald-400 block mb-0.5">Tüm Aranan Bölümler:</strong>
-                        <p>${escapeHtml(deptList.join(', '))}</p>
-                      </div>
-                    ` : ''}
-                    <div>
-                      <strong class="text-indigo-700 dark:text-indigo-300 block mb-1">İlan Başvuru Şartları:</strong>
-                      <ul class="space-y-1 list-disc pl-4">
-                        ${(item.kadroRows && item.kadroRows.length > 0 ? item.kadroRows : item.requirements).slice(0, 6).map(r => `<li>${escapeHtml(r)}</li>`).join('')}
-                      </ul>
-                    </div>
-                  </div>
-                ` : ''}
-              </div>
-
-              <!-- Alt Meta Bilgiler -->
-              <div class="mt-3 grid grid-cols-2 gap-1.5 text-[11px] text-slate-600 dark:text-slate-300">
-                <div class="flex items-center gap-1.5 truncate">
-                  <i data-lucide="map-pin" class="w-3.5 h-3.5 text-slate-400 shrink-0"></i>
-                  <span class="truncate font-medium">${escapeHtml(item.city)}</span>
-                </div>
-                <div class="flex items-center gap-1.5 truncate">
-                  <i data-lucide="graduation-cap" class="w-3.5 h-3.5 text-slate-400 shrink-0"></i>
-                  <span class="truncate font-medium">${escapeHtml(item.education)}</span>
-                </div>
-                <div class="flex items-center gap-1.5 truncate">
-                  <i data-lucide="award" class="w-3.5 h-3.5 text-slate-400 shrink-0"></i>
-                  <span class="truncate font-medium">${escapeHtml(item.kpss)}</span>
-                </div>
-                <div class="flex items-center gap-1.5 truncate">
-                  <i data-lucide="users" class="w-3.5 h-3.5 text-emerald-600 shrink-0"></i>
-                  <span class="truncate font-bold text-emerald-700 dark:text-emerald-400">${(Number(item.quota) || 1).toLocaleString('tr-TR')} Kontenjan</span>
-                </div>
+              <div class="flex items-center gap-2">
+                ${getRemainingDaysBadge(item.endDate)}
+                <span class="text-xs text-slate-500 dark:text-slate-400">
+                  Son: <strong class="text-slate-700 dark:text-slate-200">${escapeHtml(item.endDate)}</strong>
+                </span>
               </div>
             </div>
 
-            <!-- Kart Alt Eylemleri -->
-            <div class="mt-3.5 pt-3 border-t border-slate-100 dark:border-slate-800 flex flex-wrap items-center justify-between gap-2">
-              <div class="flex items-center gap-1.5 text-[11px]">
-                <span class="text-slate-400">Son: <strong class="text-slate-700 dark:text-slate-200">${formatTurkishDate(item.endDate)}</strong></span>
-                <span class="px-2 py-0.5 rounded-md font-bold border ${deadline.badgeClass}">${deadline.text}</span>
+            <h3 class="font-extrabold text-sm sm:text-base text-slate-900 dark:text-white leading-snug mb-2.5">
+              <button type="button" data-open-id="${escapeHtml(item.id)}" class="text-left hover:text-brand-600 dark:hover:text-brand-400 transition">
+                ${escapeHtml(item.title)}
+              </button>
+            </h3>
+
+            <!-- İlanda Aranan Meslek Grupları -->
+            <div class="flex flex-wrap items-center gap-1.5 mb-2.5">
+              <span class="text-[11px] font-bold text-slate-500 dark:text-slate-400 mr-0.5">Aranan Meslekler:</span>
+              ${visiblePositions.map(p => `
+                <span class="px-2 py-0.5 rounded-md text-xs font-semibold bg-indigo-50 text-indigo-700 dark:bg-indigo-950/60 dark:text-indigo-300 border border-indigo-100 dark:border-indigo-900">
+                  ${escapeHtml(p)}
+                </span>
+              `).join('')}
+              ${hiddenCount > 0 ? `
+                <button type="button" data-expand-id="${escapeHtml(item.id)}"
+                  class="px-2 py-0.5 rounded-md text-xs font-bold text-brand-600 dark:text-brand-400 hover:underline">
+                  ${isExpanded ? 'Daralt' : `+${hiddenCount} meslek daha`}
+                </button>` : ''}
+            </div>
+
+            <!-- İlan İçeriğinden Özet Şart Önizlemesi -->
+            ${primaryReq ? `
+              <p class="text-xs text-slate-600 dark:text-slate-400 bg-slate-50 dark:bg-slate-800/50 rounded-lg px-3 py-2 mb-3 line-clamp-2 border border-slate-100 dark:border-slate-800">
+                <strong class="text-slate-700 dark:text-slate-300">Şart Özeti:</strong> ${escapeHtml(primaryReq)}
+              </p>` : ''}
+
+            <!-- Alt Meta ve Butonlar -->
+            <div class="pt-3 border-t border-slate-100 dark:border-slate-800 flex flex-wrap items-center justify-between gap-3">
+              <div class="flex flex-wrap items-center gap-3 text-xs font-medium text-slate-600 dark:text-slate-400">
+                <span>📍 ${escapeHtml(item.city)}</span>
+                <span>🎓 ${escapeHtml(item.education)}</span>
+                <span>📝 ${escapeHtml(item.kpss)}</span>
+                <span>👥 ${item.quota} Kadro</span>
               </div>
 
-              <div class="flex items-center gap-1.5">
-                <button
-                  type="button"
-                  data-inline-toggle="${item.id}"
-                  class="px-2.5 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 text-xs font-bold transition cursor-pointer"
-                >
-                  ${isCardExpanded ? 'Özeti Gizle' : 'Hızlı Özet'}
+              <div class="flex items-center gap-2">
+                <button type="button" data-fav-id="${escapeHtml(item.id)}"
+                  class="px-2.5 py-1.5 rounded-lg border text-xs font-bold transition ${
+                    isFav
+                      ? 'border-amber-400 bg-amber-50 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300'
+                      : 'border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800'
+                  }">
+                  ${isFav ? '★ Kayıtlı' : '☆ Kaydet'}
                 </button>
-                <button
-                  type="button"
-                  data-detail="${item.id}"
-                  class="px-2.5 py-1.5 rounded-xl bg-indigo-50 dark:bg-indigo-950/60 hover:bg-indigo-100 text-indigo-700 dark:text-indigo-300 text-xs font-bold transition cursor-pointer"
-                >
-                  Tam Detay
+
+                <button type="button" data-open-id="${escapeHtml(item.id)}"
+                  class="px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 text-xs font-bold transition">
+                  Detay & Şartlar
                 </button>
-                <a
-                  href="${escapeHtml(item.url)}"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="inline-flex items-center gap-1 px-3 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold shadow-2xs transition"
-                >
-                  <span>İlana Git</span>
-                  <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+
+                <a href="${escapeHtml(item.url)}" target="_blank" rel="noopener noreferrer"
+                  class="px-3 py-1.5 rounded-lg bg-brand-600 hover:bg-brand-700 text-white text-xs font-bold transition">
+                  Resmi İlana Git ↗
                 </a>
               </div>
             </div>
           </article>
         `;
       }).join('');
-
-      grid.querySelectorAll('[data-bm]').forEach(btn => {
-        btn.addEventListener('click', () => toggleBookmark(btn.getAttribute('data-bm')));
-      });
-      grid.querySelectorAll('[data-detail]').forEach(btn => {
-        btn.addEventListener('click', () => openDetailModal(btn.getAttribute('data-detail')));
-      });
-      grid.querySelectorAll('[data-inline-toggle]').forEach(btn => {
-        btn.addEventListener('click', () => {
-          const cid = btn.getAttribute('data-inline-toggle');
-          if (state.expandedCardIds.has(cid)) state.expandedCardIds.delete(cid);
-          else state.expandedCardIds.add(cid);
-          renderAll();
-        });
-      });
-    }
-
-    function toggleBookmark(id) {
-      if (state.bookmarks.has(id)) {
-        state.bookmarks.delete(id);
-        showToast('Kaydedilenlerden çıkarıldı.', 'info');
-      } else {
-        state.bookmarks.add(id);
-        showToast('İlan kaydedildi!', 'success');
-      }
-      try { localStorage.setItem(STORAGE_BOOKMARKS_KEY, JSON.stringify([...state.bookmarks])); } catch (e) {}
-      renderAll();
-    }
-
-    function shareAnnouncement(id) {
-      const item = state.announcements.find(a => a.id === id);
-      if (!item) return;
-      const text = `${item.institution} - ${item.title}\nResmi İlan: ${item.url}`;
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(text).then(() => showToast('İlan bağlantısı kopyalandı!', 'success'));
-      }
     }
 
     function openDetailModal(id) {
-      const item = state.announcements.find(a => a.id === id);
-      const modal = document.getElementById('detailModal');
-      if (!item || !modal) return;
-      state.activeModalAnnouncementId = id;
-      const portal = getPortalMeta(item.sourceDomain);
-      const deadline = getDeadlineBadgeInfo(item.endDate);
+      const item = STATE.allListings.find(x => x.id === id);
+      if (!item) return;
 
-      document.getElementById('detailPortalBadge').textContent = portal.shortName;
-      document.getElementById('detailRefNo').textContent = item.refNo;
-      document.getElementById('detailInstitution').textContent = item.institution;
-      document.getElementById('detailModalTitle').textContent = item.title;
+      STATE.activeModalId = id;
+      document.getElementById('modalInstitution').textContent = item.institution;
+      document.getElementById('modalCategory').textContent = item.category;
+      document.getElementById('modalTitle').textContent = item.title;
+      document.getElementById('modalCity').textContent = item.city;
+      document.getElementById('modalEducation').textContent = item.education;
+      document.getElementById('modalKpss').textContent = item.kpss;
+      document.getElementById('modalQualCode').textContent = item.qualCode;
+      document.getElementById('modalQuota').textContent = `${item.quota} Kişi / Kadro`;
+      document.getElementById('modalEndDate').textContent = item.endDate;
+      document.getElementById('modalOfficialLink').href = item.url;
 
-      const modalPositions = item.positionDetails || item.positions || [];
-      document.getElementById('detailProfessionGroupSubtitle').textContent = `Meslek Grubu: ${item.category} • ${item.education} (${item.qualCode})`;
-      document.getElementById('detailProfessionCountBadge').textContent = `${modalPositions.length} Kadro`;
+      document.getElementById('modalDuzBadge').classList.toggle('hidden', !item.isDuzMemurluk);
 
-      document.getElementById('detailPositionsBox').innerHTML = modalPositions.map(p => `
-        <span class="inline-flex items-center px-2.5 py-1 rounded-lg text-xs font-extrabold bg-white dark:bg-slate-800 text-indigo-900 dark:text-indigo-100 border border-indigo-200 dark:border-indigo-700">
+      document.getElementById('modalProfessionCount').textContent = `${item.positionDetails.length} Meslek / Unvan`;
+      document.getElementById('modalPositionsList').innerHTML = item.positionDetails.map(p => `
+        <span class="px-2.5 py-1 rounded-lg text-xs font-bold bg-white dark:bg-slate-900 text-brand-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800">
           ${escapeHtml(p)}
         </span>
       `).join('');
 
-      const depts = item.departments || [];
-      document.getElementById('detailDepartmentsBox').innerHTML = depts.map(d => `
-        <span class="inline-flex items-center px-2.5 py-1 rounded-lg text-xs font-bold bg-emerald-50 dark:bg-emerald-950/70 text-emerald-800 dark:text-emerald-200 border border-emerald-200 dark:border-emerald-800">
-          ${escapeHtml(d)}
+      const rowsWrap = document.getElementById('modalKadroRowsWrap');
+      const rowsList = document.getElementById('modalKadroRowsList');
+      if (item.kadroRows.length > 0) {
+        rowsWrap.classList.remove('hidden');
+        rowsList.innerHTML = item.kadroRows.map(r => `<li>${escapeHtml(r)}</li>`).join('');
+      } else {
+        rowsWrap.classList.add('hidden');
+        rowsList.innerHTML = '';
+      }
+
+      document.getElementById('modalRequirementsList').innerHTML = item.requirements.map(req => `
+        <li>${escapeHtml(req)}</li>
+      `).join('');
+
+      document.getElementById('modalDocumentsList').innerHTML = item.documents.map(doc => `
+        <span class="px-2.5 py-1 rounded-lg text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">
+          ✓ ${escapeHtml(doc)}
         </span>
       `).join('');
 
-      const kadroWrap = document.getElementById('detailKadroTableWrap');
-      const kadroList = document.getElementById('detailKadroRowsList');
-      const rows = item.kadroRows || [];
-      if (rows.length > 0) {
-        kadroWrap.classList.remove('hidden');
-        kadroList.innerHTML = rows.map(r => {
-          const colonIdx = r.indexOf(':');
-          if (colonIdx > 0 && colonIdx < 45) {
-            return `<li class="px-3 py-2 rounded-xl bg-white dark:bg-slate-800 border border-indigo-100 dark:border-slate-700"><strong class="text-indigo-700 dark:text-indigo-300">${escapeHtml(r.slice(0, colonIdx))}:</strong> ${escapeHtml(r.slice(colonIdx + 1).trim())}</li>`;
-          }
-          return `<li class="px-3 py-2 rounded-xl bg-white dark:bg-slate-800 border border-indigo-100 dark:border-slate-700">${escapeHtml(r)}</li>`;
-        }).join('');
-      } else {
-        kadroWrap.classList.add('hidden');
-      }
-
-      document.getElementById('detailCategory').textContent = item.category;
-      document.getElementById('detailCity').textContent = item.city;
-      document.getElementById('detailQuota').textContent = `${item.quota} Kontenjan`;
-      document.getElementById('detailEducation').textContent = item.education;
-      document.getElementById('detailKpss').textContent = item.kpss;
-      document.getElementById('detailQualCode').textContent = item.qualCode;
-      document.getElementById('detailPublishDate').textContent = formatTurkishDate(item.publishDate);
-      document.getElementById('detailEndDate').textContent = formatTurkishDate(item.endDate);
-
-      const badge = document.getElementById('detailCountdownBadge');
-      badge.textContent = deadline.text;
-      badge.className = `px-2.5 py-0.5 rounded-lg font-bold border ${deadline.badgeClass}`;
-
-      document.getElementById('detailRequirementsList').innerHTML = item.requirements.map(r => `<li class="flex items-start gap-2"><span class="w-1.5 h-1.5 rounded-full bg-indigo-600 mt-1.5 shrink-0"></span><span>${escapeHtml(r)}</span></li>`).join('');
-      document.getElementById('detailDocumentsList').innerHTML = item.documents.map(d => `<span class="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 text-xs font-semibold">${escapeHtml(d)}</span>`).join('');
-      document.getElementById('detailExternalLink').href = item.url;
-
-      const isBm = state.bookmarks.has(id);
-      const bmBtn = document.getElementById('detailBookmarkBtn');
-      bmBtn.className = isBm
-        ? 'inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl border border-rose-200 bg-rose-50 text-rose-700 text-xs font-bold cursor-pointer'
-        : 'inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-200 text-xs font-bold cursor-pointer';
-      document.getElementById('detailBookmarkLabel').textContent = isBm ? 'Kaydedildi' : 'Kaydet';
-
+      updateModalFavButton();
+      const modal = document.getElementById('detailModal');
       modal.classList.remove('hidden');
       modal.classList.add('flex');
-      if (window.lucide) lucide.createIcons();
     }
 
-    function applyTheme(isDark) {
-      document.documentElement.classList.toggle('dark', isDark);
-      const icon = document.getElementById('themeToggleIcon');
-      if (icon) icon.setAttribute('data-lucide', isDark ? 'sun' : 'moon');
-      try { localStorage.setItem(STORAGE_THEME_KEY, isDark ? 'dark' : 'light'); } catch (e) {}
-      if (window.lucide) lucide.createIcons();
+    function closeDetailModal() {
+      const modal = document.getElementById('detailModal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+      STATE.activeModalId = null;
     }
 
-    function resetAllFilters() {
-      state.filters.category = 'Tümü';
-      state.filters.profession = 'Tümü';
-      state.filters.keyword = '';
-      state.filters.sources = new Set(PORTALS.map(p => p.domain));
-      state.filters.education = 'Tümü';
-      state.filters.kpss = 'Tümü';
-      state.filters.city = 'Tümü';
-      state.filters.includeTurkiyeGeneli = true;
-      state.filters.hideNoise = true;
-      state.filters.bookmarkedOnly = false;
-      state.filters.duzMemurlukOnly = false;
-      state.filters.urgentOnly = false;
-      document.getElementById('keywordInput').value = '';
-      renderAll();
-      showToast('Tüm filtreler temizlendi.', 'info');
+    function toggleFavorite(id) {
+      if (STATE.favorites.has(id)) {
+        STATE.favorites.delete(id);
+        showToast('İlan favorilerden çıkarıldı.');
+      } else {
+        STATE.favorites.add(id);
+        showToast('İlan favorilere kaydedildi.');
+      }
+      localStorage.setItem('ga_favorites', JSON.stringify(Array.from(STATE.favorites)));
+      updateStats();
+      renderListings();
+      if (STATE.activeModalId === id) updateModalFavButton();
     }
 
-    function bindEvents() {
-      document.getElementById('themeToggleBtn').addEventListener('click', () => {
-        applyTheme(!document.documentElement.classList.contains('dark'));
-      });
-
-      document.getElementById('scanNowBtn').addEventListener('click', () => fetchLiveAnnouncements(false));
-
-      document.getElementById('quickProfessionSelect').addEventListener('change', (e) => {
-        state.filters.profession = e.target.value;
-        if (state.filters.category === EXAM_CATEGORY_ID) state.filters.category = 'Tümü';
-        renderAll();
-      });
-      document.getElementById('quickEduSelect').addEventListener('change', (e) => { state.filters.education = e.target.value; renderAll(); });
-      document.getElementById('quickCitySelect').addEventListener('change', (e) => { state.filters.city = e.target.value; renderAll(); });
-      document.getElementById('quickOnlyDuzBtn').addEventListener('click', () => {
-        state.filters.duzMemurlukOnly = !state.filters.duzMemurlukOnly;
-        if (state.filters.category === EXAM_CATEGORY_ID) state.filters.category = 'Tümü';
-        renderAll();
-      });
-      document.getElementById('quickKpssFreeBtn').addEventListener('click', () => {
-        state.filters.kpss = state.filters.kpss === 'KPSS Şartsız' ? 'Tümü' : 'KPSS Şartsız';
-        if (state.filters.category === EXAM_CATEGORY_ID) state.filters.category = 'Tümü';
-        renderAll();
-      });
-
-      document.getElementById('quickDuzMemurCardBtn').addEventListener('click', () => {
-        state.filters.duzMemurlukOnly = !state.filters.duzMemurlukOnly;
-        if (state.filters.category === EXAM_CATEGORY_ID) state.filters.category = 'Tümü';
-        renderAll();
-      });
-      document.getElementById('quickUrgentBtn').addEventListener('click', () => {
-        state.filters.urgentOnly = !state.filters.urgentOnly;
-        if (state.filters.category === EXAM_CATEGORY_ID) state.filters.category = 'Tümü';
-        renderAll();
-      });
-      document.getElementById('quickBookmarkStatBtn').addEventListener('click', () => {
-        state.filters.bookmarkedOnly = !state.filters.bookmarkedOnly;
-        renderAll();
-      });
-      document.getElementById('backToJobsBtn').addEventListener('click', () => {
-        state.filters.category = 'Tümü';
-        renderAll();
-      });
-
-      document.getElementById('keywordInput').addEventListener('input', (e) => { state.filters.keyword = e.target.value; renderAll(); });
-      document.getElementById('clearKeywordBtn').addEventListener('click', () => { state.filters.keyword = ''; document.getElementById('keywordInput').value = ''; renderAll(); });
-      document.getElementById('portalSearchInput').addEventListener('input', (e) => { state.portalSearchQuery = e.target.value; renderAll(); });
-      document.getElementById('hideNoiseToggle').addEventListener('change', (e) => { state.filters.hideNoise = e.target.checked; renderAll(); });
-      document.getElementById('duzMemurlukOnlyToggle').addEventListener('change', (e) => { state.filters.duzMemurlukOnly = e.target.checked; renderAll(); });
-      document.getElementById('bookmarkedOnlyToggle').addEventListener('change', (e) => { state.filters.bookmarkedOnly = e.target.checked; renderAll(); });
-      document.getElementById('includeTurkiyeGeneliCheck').addEventListener('change', (e) => { state.filters.includeTurkiyeGeneli = e.target.checked; renderAll(); });
-      document.getElementById('kpssSelect').addEventListener('change', (e) => { state.filters.kpss = e.target.value; renderAll(); });
-      document.getElementById('sortSelect').addEventListener('change', (e) => { state.filters.sortBy = e.target.value; renderAll(); });
-      document.getElementById('toggleAllSourcesBtn').addEventListener('click', () => {
-        state.filters.sources = new Set(PORTALS.map(p => p.domain));
-        renderAll();
-      });
-
-      document.getElementById('resetFiltersBtn').addEventListener('click', resetAllFilters);
-      document.getElementById('emptyResetFiltersBtn').addEventListener('click', resetAllFilters);
-
-      const openMobileDrawer = () => {
-        document.getElementById('filterSidebar').classList.remove('-translate-x-full');
-        document.getElementById('filterDrawerBackdrop').classList.remove('hidden');
-      };
-      document.getElementById('mobileFilterOpenBtn').addEventListener('click', openMobileDrawer);
-      const closeMobile = () => {
-        document.getElementById('filterSidebar').classList.add('-translate-x-full');
-        document.getElementById('filterDrawerBackdrop').classList.add('hidden');
-      };
-      document.getElementById('mobileFilterCloseBtn').addEventListener('click', closeMobile);
-      document.getElementById('mobileApplyFiltersBtn').addEventListener('click', closeMobile);
-      document.getElementById('filterDrawerBackdrop').addEventListener('click', closeMobile);
-
-      document.getElementById('closeDetailModalBtn').addEventListener('click', () => document.getElementById('detailModal').classList.add('hidden'));
-      document.getElementById('detailBookmarkBtn').addEventListener('click', () => {
-        if (state.activeModalAnnouncementId) { toggleBookmark(state.activeModalAnnouncementId); openDetailModal(state.activeModalAnnouncementId); }
-      });
-      document.getElementById('detailShareBtn').addEventListener('click', () => {
-        if (state.activeModalAnnouncementId) shareAnnouncement(state.activeModalAnnouncementId);
-      });
-
-      const openJson = () => {
-        document.getElementById('liveJsonUrlInput').value = state.liveJsonUrl;
-        document.getElementById('jsonModal').classList.remove('hidden');
-        document.getElementById('jsonModal').classList.add('flex');
-      };
-      document.getElementById('openJsonModalBtn').addEventListener('click', openJson);
-      const closeJson = () => document.getElementById('jsonModal').classList.add('hidden');
-      document.getElementById('closeJsonModalBtn').addEventListener('click', closeJson);
-      document.getElementById('closeJsonModalFooterBtn').addEventListener('click', closeJson);
-
-      document.getElementById('useGithubDefaultUrlBtn').addEventListener('click', () => {
-        document.getElementById('liveJsonUrlInput').value = DETECTED_URLS.githubRawUrl;
-      });
-      document.getElementById('saveAndTestLiveUrlBtn').addEventListener('click', async () => {
-        const val = document.getElementById('liveJsonUrlInput').value.trim();
-        if (!val) return;
-        state.liveJsonUrl = val;
-        try { localStorage.setItem(STORAGE_LIVE_URL_KEY, val); } catch (e) {}
-        await fetchLiveAnnouncements(false);
-        closeJson();
-      });
-
-      const dropzone = document.getElementById('jsonDropzone');
-      const fileInput = document.getElementById('jsonFileInput');
-      dropzone.addEventListener('click', () => fileInput.click());
-      fileInput.addEventListener('change', (e) => {
-        const file = e.target.files?.[0];
-        if (!file) return;
-        const reader = new FileReader();
-        reader.onload = (ev) => {
-          try {
-            const parsed = JSON.parse(String(ev.target.result));
-            state.announcements = parsed.map((it, i) => normalizeAnnouncementItem(it, i));
-            renderAll();
-            closeJson();
-            showToast(`${state.announcements.length} kayıt yüklendi!`, 'success');
-          } catch (err) {
-            showToast('Geçersiz dosya biçimi!', 'error');
-          }
-        };
-        reader.readAsText(file, 'utf-8');
-      });
+    function updateModalFavButton() {
+      const btn = document.getElementById('modalBtnFav');
+      const isFav = STATE.favorites.has(STATE.activeModalId);
+      btn.textContent = isFav ? '★ Favorilerden Çıkar' : '★ Favorilere Ekle';
     }
 
-    async function bootApp() {
-      try {
-        const savedBm = JSON.parse(localStorage.getItem(STORAGE_BOOKMARKS_KEY) || '[]');
-        if (Array.isArray(savedBm)) state.bookmarks = new Set(savedBm);
-        const savedUrl = localStorage.getItem(STORAGE_LIVE_URL_KEY);
-        if (savedUrl && !savedUrl.includes('localhost')) state.liveJsonUrl = savedUrl;
-        const savedTheme = localStorage.getItem(STORAGE_THEME_KEY);
-        if (savedTheme === 'dark') applyTheme(true);
-      } catch (e) {}
+    function exportCsv() {
+      if (STATE.filteredListings.length === 0) {
+        showToast('Dışa aktarılacak ilan bulunamadı.');
+        return;
+      }
+      const headers = ['Kurum', 'Başlık', 'Aranan Meslekler', 'Şehir', 'Eğitim', 'KPSS', 'Kontenjan', 'Son Başvuru', 'Resmi Link'];
+      const rows = STATE.filteredListings.map(x => [
+        x.institution,
+        x.title,
+        x.positionDetails.join(' | '),
+        x.city,
+        x.education,
+        x.kpss,
+        x.quota,
+        x.endDate,
+        x.url
+      ].map(v => `"${String(v).replace(/"/g, '""')}"`).join(','));
 
-      bindEvents();
-      renderAll();
-      await fetchLiveAnnouncements(true);
+      const csv = '\uFEFF' + [headers.join(','), ...rows].join('\n');
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = `gelecege-adim-kamu-ilan-${new Date().toISOString().slice(0, 10)}.csv`;
+      a.click();
+      showToast('CSV dosyası indirildi.');
+    }
 
-      // 5 dakikada bir ve sekme tekrar açıldığında otomatik yenileme
-      setInterval(() => {
-        if (!state.isScanningNow && Date.now() >= state.scheduler.nextScanTimestamp) {
-          fetchLiveAnnouncements(true);
+    function startHourlyTimer() {
+      function tick() {
+        const now = new Date();
+        const nextHour = new Date(now);
+        nextHour.setHours(now.getHours() + 1, 2, 0, 0);
+        const diffSec = Math.max(0, Math.floor((nextHour - now) / 1000));
+        const mm = String(Math.floor(diffSec / 60)).padStart(2, '0');
+        const ss = String(diffSec % 60).padStart(2, '0');
+        document.getElementById('statCountdown').textContent = `${mm}:${ss}`;
+
+        if (diffSec === 0) {
+          fetchListings(true);
         }
-      }, 15000);
+      }
+      tick();
+      setInterval(tick, 1000);
+    }
 
-      document.addEventListener('visibilitychange', () => {
-        if (document.visibilityState === 'visible' && !state.isScanningNow) {
-          fetchLiveAnnouncements(true);
+    document.addEventListener('DOMContentLoaded', () => {
+      const savedTheme = localStorage.getItem('ga_theme');
+      if (savedTheme === 'dark') {
+        document.documentElement.classList.add('dark');
+        document.getElementById('themeIcon').textContent = '☀️';
+      }
+
+      document.getElementById('btnThemeToggle').addEventListener('click', () => {
+        const isDark = document.documentElement.classList.toggle('dark');
+        localStorage.setItem('ga_theme', isDark ? 'dark' : 'light');
+        document.getElementById('themeIcon').textContent = isDark ? '☀️' : '🌙';
+      });
+
+      document.getElementById('btnManualRefresh').addEventListener('click', () => fetchListings(false));
+      document.getElementById('btnExportCsv').addEventListener('click', exportCsv);
+
+      // 42 Portal Vitrini Aç/Kapat
+      const portalsSection = document.getElementById('portalsDirectorySection');
+      document.getElementById('btnTogglePortalsDrawer').addEventListener('click', () => {
+        portalsSection.classList.toggle('hidden');
+      });
+      document.getElementById('btnClosePortalsDrawer').addEventListener('click', () => {
+        portalsSection.classList.add('hidden');
+      });
+      document.getElementById('btnClearPortalFilter').addEventListener('click', () => {
+        document.getElementById('portalSelect').value = '';
+        document.getElementById('btnClearPortalFilter').classList.add('hidden');
+        renderPortalsGrid();
+        applyFilters();
+      });
+
+      // Rehber Modalı
+      const guideModal = document.getElementById('guideModal');
+      const openGuide = () => { guideModal.classList.remove('hidden'); guideModal.classList.add('flex'); };
+      const closeGuide = () => { guideModal.classList.add('hidden'); guideModal.classList.remove('flex'); };
+      document.getElementById('btnOpenGuideModal').addEventListener('click', openGuide);
+      document.getElementById('btnCloseGuideModal').addEventListener('click', closeGuide);
+      guideModal.addEventListener('click', (e) => { if (e.target.id === 'guideModal') closeGuide(); });
+
+      // Footer Hızlı Erişim
+      document.getElementById('footerBtnDuz').addEventListener('click', () => {
+        STATE.onlyDuzMemurluk = true;
+        document.getElementById('btnDuzMemurlukOnly').textContent = 'Tüm İlanları Göster';
+        applyFilters();
+        window.scrollTo({ top: 300, behavior: 'smooth' });
+      });
+      document.getElementById('footerBtnGuide').addEventListener('click', openGuide);
+      document.getElementById('footerBtnPortals').addEventListener('click', () => {
+        portalsSection.classList.remove('hidden');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+
+      // Hızlı Etiketler
+      document.querySelectorAll('.quick-tag-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const tag = btn.getAttribute('data-quick-tag');
+          const input = document.getElementById('heroSearchInput');
+          input.value = input.value === tag ? '' : tag;
+          applyFilters();
+        });
+      });
+
+      document.getElementById('btnHeroSearchClear').addEventListener('click', applyFilters);
+
+      document.getElementById('btnToggleFavorites').addEventListener('click', (e) => {
+        STATE.onlyFavorites = !STATE.onlyFavorites;
+        e.currentTarget.classList.toggle('ring-2', STATE.onlyFavorites);
+        e.currentTarget.classList.toggle('ring-amber-400', STATE.onlyFavorites);
+        applyFilters();
+      });
+
+      document.getElementById('btnDuzMemurlukOnly').addEventListener('click', (e) => {
+        STATE.onlyDuzMemurluk = !STATE.onlyDuzMemurluk;
+        e.currentTarget.textContent = STATE.onlyDuzMemurluk
+          ? 'Tüm İlanları Göster'
+          : 'Sadece Bölüm Şartsızları Göster';
+        applyFilters();
+      });
+
+      const resetAll = () => {
+        document.getElementById('heroSearchInput').value = '';
+        document.getElementById('professionSelect').value = '';
+        document.getElementById('citySelect').value = '';
+        document.getElementById('educationSelect').value = '';
+        document.getElementById('kpssSelect').value = '';
+        document.getElementById('categorySelect').value = '';
+        document.getElementById('portalSelect').value = '';
+        STATE.onlyDuzMemurluk = false;
+        STATE.onlyFavorites = false;
+        document.getElementById('btnDuzMemurlukOnly').textContent = 'Sadece Bölüm Şartsızları Göster';
+        document.getElementById('btnClearPortalFilter').classList.add('hidden');
+        populateFilterOptions();
+        renderPortalsGrid();
+        applyFilters();
+      };
+
+      document.getElementById('btnResetFilters').addEventListener('click', resetAll);
+      document.getElementById('brandLogoReset').addEventListener('click', (e) => {
+        e.preventDefault();
+        resetAll();
+      });
+
+      ['heroSearchInput', 'professionSelect', 'citySelect', 'educationSelect', 'kpssSelect', 'categorySelect', 'portalSelect', 'sortSelect']
+        .forEach(id => {
+          document.getElementById(id).addEventListener('input', () => {
+            if (id === 'professionSelect') populateFilterOptions();
+            if (id === 'portalSelect') {
+              document.getElementById('btnClearPortalFilter').classList.toggle('hidden', !document.getElementById('portalSelect').value);
+              renderPortalsGrid();
+            }
+            applyFilters();
+          });
+        });
+
+      document.getElementById('listingsContainer').addEventListener('click', (e) => {
+        const openBtn = e.target.closest('[data-open-id]');
+        if (openBtn) {
+          openDetailModal(openBtn.getAttribute('data-open-id'));
+          return;
+        }
+        const favBtn = e.target.closest('[data-fav-id]');
+        if (favBtn) {
+          toggleFavorite(favBtn.getAttribute('data-fav-id'));
+          return;
+        }
+        const expBtn = e.target.closest('[data-expand-id]');
+        if (expBtn) {
+          const id = expBtn.getAttribute('data-expand-id');
+          if (STATE.expandedCards.has(id)) STATE.expandedCards.delete(id);
+          else STATE.expandedCards.add(id);
+          renderListings();
         }
       });
-    }
 
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', bootApp);
-    } else {
-      bootApp();
-    }
+      document.getElementById('btnCloseModal').addEventListener('click', closeDetailModal);
+      document.getElementById('modalBtnFav').addEventListener('click', () => {
+        if (STATE.activeModalId) toggleFavorite(STATE.activeModalId);
+      });
+      document.getElementById('modalBtnCopyLink').addEventListener('click', () => {
+        const item = STATE.allListings.find(x => x.id === STATE.activeModalId);
+        if (item && navigator.clipboard) {
+          navigator.clipboard.writeText(item.url);
+          showToast('Resmi ilan bağlantısı panoya kopyalandı.');
+        }
+      });
+      document.getElementById('detailModal').addEventListener('click', (e) => {
+        if (e.target.id === 'detailModal') closeDetailModal();
+      });
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          closeDetailModal();
+          closeGuide();
+        }
+      });
+
+      renderPortalsGrid();
+      fetchListings(false);
+      startHourlyTimer();
+    });
   </script>
 </body>
 </html>
