@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://ozturkmertcan0001-wq.github.io/gelecege-adim-kamu-ilan/sitemap.xml
