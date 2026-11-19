@@ -1,11 +1,11 @@
-[README.md](https://github.com/user-attachments/files/34967362/README.md)
-# Geleceğe Adım 🚀
-**Merkezi Kamu, Belediye & Kurum İlan Takip Sistemi (42 Resmi Portal)**
+# Geleceğe Adım — Kamu İlan
+**Merkezi Kamu, Belediye & Kurum Personel Alım Takip Sistemi (42 Resmi Portal)**
 
-Geleceğe Adım, Türkiye'deki 42 resmi kamu kurumunun, bakanlığın, büyükşehir belediyesinin ve altyapı kuruluşunun kariyer portallarını saatlik olarak otomatik tarayan ve **bölüm şartsız (2001 / 3001 / 4001) düz memurluk** kadrolarını özel olarak filtreleyen açık kaynaklı bir web uygulamasıdır.
+Geleceğe Adım Kamu İlan; Türkiye'deki 42 resmi kamu kurumu, bakanlık, büyükşehir belediyesi ve kamu iktisadi teşebbüsünün kariyer portallarını saatlik olarak tarayan, her ilanın içine girerek **aranan meslek gruplarını** ve **başvuru şartlarını** çıkaran açık kaynaklı bir web uygulamasıdır.
 
-## Özellikler
-- **42 Resmi Portal Entegrasyonu:** SBB, Kariyer Kapısı, İŞKUR, Resmî Gazete, ÖSYM, MSB, Jandarma, İBB, Ankara BB, İzmir BB, DSİ, KGM, BOTAŞ, Bankalar ve Savunma Sanayii.
-- **Bölüm Şartsız Düz Memurluk Vitrini:** Herhangi bir lise, önlisans veya lisans bölümünden mezun olanların başvurabileceği kadrolar.
-- **7/24 Saatlik Otomatik Tarama:** Python botu ve GitHub Actions entegrasyonu ile bilgisayarınız kapalıyken bile arka planda güncel ilan takibi.
-- **Doğrudan Resmi İlana Git:** Tüm ilan kartlarında tek tıkla ilgili kurumun gerçek başvuru sayfasına yönlendirme.
+## Öne Çıkan Özellikler
+- **42 Resmi Portal Entegrasyonu:** Cumhurbaşkanlığı Kamu İlan (SBB), Kariyer Kapısı, İŞKUR, Resmî Gazete, ÖSYM, MSB, Jandarma, İBB, Ankara BB, İzmir BB, DSİ, KGM, BOTAŞ, Kamu Bankaları ve Savunma Sanayii.
+- **İlan İçi Meslek & Şart Ayrıştırma (`bot.py`):** Her ilanın kendi duyuru sayfasını okuyarak aranan meslekleri, kadro tablolarını ve başvuru şartlarını detay penceresinde listeler.
+- **4 Katmanlı Engel Aşma Modülü (`helper_bot.py`):** SSL sertifika hataları, WAF/403 korumaları, JavaScript tabanlı portallar ve PDF duyuru dosyalarını otomatik çözer.
+- **Bölüm Şartsız (2001 / 3001 / 4001) Vitrini:** Herhangi bir lise, önlisans veya lisans bölümünden mezun adayların başvurabileceği düz memurluk kadrolarını tek tıkla filtreler.
+- **Kesintisiz Saatlik Otomasyon:** Yeni ilan bulunmadığında çökmeden mevcut aktif ilanları koruyarak sessizce güncellenir.
