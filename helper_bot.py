@@ -13,19 +13,19 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 try:
     import cloudscraper
     CLOUDSCRAPER_AKTIF = True
-except ImportError:
+except Exception:
     CLOUDSCRAPER_AKTIF = False
 
 try:
     from playwright.sync_api import sync_playwright
     PLAYWRIGHT_AKTIF = True
-except ImportError:
+except Exception:
     PLAYWRIGHT_AKTIF = False
 
 try:
     from pypdf import PdfReader
     PYPDF_AKTIF = True
-except ImportError:
+except Exception:
     PYPDF_AKTIF = False
 
 
@@ -124,6 +124,17 @@ class GuvenliIstemci:
             return True
         return False
 
+    @staticmethod
+    def _pdf_mi(url: str, icerik_turu: str, ham_bayt: bytes) -> bool:
+        temiz_url = (url or "").split("?")[0].lower()
+        if "application/pdf" in (icerik_turu or "").lower():
+            return True
+        if temiz_url.endswith(".pdf"):
+            return True
+        if ham_bayt and ham_bayt[:5] == b"%PDF-":
+            return True
+        return False
+
     def pdf_metni_cikar(self, pdf_baytlari: bytes) -> str:
         if not PYPDF_AKTIF or not pdf_baytlari:
             return ""
@@ -131,9 +142,12 @@ class GuvenliIstemci:
             okuyucu = PdfReader(io.BytesIO(pdf_baytlari))
             parcalar = []
             for sayfa in okuyucu.pages[:6]:
-                metin = sayfa.extract_text() or ""
-                if metin.strip():
-                    parcalar.append(metin.strip())
+                try:
+                    metin = sayfa.extract_text() or ""
+                    if metin.strip():
+                        parcalar.append(metin.strip())
+                except Exception:
+                    continue
             return "\n".join(parcalar)[:25000]
         except Exception:
             return ""
@@ -142,6 +156,8 @@ class GuvenliIstemci:
         if not PLAYWRIGHT_AKTIF:
             return ""
         with self._pw_kilit:
+            browser = None
+            context = None
             try:
                 with sync_playwright() as p:
                     browser = p.chromium.launch(
@@ -161,13 +177,22 @@ class GuvenliIstemci:
                         else route.continue_(),
                     )
                     page.goto(url, wait_until="domcontentloaded", timeout=timeout_ms)
-                    page.wait_for_timeout(1800)
+                    page.wait_for_timeout(1600)
                     icerik = page.content()
-                    context.close()
-                    browser.close()
                     return icerik or ""
             except Exception:
                 return ""
+            finally:
+                try:
+                    if context is not None:
+                        context.close()
+                except Exception:
+                    pass
+                try:
+                    if browser is not None:
+                        browser.close()
+                except Exception:
+                    pass
 
     def sayfa_getir(self, url: str, timeout: int = 14, js_destegi: bool = True) -> dict:
         """
@@ -175,15 +200,25 @@ class GuvenliIstemci:
         Hiçbir durumda hata fırlatmaz.
         """
         sonuc = {"ok": False, "html": "", "pdf_text": "", "yontem": "yok"}
-        url_kucuk = url.lower()
+        if not url or not isinstance(url, str) or not url.startswith(("http://", "https://")):
+            return sonuc
+
+        temiz_url = url.split("?")[0].lower()
 
         # Katman 1: Esnek SSL'li requests.Session
         try:
-            resp = self.session.get(url, headers=self._headers(), timeout=timeout, verify=False, allow_redirects=True)
-            icerik_turu = resp.headers.get("Content-Type", "").lower()
+            resp = self.session.get(
+                url,
+                headers=self._headers(),
+                timeout=timeout,
+                verify=False,
+                allow_redirects=True,
+            )
+            icerik_turu = resp.headers.get("Content-Type", "")
+            ham_bayt = resp.content or b""
 
-            if "application/pdf" in icerik_turu or url_kucuk.endswith(".pdf"):
-                pdf_txt = self.pdf_metni_cikar(resp.content)
+            if self._pdf_mi(url, icerik_turu, ham_bayt):
+                pdf_txt = self.pdf_metni_cikar(ham_bayt)
                 if pdf_txt:
                     return {"ok": True, "html": "", "pdf_text": pdf_txt, "yontem": "pdf"}
                 return sonuc
@@ -206,9 +241,18 @@ class GuvenliIstemci:
             try:
                 time.sleep(0.25)
                 with self._scraper_kilit:
-                    resp2 = self.scraper.get(url, headers=self._headers(), timeout=timeout)
-                if "application/pdf" in resp2.headers.get("Content-Type", "").lower():
-                    pdf_txt = self.pdf_metni_cikar(resp2.content)
+                    resp2 = self.scraper.get(
+                        url,
+                        headers=self._headers(),
+                        timeout=timeout,
+                        verify=False,
+                        allow_redirects=True,
+                    )
+                icerik_turu2 = resp2.headers.get("Content-Type", "")
+                ham_bayt2 = resp2.content or b""
+
+                if self._pdf_mi(url, icerik_turu2, ham_bayt2):
+                    pdf_txt = self.pdf_metni_cikar(ham_bayt2)
                     if pdf_txt:
                         return {"ok": True, "html": "", "pdf_text": pdf_txt, "yontem": "cloudscraper-pdf"}
                     return sonuc
@@ -226,9 +270,12 @@ class GuvenliIstemci:
                 pass
 
         # Katman 3: Tam tarayıcı (Playwright Chromium)
-        if js_destegi and not url_kucuk.endswith(".pdf"):
-            js_html = self._playwright_ile_getir(url)
-            if js_html and not self._engellendi_mi(200, js_html):
-                return {"ok": True, "html": js_html, "pdf_text": "", "yontem": "playwright"}
+        if js_destegi and not temiz_url.endswith(".pdf"):
+            try:
+                js_html = self._playwright_ile_getir(url)
+                if js_html and not self._engellendi_mi(200, js_html):
+                    return {"ok": True, "html": js_html, "pdf_text": "", "yontem": "playwright"}
+            except Exception:
+                pass
 
         return sonuc
