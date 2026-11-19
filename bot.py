@@ -63,6 +63,12 @@ PORTALLAR = [
 
 HARIC_TUTULACAKLAR = [
     "ihale", "zeyilname", "sonuç ilanı", "sonuç duyurusu", "sonuçları",
+    "sonuçlarının açıklanması", "yerleştirme sonuç", "mülakat sonuç",
+    "nihai başarı", "kazanan aday", "yedek aday", "evrak teslim",
+    "branş bazında", "sıralama", "cevap kağıt", "cevap kâğıt",
+    "soru kitapçık", "cevap anahtar", "aday cevap",
+    "sınav başvurusu", "sınav başvurularının", "geç başvuru",
+    "sınav merkezi", "sınav yeri", "sınav yerleri",
     "giriş belgesi", "sınav takvimi", "etik ilkeleri", "daire başkanlığı",
     "rehberleri", "taslakları", "yer değiştirme", "mazerete bağlı",
     "görevde yükselme", "unvan değişikliği", "cübbe", "2021", "2022", "2023",
@@ -247,6 +253,20 @@ def gercek_ilan_mi(baslik: str, url: str) -> bool:
         return False
     if u.endswith("#") or "javascript:" in u or "mailto:" in u:
         return False
+
+    # ÖSYM duyurularında yalnızca personel yerleştirme / tercih kılavuzlarını kabul et
+    if "osym.gov.tr" in u:
+        return any(
+            k in b
+            for k in [
+                "tercih kılavuzu",
+                "tercihlerinin alınması",
+                "yerleştirme kılavuzu",
+                "personel alım",
+                "memur alım",
+            ]
+        )
+
     return any(
         k in b
         for k in [
@@ -254,7 +274,8 @@ def gercek_ilan_mi(baslik: str, url: str) -> bool:
             "uzman yardımcısı", "müfettiş yardımcısı", "zabıt katibi", "zabıt kâtibi",
             "mübaşir", "bilişim personeli", "sağlık personeli", "hemşire",
             "paramedik", "psikolog", "mühendis", "açık pozisyon", "işe alım ilanı",
-            "kpss", "tercih kılavuzu", "kadrolarına", "personel istihdam",
+            "kpss tercih", "kpss ile", "kpss puanı", "merkezi yerleştirme",
+            "tercih kılavuzu", "tercihlerinin alınması", "kadrolarına", "personel istihdam",
             "sürekli işçi", "koruma ve güvenlik", "destek personeli",
         ]
     )
@@ -620,7 +641,10 @@ def portallari_tara():
     print(f"[{datetime.now().strftime('%H:%M:%S')}] 42 resmi portal taranıyor...")
 
     istemci = GuvenliIstemci()
-    mevcut_liste = mevcut_ilanlari_yukle()
+    mevcut_liste = [
+        item for item in mevcut_ilanlari_yukle()
+        if gercek_ilan_mi(item.get("title", ""), item.get("url", ""))
+    ]
     mevcut_harita = {item.get("url"): item for item in mevcut_liste if item.get("url")}
 
     yeni_aday_ilanlar = []
@@ -683,23 +707,17 @@ def portallari_tara():
             yeni_eklenen_sayisi += 1
             sonuc_haritasi[u] = yeni
         else:
-            # Sadece yeni çekilen detay daha zenginse güncelle; boşsa eskiyi koru
             if yeni.get("detailParsed") or len(yeni.get("requirements", [])) > 1:
                 sonuc_haritasi[u] = yeni
 
     nihai_liste = list(sonuc_haritasi.values())
 
-    # Tüm sitelere geçici olarak erişilemediyse mevcut listeyi asla silme
     if not nihai_liste and mevcut_liste:
         print(f"[{datetime.now().strftime('%H:%M:%S')}] Portallara geçici erişim sağlanamadı; mevcut {len(mevcut_liste)} ilan korundu.")
         return
 
     nihai_liste.sort(key=lambda x: (x.get("publishDate", ""), x.get("id", "")), reverse=True)
     sure = round(time.time() - baslangic, 1)
-
-    if yeni_eklenen_sayisi == 0 and len(nihai_liste) == len(mevcut_liste):
-        print(f"[{datetime.now().strftime('%H:%M:%S')}] Yeni ilan yok, mevcut {len(nihai_liste)} ilan korundu ({sure} sn).")
-        return
 
     try:
         with open(JSON_DOSYASI, "w", encoding="utf-8") as f:
