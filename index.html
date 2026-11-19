@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Geleceğe Adım — Kamu İlan | Merkezi Kamu & Belediye İlan Takip Sistemi</title>
-  <meta name="description" content="Geleceğe Adım Kamu İlan: 42 resmi kamu kurumu, bakanlık ve belediye portalını saatlik tarayan; 2001, 3001, 4001 bölüm şartsız düz memurluk ve meslek bazlı ilan takip platformu." />
+  <meta name="description" content="Geleceğe Adım Kamu İlan: 42 resmi kamu kurumu, bakanlık ve belediye portalını saatlik tarayan; 2001, 3001, 4001 bölüm şartsız düz memurluk ve KPSS şartsız ilan takip platformu." />
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -115,7 +115,7 @@
       </div>
 
       <!-- Arama Çubuğu & Hızlı Sekmeler -->
-      <div class="flex flex-col md:flex-row items-stretch md:items-center gap-3">
+      <div class="flex flex-col lg:flex-row items-stretch lg:items-center gap-3">
         <div class="relative flex-1">
           <span class="absolute inset-y-0 left-3.5 flex items-center text-slate-400 text-sm">🔍</span>
           <input id="searchInput" type="text"
@@ -123,14 +123,18 @@
             class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-transparent bg-white dark:bg-slate-900 text-slate-900 dark:text-white placeholder-slate-400 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-white/80 transition" />
         </div>
 
-        <div class="inline-flex p-1 rounded-xl bg-brand-700/75 dark:bg-blue-900/70 border border-white/15 shrink-0 self-start md:self-auto">
+        <div class="inline-flex flex-wrap p-1 rounded-xl bg-brand-700/75 dark:bg-blue-900/70 border border-white/15 shrink-0 self-start lg:self-auto gap-1">
           <button id="quickTabAll" type="button"
-            class="px-3.5 py-1.5 rounded-lg text-xs font-semibold transition bg-white dark:bg-slate-800 text-brand-700 dark:text-white shadow-sm">
+            class="px-3 py-1.5 rounded-lg text-xs font-semibold transition bg-white dark:bg-slate-800 text-brand-700 dark:text-white shadow-sm">
             Tüm İlanlar
           </button>
           <button id="quickTabDuz" type="button"
-            class="px-3.5 py-1.5 rounded-lg text-xs font-semibold transition text-blue-100 hover:text-white">
+            class="px-3 py-1.5 rounded-lg text-xs font-semibold transition text-blue-100 hover:text-white">
             Bölüm Şartsız (2001/3001/4001)
+          </button>
+          <button id="quickTabNoKpss" type="button"
+            class="px-3 py-1.5 rounded-lg text-xs font-semibold transition text-blue-100 hover:text-white">
+            KPSS Şartsız
           </button>
         </div>
       </div>
@@ -196,6 +200,7 @@
             <option value="KPSS P94">KPSS P94 (Ortaöğretim)</option>
             <option value="KPSS P93">KPSS P93 (Önlisans)</option>
             <option value="KPSS P3">KPSS P3 (Lisans)</option>
+            <option value="KPSS Puanı Gerekli">KPSS Puanı Gerekli (Diğer)</option>
           </select>
         </div>
 
@@ -248,10 +253,15 @@
     </div>
   </main>
 
-  <!-- Sade Alt Bilgi -->
+  <!-- Bağımsız Bilgilendirme Alt Bilgisi -->
   <footer class="border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 mt-12 py-6 text-center text-xs text-slate-500 dark:text-slate-400">
-    <div class="max-w-7xl mx-auto px-4">
-      Geleceğe Adım — Kamu İlan • 42 resmi kamu, bakanlık ve belediye portalından saatlik güncellenir.
+    <div class="max-w-7xl mx-auto px-4 space-y-1">
+      <p class="font-medium text-slate-600 dark:text-slate-300">
+        Geleceğe Adım — Kamu İlan • 42 resmi kamu, bakanlık ve belediye portalından saatlik güncellenir.
+      </p>
+      <p>
+        Bağımsız açık kaynaklı ilan takip platformudur; resmî devlet kurumu değildir. Başvuru öncesinde şartları ve son tarihi ilgili kurumun resmî sayfasından doğrulayınız.
+      </p>
     </div>
   </footer>
 
@@ -474,19 +484,26 @@
     function syncTabsAndButtons() {
       const tabAll = document.getElementById('quickTabAll');
       const tabDuz = document.getElementById('quickTabDuz');
+      const tabNoKpss = document.getElementById('quickTabNoKpss');
+      const isNoKpss = document.getElementById('kpssSelect').value === 'KPSS Şartsız';
+
       const activeCls = ['bg-white', 'dark:bg-slate-800', 'text-brand-700', 'dark:text-white', 'shadow-sm'];
       const inactiveCls = ['text-blue-100', 'hover:text-white'];
+
+      [tabAll, tabDuz, tabNoKpss].forEach(btn => {
+        btn.classList.remove(...activeCls);
+        btn.classList.add(...inactiveCls);
+      });
 
       if (STATE.onlyDuzMemurluk) {
         tabDuz.classList.add(...activeCls);
         tabDuz.classList.remove(...inactiveCls);
-        tabAll.classList.remove(...activeCls);
-        tabAll.classList.add(...inactiveCls);
+      } else if (isNoKpss) {
+        tabNoKpss.classList.add(...activeCls);
+        tabNoKpss.classList.remove(...inactiveCls);
       } else {
         tabAll.classList.add(...activeCls);
         tabAll.classList.remove(...inactiveCls);
-        tabDuz.classList.remove(...activeCls);
-        tabDuz.classList.add(...inactiveCls);
       }
 
       const favBtn = document.getElementById('btnToggleFavorites');
@@ -495,10 +512,15 @@
     }
 
     function getRemainingDaysBadge(endDateStr) {
+      if (!endDateStr || !/^\d{4}-\d{2}-\d{2}$/.test(endDateStr)) {
+        return '<span class="px-2 py-0.5 rounded-md text-[11px] font-medium bg-blue-50 text-brand-700 dark:bg-blue-950/60 dark:text-blue-300">Tarih İlanda</span>';
+      }
       const today = new Date();
       today.setHours(0, 0, 0, 0);
       const end = new Date(endDateStr + 'T00:00:00');
-      if (isNaN(end.getTime())) return '';
+      if (isNaN(end.getTime())) {
+        return '<span class="px-2 py-0.5 rounded-md text-[11px] font-medium bg-blue-50 text-brand-700 dark:bg-blue-950/60 dark:text-blue-300">Tarih İlanda</span>';
+      }
       const diff = Math.round((end - today) / 86400000);
       if (diff < 0) return '<span class="px-2 py-0.5 rounded-md text-[11px] font-medium bg-slate-100 text-slate-500">Süresi Doldu</span>';
       if (diff === 0) return '<span class="px-2 py-0.5 rounded-md text-[11px] font-semibold bg-rose-50 text-rose-600 dark:bg-rose-950/60 dark:text-rose-300">Son Gün</span>';
@@ -519,7 +541,7 @@
         : ['İlgili kurumun resmi duyuru metnindeki başvuru şartlarını inceleyiniz.'];
       const documents = Array.isArray(item.documents) && item.documents.length
         ? item.documents
-        : ['e-Devlet Mezuniyet Belgesi', 'KPSS Sonuç Belgesi'];
+        : ['e-Devlet Mezuniyet Belgesi', 'Kimlik Belgesi Fotokopisi'];
 
       return {
         id: item.id || `ga-${idx}`,
@@ -532,10 +554,10 @@
         kadroRows,
         city: item.city || 'Türkiye Geneli',
         education: item.education || 'Lisans',
-        kpss: item.kpss || 'KPSS Şartsız',
+        kpss: item.kpss || 'Resmi İlanda Belirtilmiş',
         quota: Number(item.quota) || 1,
         publishDate: item.publishDate || new Date().toISOString().slice(0, 10),
-        endDate: item.endDate || new Date(Date.now() + 10 * 86400000).toISOString().slice(0, 10),
+        endDate: item.endDate || 'Resmi İlanda Belirtilmiş',
         qualCode: item.qualCode || 'Özel Nitelik',
         isDuzMemurluk: Boolean(item.isDuzMemurluk),
         url: item.url || '#',
@@ -545,7 +567,7 @@
     }
 
     function buildFingerprint(list) {
-      return list.map(x => `${x.url}|${x.title}|${x.positions.length}|${x.requirements.length}`).join(';;');
+      return list.map(x => `${x.url}|${x.title}|${x.positions.length}|${x.requirements.length}|${x.isDuzMemurluk}|${x.kpss}`).join(';;');
     }
 
     async function fetchListings(silent = false) {
@@ -664,7 +686,7 @@
       if (prof) chips.push({ label: prof, clear: () => { document.getElementById('professionSelect').value = ''; } });
       if (city) chips.push({ label: city, clear: () => { document.getElementById('citySelect').value = ''; } });
       if (edu) chips.push({ label: edu, clear: () => { document.getElementById('educationSelect').value = ''; } });
-      if (kpss) chips.push({ label: kpss, clear: () => { document.getElementById('kpssSelect').value = ''; } });
+      if (kpss) chips.push({ label: kpss, clear: () => { document.getElementById('kpssSelect').value = ''; syncTabsAndButtons(); } });
       if (cat) chips.push({ label: cat, clear: () => { document.getElementById('categorySelect').value = ''; } });
       if (portal) chips.push({ label: portal, clear: () => { document.getElementById('portalSelect').value = ''; } });
 
@@ -730,7 +752,11 @@
       });
 
       if (sort === 'deadline') {
-        list.sort((a, b) => a.endDate.localeCompare(b.endDate));
+        list.sort((a, b) => {
+          const aReal = /^\d{4}-\d{2}-\d{2}$/.test(a.endDate) ? a.endDate : '9999-12-31';
+          const bReal = /^\d{4}-\d{2}-\d{2}$/.test(b.endDate) ? b.endDate : '9999-12-31';
+          return aReal.localeCompare(bReal);
+        });
       } else if (sort === 'quota') {
         list.sort((a, b) => b.quota - a.quota);
       } else {
@@ -784,6 +810,7 @@
         const isExpanded = STATE.expandedCards.has(item.id);
         const visiblePositions = isExpanded ? item.positionDetails : item.positionDetails.slice(0, 3);
         const hiddenCount = item.positionDetails.length - 3;
+        const hasRealDate = /^\d{4}-\d{2}-\d{2}$/.test(item.endDate);
 
         return `
           <article class="bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 hover:border-brand-400 dark:hover:border-brand-700 rounded-2xl p-5 shadow-sm transition">
@@ -804,7 +831,7 @@
               </div>
               <div class="flex items-center gap-2">
                 ${getRemainingDaysBadge(item.endDate)}
-                <span class="text-xs text-slate-400">${escapeHtml(item.endDate)}</span>
+                ${hasRealDate ? `<span class="text-xs text-slate-400">${escapeHtml(item.endDate)}</span>` : ''}
               </div>
             </div>
 
@@ -1010,12 +1037,21 @@
 
       document.getElementById('quickTabAll').addEventListener('click', () => {
         STATE.onlyDuzMemurluk = false;
+        document.getElementById('kpssSelect').value = '';
         syncTabsAndButtons();
         applyFilters();
       });
 
       document.getElementById('quickTabDuz').addEventListener('click', () => {
         STATE.onlyDuzMemurluk = !STATE.onlyDuzMemurluk;
+        syncTabsAndButtons();
+        applyFilters();
+      });
+
+      document.getElementById('quickTabNoKpss').addEventListener('click', () => {
+        const kpssEl = document.getElementById('kpssSelect');
+        kpssEl.value = kpssEl.value === 'KPSS Şartsız' ? '' : 'KPSS Şartsız';
+        STATE.onlyDuzMemurluk = false;
         syncTabsAndButtons();
         applyFilters();
       });
@@ -1051,6 +1087,7 @@
         .forEach(id => {
           document.getElementById(id).addEventListener('input', () => {
             if (id === 'professionSelect') populateFilterOptions();
+            if (id === 'kpssSelect') syncTabsAndButtons();
             applyFilters();
           });
         });
