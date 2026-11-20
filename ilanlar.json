@@ -1,5 +1,37 @@
 [
   {
+    "id": "ga-3-79",
+    "sourceDomain": "osym.gov.tr",
+    "category": "Büro & İdari",
+    "institution": "OSYM.GOV.TR",
+    "title": "2026-TUS 2. Dönem: Ek Yerleştirme Tercihlerinin Alınması",
+    "positions": [
+      "Büro / İdari Personel"
+    ],
+    "positionDetails": [
+      "Büro / İdari Personel"
+    ],
+    "kadroRows": [],
+    "city": "Türkiye Geneli",
+    "education": "Lisans",
+    "kpss": "Resmi İlanda Belirtilmiş",
+    "quota": 1,
+    "publishDate": "2026-11-20",
+    "endDate": "2026-11-26",
+    "refNo": "GA-4-179",
+    "qualCode": "Özel Nitelik",
+    "isDuzMemurluk": false,
+    "url": "https://www.osym.gov.tr/2026-tus-2-donem-ek-yerlestirme-tercihlerinin-alinmasi",
+    "requirements": [
+      "İlgili kurumun resmi duyuru sayfasındaki genel ve özel başvuru şartlarını inceleyiniz."
+    ],
+    "documents": [
+      "e-Devlet Mezuniyet Belgesi",
+      "Kimlik Belgesi Fotokopisi"
+    ],
+    "detailParsed": true
+  },
+  {
     "id": "ga-4-345",
     "sourceDomain": "iskur.gov.tr",
     "category": "Bilişim & Teknik",
