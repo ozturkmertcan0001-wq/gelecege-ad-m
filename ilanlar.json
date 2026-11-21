@@ -1,5 +1,37 @@
 [
   {
+    "id": "ga-4-344",
+    "sourceDomain": "iskur.gov.tr",
+    "category": "Bilişim & Teknik",
+    "institution": "ISKUR.GOV.TR",
+    "title": "21 Kas Sözleşmeli Bilişim Personeli Sözlü/Uygulamalı Sınava Girmeye Hak Kazananlar Hakkında Duyuru",
+    "positions": [
+      "Sözleşmeli Bilişim Personeli"
+    ],
+    "positionDetails": [
+      "Sözleşmeli Bilişim Personeli"
+    ],
+    "kadroRows": [],
+    "city": "Türkiye Geneli",
+    "education": "Lisans",
+    "kpss": "Resmi İlanda Belirtilmiş",
+    "quota": 1,
+    "publishDate": "2026-11-21",
+    "endDate": "2026-11-21",
+    "refNo": "GA-5-444",
+    "qualCode": "Özel Nitelik",
+    "isDuzMemurluk": false,
+    "url": "https://www.iskur.gov.tr/duyurular/sozlesmeli-bilisim-personeli-sozlu-uygulamali-sinava-girmeye-hak-kazananlar-hakkinda-duyuru-1/",
+    "requirements": [
+      "Sözleşmeli Bilişim Personeli Sözlü/Uygulamalı Sınava Girmeye Hak Kazananlar Hakkında Duyuru (1)"
+    ],
+    "documents": [
+      "e-Devlet Mezuniyet Belgesi",
+      "Kimlik Belgesi Fotokopisi"
+    ],
+    "detailParsed": true
+  },
+  {
     "id": "ga-3-79",
     "sourceDomain": "osym.gov.tr",
     "category": "Büro & İdari",
